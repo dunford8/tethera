@@ -6,7 +6,7 @@
     <title>TETHERA • Mobile WebApp</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,7 +15,7 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: "Inter", sans-serif;
             background: radial-gradient(circle at 30% 20%, #132117, #020403);
             min-height: 100vh;
             display: flex;
@@ -25,12 +25,13 @@
 
         .app {
             width: 100%;
+            max-width: 390px;
             height: 100vh;
             background: transparent;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            color: #fff;
+            color: #ffffff;
         }
 
         .screens-container {
@@ -61,10 +62,10 @@
         .nav {
             display: flex;
             height: 70px;
-            background: rgba(10, 20, 15, 0.6);
+            background: rgba(10, 20, 15, 0.7);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border-top: 1px solid rgba(0, 255, 170, 0.15);
+            border-top: 1px solid rgba(0, 255, 170, 0.25);
             padding: 8px 0;
             flex-shrink: 0;
         }
@@ -82,87 +83,101 @@
             letter-spacing: 0.3px;
             cursor: pointer;
             user-select: none;
+            transition: color 0.2s;
         }
 
         .nav-item.active {
             color: #00ffaa;
-            text-shadow: 0 0 8px rgba(0,255,170,0.5);
+            text-shadow: 0 0 8px rgba(0, 255, 170, 0.5);
         }
 
         .nav-item span:first-child {
             font-size: 20px;
         }
 
-        .title-main {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: #fff;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(0,255,170,0.3);
+        /* Акцентный цвет — изумрудный */
+        .accent-text {
+            color: #00ffaa;
         }
 
+        .accent-bg {
+            background: linear-gradient(135deg, #00c9a7, #00a87e);
+            border: none;
+        }
+
+        /* Карточки */
         .glass-card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(0,255,170,0.2);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 255, 170, 0.2);
             border-radius: 24px;
             padding: 16px 20px;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
-        .card-row {
+        .stat-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
         }
 
-        .card-label {
-            font-size: 15px;
+        .stat-label {
+            font-size: 14px;
             font-weight: 400;
             color: #b0e0d0;
         }
 
-        .card-value {
-            font-size: 26px;
+        .stat-value {
+            font-size: 22px;
             font-weight: 600;
             color: #fff;
-            text-shadow: 0 0 8px rgba(0,255,170,0.3);
         }
 
+        /* Кнопки */
         .gradient-btn {
             background: linear-gradient(135deg, #00c9a7, #00a87e);
             border: none;
             border-radius: 40px;
-            padding: 16px 24px;
+            padding: 14px 20px;
             font-family: 'Inter', sans-serif;
             font-weight: 600;
-            font-size: 18px;
+            font-size: 16px;
             color: #0b1f18;
-            box-shadow: 0 8px 20px rgba(0,255,170,0.3);
+            box-shadow: 0 8px 20px rgba(0, 255, 170, 0.3);
             cursor: pointer;
             transition: transform 0.15s, box-shadow 0.15s;
             width: 100%;
             border: 1px solid rgba(255,255,255,0.1);
         }
-
         .gradient-btn:active {
             transform: scale(0.98);
-            box-shadow: 0 4px 12px rgba(0,255,170,0.4);
+            box-shadow: 0 4px 12px rgba(0, 255, 170, 0.5);
         }
 
-        .timer-container {
+        .small-btn {
+            padding: 10px 16px;
+            font-size: 14px;
+        }
+
+        .outline-btn {
+            background: transparent;
+            border: 1px solid rgba(0, 255, 170, 0.5);
+            color: #00ffaa;
+            box-shadow: none;
+        }
+
+        /* Главная */
+        .timer-large {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 16px 0 24px;
+            margin: 20px 0 16px;
         }
-
         .progress-ring {
-            width: 140px;
-            height: 140px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             background: conic-gradient(#00ffaa 0deg 200deg, #2a4038 200deg 360deg);
             display: flex;
@@ -171,127 +186,255 @@
             position: relative;
             margin-bottom: 12px;
         }
-
         .progress-ring::before {
             content: '';
             position: absolute;
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             background: #0a1814;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
         }
-
         .timer-value {
             position: relative;
             z-index: 2;
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 700;
             color: #fff;
         }
-
-        .timer-label {
-            font-size: 14px;
-            color: #a0c0b2;
-        }
-
         .timer-sub {
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 18px;
+            font-weight: 600;
             margin: 4px 0 2px;
+            color: #00ffaa;
         }
-
         .timer-hint {
             font-size: 13px;
-            color: #6f8f82;
-            background: rgba(0,255,170,0.1);
+            color: #8fafa0;
+            background: rgba(0, 255, 170, 0.1);
             padding: 6px 16px;
             border-radius: 30px;
         }
 
-        .wallet-balance {
-            font-size: 52px;
-            font-weight: 700;
-            text-align: center;
-            margin: 20px 0 10px;
-        }
-
-        .wallet-actions {
+        .cycles-row {
             display: flex;
-            gap: 12px;
-            margin: 24px 0 32px;
-        }
-
-        .wallet-actions .gradient-btn {
-            padding: 14px 0;
-            font-size: 16px;
-            background: linear-gradient(135deg, #1e4a3a, #0e2f24);
-            color: white;
-            box-shadow: none;
-        }
-
-        .network-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
             gap: 10px;
-            margin-top: 16px;
+            margin: 12px 0;
+        }
+        .cycles-card {
+            flex: 1;
+            background: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            padding: 14px;
+            text-align: center;
+            border: 1px solid rgba(0,255,170,0.2);
+        }
+        .cycles-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00ffaa;
+        }
+        .cycles-label {
+            font-size: 12px;
+            color: #b0e0d0;
         }
 
+        /* Кошелёк */
+        .wallet-tabs {
+            display: flex;
+            gap: 8px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 30px;
+            padding: 4px;
+            margin: 16px 0;
+        }
+        .wallet-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            border-radius: 26px;
+            font-weight: 500;
+            color: #b0e0d0;
+            cursor: pointer;
+        }
+        .wallet-tab.active {
+            background: rgba(0, 255, 170, 0.2);
+            color: #00ffaa;
+        }
+
+        .network-selector {
+            display: flex;
+            gap: 8px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
         .network-chip {
             background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(0,255,170,0.2);
-            border-radius: 40px;
-            padding: 10px 20px;
-            font-weight: 500;
+            border: 1px solid rgba(0, 255, 170, 0.3);
+            border-radius: 30px;
+            padding: 8px 16px;
             font-size: 14px;
-            color: #ccfff0;
-        }
-
-        .rating-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 16px;
-        }
-
-        .rating-item {
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(0,255,170,0.15);
-            border-radius: 20px;
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 18px;
             font-weight: 500;
+            color: #ccf0e0;
         }
-
-        .rating-amount {
-            color: #00ffaa;
+        .network-chip.active {
+            background: #00ffaa;
+            color: #0b1f18;
+            border-color: #00ffaa;
             font-weight: 600;
         }
 
-        .ref-levels {
-            margin-top: 20px;
+        .input-field {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,255,170,0.2);
+            border-radius: 20px;
+            padding: 14px 16px;
+            margin: 8px 0;
+            color: white;
+            font-size: 15px;
+        }
+        .input-field::placeholder {
+            color: #5f7f70;
         }
 
-        .ref-card {
-            background: rgba(255,255,255,0.02);
-            border-left: 4px solid #00ffaa;
+        .warning {
+            font-size: 12px;
+            color: #ffaa5e;
+            background: rgba(255,170,94,0.1);
+            padding: 10px;
             border-radius: 16px;
-            padding: 18px 20px;
-            margin-bottom: 12px;
+            margin-top: 12px;
+            border-left: 3px solid #ffaa5e;
+        }
+
+        /* Рейтинг */
+        .season-header {
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .prize-row {
             display: flex;
             justify-content: space-between;
+            margin-bottom: 8px;
         }
-
-        .ref-percent {
-            font-size: 22px;
+        .prize-amount {
+            font-size: 24px;
             font-weight: 700;
             color: #00ffaa;
         }
+        .time-left {
+            color: #b0e0d0;
+        }
 
+        .user-score {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0, 255, 170, 0.1);
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(0,255,170,0.2);
+        }
+
+        .rating-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+        }
+        .rating-position {
+            font-weight: 700;
+            font-size: 18px;
+            color: #00ffaa;
+            width: 30px;
+        }
+        .rating-info {
+            flex: 1;
+        }
+        .rating-name {
+            font-weight: 600;
+        }
+        .rating-stake {
+            font-size: 13px;
+            color: #b0e0d0;
+        }
+        .rating-amount {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* Рефералы */
+        .ref-header {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+        .ref-stat {
+            text-align: center;
+        }
+        .ref-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00ffaa;
+        }
+        .ref-stat-label {
+            font-size: 12px;
+            color: #b0e0d0;
+        }
+
+        .level-card {
+            background: rgba(0,0,0,0.2);
+            border-left: 4px solid #00ffaa;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        .level-title {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .level-conditions {
+            font-size: 12px;
+            color: #b0e0d0;
+            list-style: none;
+            padding-left: 0;
+        }
+        .level-conditions li {
+            margin-bottom: 4px;
+            padding-left: 12px;
+            position: relative;
+        }
+        .level-conditions li::before {
+            content: "•";
+            color: #00ffaa;
+            position: absolute;
+            left: 0;
+        }
+
+        .invite-btn {
+            background: linear-gradient(135deg, #00c9a7, #00a87e);
+            border: none;
+            border-radius: 40px;
+            padding: 14px;
+            color: #0b1f18;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 8px;
+            font-size: 16px;
+            box-shadow: 0 8px 20px rgba(0, 255, 170, 0.3);
+        }
+
+        /* Адаптация для маленьких экранов */
         @media (max-height: 700px) {
             .screen {
                 padding-top: 12px;
@@ -303,18 +446,18 @@
             }
             .glass-card {
                 padding: 12px 16px;
-                margin-bottom: 12px;
+                margin-bottom: 10px;
             }
-            .timer-container {
-                margin: 8px 0 16px;
+            .timer-large {
+                margin: 10px 0;
             }
             .progress-ring {
-                width: 120px;
-                height: 120px;
+                width: 110px;
+                height: 110px;
             }
             .progress-ring::before {
-                width: 100px;
-                height: 100px;
+                width: 90px;
+                height: 90px;
             }
         }
     </style>
@@ -322,61 +465,236 @@
 <body>
     <div class="app">
         <div class="screens-container">
+            <!-- Главная -->
             <div class="screen home active" id="screen-home">
-                <h1 class="title-main">TETHERA</h1>
+                <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:20px;">TETHERA</h1>
+
                 <div class="glass-card">
-                    <div class="card-row">
-                        <span class="card-label">Заработано с циклов</span>
-                        <span class="card-value">$0.00</span>
+                    <div class="stat-row">
+                        <span class="stat-label">Заработано с циклов</span>
+                        <span class="stat-value">$0.00</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Активный депозит</span>
+                        <span class="stat-value">$0.00</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Доступно к выводу</span>
+                        <span class="stat-value accent-text">$0.00</span>
                     </div>
                 </div>
-                <div class="glass-card">
-                    <div class="card-row">
-                        <span class="card-label">Активный депозит</span>
-                        <span class="card-value">$0.00</span>
-                    </div>
-                </div>
-                <div class="timer-container">
+
+                <div class="timer-large">
                     <div class="progress-ring"><span class="timer-value">6ч</span></div>
-                    <span class="timer-label">Следующий цикл</span>
                     <span class="timer-sub">06:00:00</span>
-                    <span class="timer-hint">+1.5% за цикл (6 часов)</span>
+                    <span class="timer-hint">Следующий цикл · +1.5%</span>
                 </div>
-                <button class="gradient-btn">Запустить цикл</button>
+
+                <div class="cycles-row">
+                    <div class="cycles-card">
+                        <div class="cycles-number">0</div>
+                        <div class="cycles-label">Новых циклов</div>
+                    </div>
+                    <div class="cycles-card">
+                        <div class="cycles-number">0</div>
+                        <div class="cycles-label">Активных</div>
+                    </div>
+                </div>
+
+                <button class="gradient-btn" style="margin-top:12px;">Запустить цикл</button>
             </div>
+
+            <!-- Кошелёк -->
             <div class="screen wallet" id="screen-wallet">
                 <h1 class="title-main" style="font-size:24px;">КОШЕЛЁК</h1>
-                <div class="wallet-balance">$0.00</div>
-                <div class="wallet-actions">
-                    <button class="gradient-btn">Пополнить</button>
-                    <button class="gradient-btn">Вывести</button>
+
+                <div class="wallet-tabs">
+                    <div class="wallet-tab active" data-wallet="deposit">Пополнение</div>
+                    <div class="wallet-tab" data-wallet="withdraw">Вывод</div>
                 </div>
-                <h2 style="margin-top:20px;">Поддерживаемые сети</h2>
-                <div class="network-list">
-                    <span class="network-chip">TON</span>
-                    <span class="network-chip">TRC20</span>
-                    <span class="network-chip">ERC20</span>
-                    <span class="network-chip">BEP20</span>
-                    <span class="network-chip">SOL</span>
+
+                <!-- Пополнение (по умолчанию активно) -->
+                <div class="deposit-tab">
+                    <div class="network-selector">
+                        <span class="network-chip active">TON</span>
+                        <span class="network-chip">SOL</span>
+                        <span class="network-chip">BEP20</span>
+                        <span class="network-chip">TRC20</span>
+                    </div>
+
+                    <div class="input-field" id="depositAddress">UQA29vQS_WlwLZp6qkxgPB0YOjEsg...</div>
+                    <div style="font-size:13px; color:#b0e0d0; margin:4px 0 0 16px;">Адрес кошелька (USDT)</div>
+
+                    <div class="input-field" style="margin-top:16px;" id="depositComment">405279351</div>
+                    <div style="font-size:13px; color:#b0e0d0; margin:4px 0 0 16px;">Комментарий</div>
+
+                    <div class="warning">
+                        ⚠️ Комментарий обязателен при пополнении!
+                    </div>
+
+                    <button class="gradient-btn" style="margin-top:24px;">Пополнить (Min 5 USDT)</button>
+                </div>
+
+                <!-- Вывод (изначально скрыт) -->
+                <div class="withdraw-tab" style="display: none;">
+                    <div style="font-size:32px; font-weight:700; text-align:center; margin:10px 0; color:#00ffaa;">$0.00</div>
+
+                    <div class="network-selector">
+                        <span class="network-chip">TON</span>
+                        <span class="network-chip active">SOL</span>
+                        <span class="network-chip">BEP20</span>
+                    </div>
+
+                    <div class="input-field">0.00</div>
+                    <div style="font-size:13px; color:#b0e0d0; margin:4px 0 0 16px;">Введите сумму (USDT) · Min 1 USDT | Комиссия: 3%</div>
+
+                    <div class="input-field" style="margin-top:16px;">Введите свой адрес</div>
+                    <div style="font-size:13px; color:#b0e0d0; margin:4px 0 0 16px;">Ваш адрес USDT</div>
+
+                    <button class="gradient-btn" style="margin-top:24px;">Вывести</button>
                 </div>
             </div>
+
+            <!-- Рейтинг -->
             <div class="screen rating" id="screen-rating">
                 <h1 class="title-main" style="font-size:24px;">РЕЙТИНГ</h1>
+
+                <div class="season-header">
+                    <div class="prize-row">
+                        <span>Сезон</span>
+                        <span class="prize-amount">$10,000</span>
+                    </div>
+                    <div class="prize-row">
+                        <span>Осталось</span>
+                        <span class="time-left">29дн 04ч 18м</span>
+                    </div>
+                </div>
+
+                <div class="user-score">
+                    <span>Ваш Stake Score</span>
+                    <span class="accent-text">0</span>
+                </div>
+
                 <div class="rating-list">
-                    <div class="rating-item"><span class="rating-name">User1</span><span class="rating-amount">$1000</span></div>
-                    <div class="rating-item"><span class="rating-name">User2</span><span class="rating-amount">$800</span></div>
-                    <div class="rating-item"><span class="rating-name">User3</span><span class="rating-amount">$500</span></div>
+                    <div class="rating-item">
+                        <span class="rating-position">1</span>
+                        <div class="rating-info">
+                            <div class="rating-name">Zombini</div>
+                            <div class="rating-stake">20 Stake Score</div>
+                        </div>
+                        <div class="rating-amount">$1600</div>
+                    </div>
+                    <div class="rating-item">
+                        <span class="rating-position">2</span>
+                        <div class="rating-info">
+                            <div class="rating-name">olekitka</div>
+                            <div class="rating-stake">20 Stake Score</div>
+                        </div>
+                        <div class="rating-amount">$1100</div>
+                    </div>
+                    <div class="rating-item">
+                        <span class="rating-position">3</span>
+                        <div class="rating-info">
+                            <div class="rating-name">Evakuatordubna</div>
+                            <div class="rating-stake">15.56 Stake Score</div>
+                        </div>
+                        <div class="rating-amount">$800</div>
+                    </div>
+                    <div class="rating-item">
+                        <span class="rating-position">4</span>
+                        <div class="rating-info">
+                            <div class="rating-name">MrCryptoMon</div>
+                            <div class="rating-stake">15 Stake Score</div>
+                        </div>
+                        <div class="rating-amount">$650</div>
+                    </div>
+                    <div class="rating-item">
+                        <span class="rating-position">5</span>
+                        <div class="rating-info">
+                            <div class="rating-name">vavan42</div>
+                            <div class="rating-stake">11.11 Stake Score</div>
+                        </div>
+                        <div class="rating-amount">$550</div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Рефералы -->
             <div class="screen ref" id="screen-ref">
                 <h1 class="title-main" style="font-size:24px;">РЕФЕРАЛЫ</h1>
-                <div class="ref-levels">
-                    <div class="ref-card"><span class="ref-level">Уровень 1</span><span class="ref-percent">10%</span></div>
-                    <div class="ref-card"><span class="ref-level">Уровень 2</span><span class="ref-percent">5%</span></div>
-                    <div class="ref-card"><span class="ref-level">Уровень 3</span><span class="ref-percent">5%</span></div>
+
+                <button class="invite-btn">👥 Пригласить друга</button>
+
+                <div class="ref-header">
+                    <div class="ref-stat">
+                        <div class="ref-stat-value">0</div>
+                        <div class="ref-stat-label">Ваши рефералы</div>
+                    </div>
+                    <div class="ref-stat">
+                        <div class="ref-stat-value">0</div>
+                        <div class="ref-stat-label">Вся команда</div>
+                    </div>
+                    <div class="ref-stat">
+                        <div class="ref-stat-value">0</div>
+                        <div class="ref-stat-label">Активных</div>
+                    </div>
+                </div>
+
+                <h3 style="margin:16px 0 8px; font-weight:500;">Уровни и вознаграждения</h3>
+
+                <div class="level-card">
+                    <div class="level-title">
+                        <span>Уровень 1</span>
+                        <span class="accent-text">10%</span>
+                    </div>
+                </div>
+
+                <div class="level-card">
+                    <div class="level-title">
+                        <span>Уровень 2</span>
+                        <span class="accent-text">5%</span>
+                    </div>
+                    <ul class="level-conditions">
+                        <li>Депозит от 500 USDT</li>
+                    </ul>
+                </div>
+
+                <div class="level-card">
+                    <div class="level-title">
+                        <span>Уровень 3</span>
+                        <span class="accent-text">5%</span>
+                    </div>
+                    <ul class="level-conditions">
+                        <li>Депозит от 1000 USDT</li>
+                        <li>Оборот команды 1-2 ур. от 25K USDT в сутки</li>
+                    </ul>
+                </div>
+
+                <div class="level-card">
+                    <div class="level-title">
+                        <span>Уровень 4</span>
+                        <span class="accent-text">3%</span>
+                    </div>
+                    <ul class="level-conditions">
+                        <li>Депозит от 2000 USDT</li>
+                        <li>Оборот всей структуры от 100K USDT в сутки</li>
+                    </ul>
+                </div>
+
+                <div class="level-card">
+                    <div class="level-title">
+                        <span>Уровень 5</span>
+                        <span class="accent-text">1%</span>
+                    </div>
+                    <ul class="level-conditions">
+                        <li>Депозит от 4000 USDT</li>
+                        <li>Оборот всей структуры от 200K USDT в сутки</li>
+                    </ul>
                 </div>
             </div>
         </div>
+
+        <!-- Нижняя навигация -->
         <nav class="nav">
             <div class="nav-item active" data-screen="home"><span>🏠</span><span>Главная</span></div>
             <div class="nav-item" data-screen="wallet"><span>💳</span><span>Кошелёк</span></div>
@@ -384,6 +702,7 @@
             <div class="nav-item" data-screen="ref"><span>👥</span><span>Рефералы</span></div>
         </nav>
     </div>
+
     <script>
         (function() {
             const screens = document.querySelectorAll('.screen');
@@ -399,6 +718,37 @@
 
             navItems.forEach(item => {
                 item.addEventListener('click', () => showScreen(item.dataset.screen));
+            });
+
+            // Переключение вкладок кошелька
+            const walletTabs = document.querySelectorAll('.wallet-tab');
+            const depositTab = document.querySelector('.deposit-tab');
+            const withdrawTab = document.querySelector('.withdraw-tab');
+
+            if (walletTabs.length) {
+                walletTabs.forEach((tab, index) => {
+                    tab.addEventListener('click', () => {
+                        walletTabs.forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        if (index === 0) {
+                            depositTab.style.display = 'block';
+                            withdrawTab.style.display = 'none';
+                        } else {
+                            depositTab.style.display = 'none';
+                            withdrawTab.style.display = 'block';
+                        }
+                    });
+                });
+            }
+
+            // Активация сетей (просто визуально)
+            const chips = document.querySelectorAll('.network-chip');
+            chips.forEach(chip => {
+                chip.addEventListener('click', function(e) {
+                    const parent = this.parentNode;
+                    parent.querySelectorAll('.network-chip').forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                });
             });
         })();
     </script>
