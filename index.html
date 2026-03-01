@@ -98,15 +98,14 @@
             color: #00ffaa;
         }
 
-        /* Карточки статистики (отдельные, с тонкой линией) */
+        /* Карточки статистики (тонкая линия) */
         .stat-card {
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(0, 255, 170, 0.25); /* тонкая линия */
+            border: 1px solid rgba(0, 255, 170, 0.25);
             border-radius: 24px;
             padding: 16px 20px;
-            margin-bottom: 12px;
             width: 100%;
         }
 
@@ -114,7 +113,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0; /* убрали отступ, он будет через padding карточки */
+            margin-bottom: 0;
         }
 
         .stat-label {
@@ -129,7 +128,7 @@
             color: #fff;
         }
 
-        /* Контейнер для графика (спарклайн) */
+        /* Контейнер для графика */
         .sparkline-container {
             margin-top: 10px;
             width: 100%;
@@ -142,6 +141,25 @@
             height: 40px;
         }
 
+        /* Новый контейнер для двухколоночного расположения карточек */
+        .stats-double-column {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .stats-left {
+            flex: 1; /* левая колонка занимает одну долю */
+        }
+
+        .stats-right {
+            flex: 1; /* правая колонка тоже одна доля */
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Остальные стили без изменений */
         .gradient-btn {
             background: linear-gradient(135deg, #00c9a7, #00a87e);
             border: none;
@@ -437,7 +455,6 @@
             }
             .stat-card {
                 padding: 12px 16px;
-                margin-bottom: 10px;
             }
             .timer-large {
                 margin: 10px 0;
@@ -456,34 +473,39 @@
 <body>
     <div class="app">
         <div class="screens-container">
-            <!-- Главная (обновлённая) -->
+            <!-- Главная (обновлённая: двухколоночные карточки) -->
             <div class="screen home active" id="screen-home">
                 <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:20px;">TETHERA</h1>
 
-                <!-- Карточка 1: Заработано с циклов + график -->
-                <div class="stat-card">
-                    <div class="stat-row">
-                        <span class="stat-label">Заработано с циклов</span>
-                        <span class="stat-value">$0.00</span>
+                <!-- Две колонки: слева карточка с графиком, справа две карточки -->
+                <div class="stats-double-column">
+                    <!-- Левая колонка: Заработано с циклов + график -->
+                    <div class="stats-left">
+                        <div class="stat-card">
+                            <div class="stat-row">
+                                <span class="stat-label">Заработано с циклов</span>
+                                <span class="stat-value">$0.00</span>
+                            </div>
+                            <div class="sparkline-container">
+                                <canvas class="sparkline" width="300" height="40"></canvas>
+                            </div>
+                        </div>
                     </div>
-                    <div class="sparkline-container">
-                        <canvas class="sparkline" width="300" height="40"></canvas>
-                    </div>
-                </div>
 
-                <!-- Карточка 2: Активный депозит -->
-                <div class="stat-card">
-                    <div class="stat-row">
-                        <span class="stat-label">Активный депозит</span>
-                        <span class="stat-value">$0.00</span>
-                    </div>
-                </div>
-
-                <!-- Карточка 3: Доступно к выводу -->
-                <div class="stat-card">
-                    <div class="stat-row">
-                        <span class="stat-label">Доступно к выводу</span>
-                        <span class="stat-value accent-text">$0.00</span>
+                    <!-- Правая колонка: две карточки вертикально -->
+                    <div class="stats-right">
+                        <div class="stat-card">
+                            <div class="stat-row">
+                                <span class="stat-label">Активный депозит</span>
+                                <span class="stat-value">$0.00</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-row">
+                                <span class="stat-label">Доступно к выводу</span>
+                                <span class="stat-value accent-text">$0.00</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -756,73 +778,82 @@
                 });
             });
 
-            // ========== Анимированный график (спарклайн) ==========
+            // ========== Плавный анимированный график (спарклайн) ==========
             const sparklines = document.querySelectorAll('.sparkline');
             if (sparklines.length > 0) {
-                // Для каждого canvas создаём свой массив данных (история значений)
-                const dataMap = new Map(); // ключ - canvas, значение - массив y-координат (нормализованных 0..1)
+                // Для каждого canvas создаём массивы: текущие значения и целевые значения
+                const dataMap = new Map(); // ключ - canvas, значение - объект { current, target }
+                const pointsCount = 60; // больше точек для плавности
 
                 // Инициализация случайными данными
                 sparklines.forEach(canvas => {
-                    const pointsCount = 20; // количество точек
-                    const initialData = [];
+                    const current = [];
+                    const target = [];
                     for (let i = 0; i < pointsCount; i++) {
-                        initialData.push(Math.random()); // случайное от 0 до 1
+                        const val = 0.3 + Math.random() * 0.4; // диапазон 0.3..0.7
+                        current.push(val);
+                        target.push(val);
                     }
-                    dataMap.set(canvas, initialData);
+                    dataMap.set(canvas, { current, target });
                 });
 
                 // Функция отрисовки одного canvas
-                function drawSparkline(canvas, data) {
+                function drawSparkline(canvas, current) {
                     const ctx = canvas.getContext('2d');
                     const w = canvas.width;
                     const h = canvas.height;
 
                     ctx.clearRect(0, 0, w, h);
 
-                    // Настройки линии
+                    // Мягкие линии
                     ctx.strokeStyle = '#00ffaa';
                     ctx.lineWidth = 2;
+                    ctx.lineJoin = 'round';
+                    ctx.lineCap = 'round';
                     ctx.beginPath();
 
-                    const step = w / (data.length - 1);
-                    for (let i = 0; i < data.length; i++) {
+                    const step = w / (current.length - 1);
+                    for (let i = 0; i < current.length; i++) {
                         const x = i * step;
-                        // y = отступ сверху + значение * (высота - отступы)
-                        const y = 5 + data[i] * (h - 10); // небольшой отступ сверху/снизу
+                        const y = 5 + current[i] * (h - 10);
                         if (i === 0) ctx.moveTo(x, y);
                         else ctx.lineTo(x, y);
                     }
                     ctx.stroke();
                 }
 
-                // Функция обновления данных (случайное блуждание)
-                function updateData(data) {
-                    const newData = [];
-                    for (let i = 0; i < data.length; i++) {
-                        let val = data[i] + (Math.random() - 0.5) * 0.15; // изменение в пределах ±0.15
-                        // Ограничиваем, чтобы не выходило за 0..1
-                        if (val < 0.1) val = 0.1;
-                        if (val > 0.9) val = 0.9;
-                        newData.push(val);
+                // Обновление целевых значений (плавное случайное блуждание)
+                function updateTargets(target) {
+                    for (let i = 0; i < target.length; i++) {
+                        // небольшое изменение
+                        let delta = (Math.random() - 0.5) * 0.04;
+                        let newVal = target[i] + delta;
+                        // удерживаем в разумных пределах 0.2..0.8
+                        if (newVal < 0.2) newVal = 0.2;
+                        if (newVal > 0.8) newVal = 0.8;
+                        target[i] = newVal;
                     }
-                    return newData;
                 }
 
-                // Запускаем анимацию
+                // Интерполяция current -> target
+                function interpolate(current, target, factor = 0.1) {
+                    for (let i = 0; i < current.length; i++) {
+                        current[i] += (target[i] - current[i]) * factor;
+                    }
+                }
+
+                // Запускаем анимацию с высокой частотой для плавности
                 setInterval(() => {
                     sparklines.forEach(canvas => {
-                        let data = dataMap.get(canvas);
-                        data = updateData(data);
-                        dataMap.set(canvas, data);
-                        drawSparkline(canvas, data);
+                        const data = dataMap.get(canvas);
+                        if (!data) return;
+                        // Обновляем целевые значения (не каждые кадр, чтобы было менее хаотично)
+                        updateTargets(data.target);
+                        // Плавно подводим текущие к целевым
+                        interpolate(data.current, data.target, 0.15);
+                        drawSparkline(canvas, data.current);
                     });
-                }, 250); // обновление каждые 250 мс
-
-                // Первоначальная отрисовка
-                sparklines.forEach(canvas => {
-                    drawSparkline(canvas, dataMap.get(canvas));
-                });
+                }, 50); // 50 мс для очень плавного движения
             }
         })();
     </script>
