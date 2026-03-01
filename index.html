@@ -24,8 +24,9 @@
         }
 
         .app {
-            width: 390px;
-            height: 844px;
+            width: 100%;
+            max-width: 390px;
+            height: 100vh;
             background: radial-gradient(circle at 30% 20%, #132117, #020403);
             border-radius: 32px;
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
@@ -58,7 +59,6 @@
             display: flex;
         }
 
-        /* Навигация */
         .nav {
             display: flex;
             height: 70px;
@@ -68,6 +68,7 @@
             border-top: 1px solid rgba(0, 255, 170, 0.15);
             padding: 8px 0;
             border-radius: 0 0 32px 32px;
+            flex-shrink: 0;
         }
 
         .nav-item {
@@ -94,7 +95,6 @@
             font-size: 20px;
         }
 
-        /* Типографика */
         .title-main {
             font-size: 28px;
             font-weight: 700;
@@ -154,7 +154,6 @@
             box-shadow: 0 4px 12px rgba(0,255,170,0.4);
         }
 
-        /* Таймер */
         .timer-container {
             display: flex;
             flex-direction: column;
@@ -205,7 +204,6 @@
             border-radius: 30px;
         }
 
-        /* Экран кошелька */
         .wallet-balance {
             font-size: 52px;
             font-weight: 700;
@@ -241,7 +239,6 @@
             color: #ccfff0;
         }
 
-        /* Рейтинг */
         .rating-list {
             display: flex;
             flex-direction: column;
@@ -264,7 +261,6 @@
             font-weight: 600;
         }
 
-        /* Рефералы */
         .ref-levels {
             margin-top: 20px;
         }
@@ -282,12 +278,37 @@
             font-weight: 700;
             color: #00ffaa;
         }
+
+        @media (max-height: 700px) {
+            .screen {
+                padding-top: 12px;
+                padding-bottom: 5px;
+            }
+            .title-main {
+                font-size: 24px;
+                margin-bottom: 12px;
+            }
+            .glass-card {
+                padding: 12px 16px;
+                margin-bottom: 12px;
+            }
+            .timer-container {
+                margin: 8px 0 16px;
+            }
+            .progress-ring {
+                width: 120px;
+                height: 120px;
+            }
+            .progress-ring::before {
+                width: 100px;
+                height: 100px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="app">
         <div class="screens-container">
-            <!-- Главная -->
             <div class="screen home active" id="screen-home">
                 <h1 class="title-main">TETHERA</h1>
                 <div class="glass-card">
@@ -310,8 +331,6 @@
                 </div>
                 <button class="gradient-btn">Запустить цикл</button>
             </div>
-
-            <!-- Кошелёк -->
             <div class="screen wallet" id="screen-wallet">
                 <h1 class="title-main" style="font-size:24px;">КОШЕЛЁК</h1>
                 <div class="wallet-balance">$0.00</div>
@@ -328,8 +347,6 @@
                     <span class="network-chip">SOL</span>
                 </div>
             </div>
-
-            <!-- Рейтинг -->
             <div class="screen rating" id="screen-rating">
                 <h1 class="title-main" style="font-size:24px;">РЕЙТИНГ</h1>
                 <div class="rating-list">
@@ -338,8 +355,6 @@
                     <div class="rating-item"><span class="rating-name">User3</span><span class="rating-amount">$500</span></div>
                 </div>
             </div>
-
-            <!-- Рефералы -->
             <div class="screen ref" id="screen-ref">
                 <h1 class="title-main" style="font-size:24px;">РЕФЕРАЛЫ</h1>
                 <div class="ref-levels">
@@ -349,8 +364,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Нижняя навигация -->
         <nav class="nav">
             <div class="nav-item active" data-screen="home"><span>🏠</span><span>Главная</span></div>
             <div class="nav-item" data-screen="wallet"><span>💳</span><span>Кошелёк</span></div>
@@ -358,7 +371,6 @@
             <div class="nav-item" data-screen="ref"><span>👥</span><span>Рефералы</span></div>
         </nav>
     </div>
-
     <script>
         (function() {
             const screens = document.querySelectorAll('.screen');
