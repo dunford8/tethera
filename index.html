@@ -105,7 +105,7 @@
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(0, 255, 170, 0.25);
             border-radius: 24px;
-            padding: 16px 20px;
+            padding: 12px 16px;  /* уменьшенный padding */
             width: 100%;
         }
 
@@ -114,6 +114,7 @@
             display: flex;
             flex-direction: column;
             height: 100%; /* растягиваем на всю высоту родителя */
+            justify-content: space-between; /* прижимает контент к верху и график к низу */
         }
 
         .stat-card-right {
@@ -130,7 +131,7 @@
         }
 
         .stat-value-large {
-            font-size: 28px;
+            font-size: 24px;  /* уменьшен с 28px */
             font-weight: 700;
             line-height: 1.2;
             color: #fff;
@@ -140,7 +141,7 @@
             font-size: 14px;
             font-weight: 400;
             color: #b0e0d0;
-            margin-top: 4px;
+            margin-top: 2px;  /* небольшой отступ */
         }
 
         .stat-icon {
@@ -153,16 +154,15 @@
 
         /* Контейнер для графика */
         .sparkline-container {
-            margin-top: auto; /* прижимает к низу */
             width: 100%;
-            height: 40px;
-            margin-bottom: 0;
+            height: 30px;  /* уменьшен с 40px */
+            margin-top: 8px;  /* небольшой отступ сверху, но можно и без */
         }
 
         .sparkline {
             display: block;
             width: 100%;
-            height: 40px;
+            height: 30px;
         }
 
         /* Две колонки карточек, выровненные по высоте */
@@ -496,7 +496,7 @@
                 margin-bottom: 12px;
             }
             .stat-card {
-                padding: 12px 16px;
+                padding: 10px 14px; /* ещё немного уменьшим */
             }
             .timer-large {
                 margin: 10px 0;
@@ -515,7 +515,7 @@
 <body>
     <div class="app">
         <div class="screens-container">
-            <!-- Главная (обновлённая структура карточек) -->
+            <!-- Главная (компактные карточки, простой график) -->
             <div class="screen home active" id="screen-home">
                 <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:20px;">TETHERA</h1>
 
@@ -530,7 +530,7 @@
                                     <span class="stat-label-small">Заработано с циклов</span>
                                 </div>
                                 <div class="sparkline-container">
-                                    <canvas class="sparkline" width="300" height="40"></canvas>
+                                    <canvas class="sparkline" width="300" height="30"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -828,7 +828,7 @@
                 });
             });
 
-            // ========== Плавный анимированный график с заполнением (area) ==========
+            // ========== Плавный анимированный график (простая линия, без заливки) ==========
             const sparklines = document.querySelectorAll('.sparkline');
             if (sparklines.length > 0) {
                 // Для каждого canvas создаём массивы: текущие значения и целевые значения
@@ -847,7 +847,7 @@
                     dataMap.set(canvas, { current, target });
                 });
 
-                // Функция отрисовки одного canvas (линия + заливка)
+                // Функция отрисовки одного canvas (только линия)
                 function drawSparkline(canvas, current) {
                     const ctx = canvas.getContext('2d');
                     const w = canvas.width;
@@ -855,31 +855,18 @@
 
                     ctx.clearRect(0, 0, w, h);
 
-                    // Сначала рисуем заливку (полупрозрачную область под линией)
-                    ctx.beginPath();
-                    const step = w / (current.length - 1);
-                    // Начинаем от левого нижнего угла
-                    ctx.moveTo(0, h);
-                    for (let i = 0; i < current.length; i++) {
-                        const x = i * step;
-                        const y = 5 + current[i] * (h - 10);
-                        ctx.lineTo(x, y);
-                    }
-                    // Замыкаем на правый нижний угол
-                    ctx.lineTo(w, h);
-                    ctx.closePath();
-                    ctx.fillStyle = 'rgba(0, 255, 170, 0.2)'; // полупрозрачный зелёный
-                    ctx.fill();
-
-                    // Затем рисуем линию поверх
+                    // Рисуем только линию
                     ctx.strokeStyle = '#00ffaa';
                     ctx.lineWidth = 2;
                     ctx.lineJoin = 'round';
                     ctx.lineCap = 'round';
                     ctx.beginPath();
+
+                    const step = w / (current.length - 1);
                     for (let i = 0; i < current.length; i++) {
                         const x = i * step;
-                        const y = 5 + current[i] * (h - 10);
+                        // Отступы сверху и снизу по 2px, чтобы линия не касалась краёв
+                        const y = 2 + current[i] * (h - 4);
                         if (i === 0) ctx.moveTo(x, y);
                         else ctx.lineTo(x, y);
                     }
