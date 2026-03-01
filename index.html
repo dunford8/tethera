@@ -128,30 +128,29 @@
             color: #fff;
         }
 
-        /* Контейнер для графика */
+        /* Контейнер для графика — уменьшенная высота */
         .sparkline-container {
-            margin-top: 10px;
             width: 100%;
-            height: 40px;
+            height: 24px;  /* было 40px, теперь меньше для лучшего выравнивания */
+            margin-top: 0;  /* убран отступ */
         }
 
         .sparkline {
             display: block;
             width: 100%;
-            height: 40px;
+            height: 24px;  /* синхронизировано с контейнером */
         }
 
         /* Две колонки карточек, выровненные по высоте */
         .stats-double-column {
             display: flex;
             gap: 12px;
-            align-items: stretch; /* колонки будут одинаковой высоты */
+            align-items: stretch; /* колонки одинаковой высоты */
             margin-bottom: 12px;
         }
 
         .stats-left {
             flex: 1;
-            /* левая карточка просто лежит, её высота определит высоту родителя */
         }
 
         .stats-right {
@@ -162,10 +161,10 @@
         }
 
         .stats-right .stat-card {
-            flex: 1; /* карточки справа равномерно делят доступную высоту */
+            flex: 1; /* карточки справа делят доступную высоту поровну */
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* содержимое прижато к верху (как и в левой) */
+            justify-content: flex-start; /* содержимое прижато к верху */
         }
 
         /* Остальные стили без изменений */
@@ -482,7 +481,7 @@
 <body>
     <div class="app">
         <div class="screens-container">
-            <!-- Главная (двухколоночные карточки, выровненные по высоте) -->
+            <!-- Главная (двухколоночные карточки, выровненные по высоте, уменьшенный график) -->
             <div class="screen home active" id="screen-home">
                 <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:20px;">TETHERA</h1>
 
@@ -496,7 +495,7 @@
                                 <span class="stat-value">$0.00</span>
                             </div>
                             <div class="sparkline-container">
-                                <canvas class="sparkline" width="300" height="40"></canvas>
+                                <canvas class="sparkline" width="300" height="24"></canvas>
                             </div>
                         </div>
                     </div>
@@ -824,7 +823,7 @@
                     const step = w / (current.length - 1);
                     for (let i = 0; i < current.length; i++) {
                         const x = i * step;
-                        const y = 5 + current[i] * (h - 10);
+                        const y = 2 + current[i] * (h - 4); // небольшой отступ сверху/снизу
                         if (i === 0) ctx.moveTo(x, y);
                         else ctx.lineTo(x, y);
                     }
@@ -856,7 +855,7 @@
                     sparklines.forEach(canvas => {
                         const data = dataMap.get(canvas);
                         if (!data) return;
-                        // Обновляем целевые значения (не каждые кадр, чтобы было менее хаотично)
+                        // Обновляем целевые значения
                         updateTargets(data.target);
                         // Плавно подводим текущие к целевым
                         interpolate(data.current, data.target, 0.15);
