@@ -19,13 +19,13 @@
             background: radial-gradient(circle at 30% 20%, #132117, #020403);
             min-height: 100vh;
             display: flex;
-            align-items: stretch;    /* растягиваем по вертикали */
-            justify-content: stretch; /* растягиваем по горизонтали */
+            align-items: stretch;
+            justify-content: stretch;
         }
 
         .app {
             width: 100%;
-            height: 100vh;            /* полная высота экрана */
+            height: 100vh;
             background: transparent;
             display: flex;
             flex-direction: column;
@@ -147,45 +147,85 @@
             box-shadow: 0 4px 12px rgba(0, 255, 170, 0.5);
         }
 
+        /* ----- НОВЫЙ ТАЙМЕР С СЕГМЕНТАМИ ----- */
         .timer-large {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin: 20px 0 16px;
         }
-        .progress-ring {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            background: conic-gradient(#00ffaa 0deg 200deg, #2a4038 200deg 360deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        .premium-timer {
             position: relative;
-            margin-bottom: 12px;
+            width: 180px;
+            height: 180px;
+            margin-bottom: 16px;
         }
-        .progress-ring::before {
-            content: '';
+
+        .timer-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 170, 0.6));
+            animation: rotateGlow 10s infinite linear;
+        }
+
+        /* Сегменты - заполненные */
+        .segment-filled {
+            stroke: #00ffaa;
+            stroke-width: 5;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 8px #00ffaa);
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        /* Сегменты - пустые (фон) */
+        .segment-empty {
+            stroke: #1a3a2a;
+            stroke-width: 5;
+            stroke-linecap: round;
+            opacity: 0.6;
+        }
+
+        /* Внутреннее свечение (вращающийся градиент) */
+        .glow-overlay {
             position: absolute;
-            width: 110px;
-            height: 110px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            background: #0a1814;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
+            background: conic-gradient(from 0deg, transparent, rgba(0, 255, 170, 0.2), transparent 30%, transparent 70%, rgba(0, 255, 170, 0.2), transparent);
+            mask: radial-gradient(circle at center, transparent 40%, black 41%);
+            -webkit-mask: radial-gradient(circle at center, transparent 40%, black 41%);
+            animation: rotateGlow 8s infinite linear;
+            pointer-events: none;
         }
-        .timer-value {
-            position: relative;
-            z-index: 2;
-            font-size: 24px;
+
+        /* Центральный текст */
+        .timer-center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 28px;
             font-weight: 700;
-            color: #fff;
+            color: white;
+            text-shadow: 0 0 15px #00ffaa;
+            z-index: 2;
         }
+
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         .timer-sub {
             font-size: 18px;
             font-weight: 600;
             margin: 4px 0 2px;
             color: #00ffaa;
         }
+
         .timer-hint {
             font-size: 13px;
             color: #8fafa0;
@@ -193,6 +233,7 @@
             padding: 6px 16px;
             border-radius: 30px;
         }
+        /* ----------------------------------- */
 
         .cycles-row {
             display: flex;
@@ -427,64 +468,11 @@
             .timer-large {
                 margin: 10px 0;
             }
-            .progress-ring {
-                width: 110px;
-                height: 110px;
-            }
-            .progress-ring::before {
-                width: 90px;
-                height: 90px;
+            .premium-timer {
+                width: 150px;
+                height: 150px;
             }
         }
-        /* Премиум таймер */
-.premium-timer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 12px;
-}
-
-.timer-svg {
-    width: 140px;
-    height: 140px;
-    filter: drop-shadow(0 0 15px rgba(0, 255, 170, 0.5));
-    animation: rotateGlow 8s infinite linear;
-}
-
-.timer-glow {
-    stroke-dasharray: 4 6;
-    animation: glowPulse 3s infinite ease-in-out;
-    filter: blur(2px);
-}
-
-.timer-track {
-    stroke: #1a3a2a;
-    opacity: 0.8;
-}
-
-.timer-progress {
-    transition: stroke-dashoffset 1s ease;
-    filter: drop-shadow(0 0 8px #00ffaa);
-    stroke-linecap: round;
-}
-
-@keyframes rotateGlow {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes glowPulse {
-    0%, 100% { opacity: 0.5; stroke-width: 2; }
-    50% { opacity: 1; stroke-width: 3; }
-}
-
-.timer-svg text {
-    dominant-baseline: middle;
-    font-size: 24px;
-    fill: white;
-    text-shadow: 0 0 10px #00ffaa;
-}
     </style>
 </head>
 <body>
@@ -509,35 +497,49 @@
                     </div>
                 </div>
 
-               <div class="timer-large">
-    <div class="premium-timer">
-        <svg class="timer-svg" viewBox="0 0 140 140">
-            <!-- Внешнее свечение (размытый круг) -->
-            <circle class="timer-glow" cx="70" cy="70" r="64" fill="none" stroke="rgba(0, 255, 170, 0.3)" stroke-width="4" stroke-dasharray="2 8" vector-effect="non-scaling-stroke"/>
-            
-            <!-- Основная дорожка (фоновая) -->
-            <circle class="timer-track" cx="70" cy="70" r="62" fill="none" stroke="#1a3a2a" stroke-width="6" stroke-linecap="round"/>
-            
-            <!-- Прогресс (анимируемая обводка) -->
-            <circle class="timer-progress" cx="70" cy="70" r="62" fill="none" stroke="url(#gradient)" stroke-width="6" stroke-linecap="round" stroke-dasharray="389 389" stroke-dashoffset="200" transform="rotate(-90 70 70)"/>
-            
-            <!-- Градиент для прогресса -->
-            <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#00ffaa" stop-opacity="1"/>
-                    <stop offset="50%" stop-color="#00cc88" stop-opacity="1"/>
-                    <stop offset="100%" stop-color="#00aa77" stop-opacity="1"/>
-                </linearGradient>
-            </defs>
-            
-            <!-- Центральная часть с цифрой -->
-            <circle cx="70" cy="70" r="52" fill="#0a1814" stroke="rgba(0,255,170,0.2)" stroke-width="1"/>
-            <text x="70" y="76" text-anchor="middle" fill="white" font-size="24" font-weight="600" font-family="Inter, sans-serif">6ч</text>
-        </svg>
-    </div>
-    <span class="timer-sub">06:00:00</span>
-    <span class="timer-hint">Следующий цикл · +1.5%</span>
-</div>
+                <!-- НОВЫЙ ТАЙМЕР -->
+                <div class="timer-large">
+                    <div class="premium-timer">
+                        <svg class="timer-svg" viewBox="0 0 200 200">
+                            <!-- Определение градиента для вращающегося свечения (будет использовано в overlay) -->
+                            <defs>
+                                <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                    <stop offset="0%" stop-color="#00ffaa" stop-opacity="0" />
+                                    <stop offset="80%" stop-color="#00ffaa" stop-opacity="0.3" />
+                                    <stop offset="100%" stop-color="#00ffaa" stop-opacity="0" />
+                                </radialGradient>
+                            </defs>
+                            
+                            <!-- 12 сегментов - пустые (фоновые) -->
+                            <g class="segments-empty">
+                                <circle cx="100" cy="100" r="80" fill="none" stroke="#1a3a2a" stroke-width="6" stroke-dasharray="2 3" stroke-linecap="round" transform="rotate(-90 100 100)" />
+                                <!-- Здесь можно добавить больше сегментов, но для простоты используем пунктир -->
+                            </g>
+                            
+                            <!-- 12 сегментов - заполненные (активные) - для примера заполнено 6 из 12 -->
+                            <g class="segments-filled">
+                                <circle cx="100" cy="100" r="80" fill="none" stroke="url(#gradient)" stroke-width="6" stroke-dasharray="41.9 418" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 100 100)" />
+                                <!-- stroke-dasharray: 41.9 = длина одного сегмента (2π*80/12 ≈ 41.9) ; 418 = общая длина окружности (502) минус 6*41.9? для 6 сегментов -->
+                            </g>
+                            
+                            <!-- Внутренний круг с градиентным свечением -->
+                            <circle cx="100" cy="100" r="70" fill="url(#glowGradient)" filter="url(#blur)" />
+                            <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur in="SourceAlpha" stdDeviation="10" />
+                                <feMerge>
+                                    <feMergeNode in="offsetblur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                        </svg>
+                        <!-- Вращающееся свечение поверх (css анимация) -->
+                        <div class="glow-overlay"></div>
+                        <!-- Центральный текст -->
+                        <div class="timer-center-text">6ч</div>
+                    </div>
+                    <span class="timer-sub">06:00:00</span>
+                    <span class="timer-hint">Следующий цикл · +1.5%</span>
+                </div>
 
                 <div class="cycles-row">
                     <div class="cycles-card">
@@ -803,4 +805,3 @@
     </script>
 </body>
 </html>
-
