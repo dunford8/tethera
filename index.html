@@ -16,7 +16,8 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #030504;
+            /* Фон выносим на body, чтобы не было чёрных полос */
+            background: radial-gradient(circle at 30% 20%, #132117, #020403);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -25,9 +26,10 @@
 
         .app {
             width: 100%;
-            max-width: 390px;
-            height: 100vh;
-            background: radial-gradient(circle at 30% 20%, #132117, #020403);
+            max-width: 390px;           /* сохраняем мобильную ширину */
+            height: 100vh;               /* занимает всю высоту экрана */
+            /* фон прозрачный – виден фон body */
+            background: transparent;
             border-radius: 32px;
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
             display: flex;
