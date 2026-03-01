@@ -98,61 +98,60 @@
             color: #00ffaa;
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(0, 255, 170, 0.2);
-            border-radius: 24px;
-            padding: 16px 20px;
-            margin-bottom: 12px;
+        /* Главная в стиле референса */
+        .stats-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
         }
 
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
+        .stat-block {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            padding: 16px 20px;
+            border: 1px solid rgba(0, 255, 170, 0.15);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         .stat-label {
             font-size: 14px;
             font-weight: 400;
             color: #b0e0d0;
+            letter-spacing: 0.3px;
+            margin-bottom: 6px;
         }
 
         .stat-value {
-            font-size: 22px;
+            font-size: 36px;
             font-weight: 600;
             color: #fff;
+            line-height: 1.1;
         }
 
-        .gradient-btn {
-            background: linear-gradient(135deg, #00c9a7, #00a87e);
-            border: none;
-            border-radius: 40px;
-            padding: 14px 20px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 16px;
-            color: #0b1f18;
-            box-shadow: 0 8px 20px rgba(0, 255, 170, 0.3);
-            cursor: pointer;
-            transition: transform 0.15s, box-shadow 0.15s;
+        /* Блок с графиком для первого статблока */
+        .stat-block:first-child {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #chartCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .gradient-btn:active {
-            transform: scale(0.98);
-            box-shadow: 0 4px 12px rgba(0, 255, 170, 0.5);
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.15;
         }
 
-        /* ----- НОВЫЙ ТАЙМЕР С СЕГМЕНТАМИ ----- */
-        .timer-large {
+        /* Таймер */
+        .timer-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 20px 0 16px;
+            margin: 20px 0 24px;
         }
 
         .premium-timer {
@@ -165,28 +164,27 @@
         .timer-svg {
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 0 20px rgba(0, 255, 170, 0.6));
-            animation: rotateGlow 10s infinite linear;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 170, 0.3));
         }
 
-        /* Сегменты - заполненные */
-        .segment-filled {
+        .timer-track {
+            stroke: #1a3a2a;
+            stroke-width: 6;
+            fill: none;
+            stroke-linecap: round;
+            opacity: 0.6;
+        }
+
+        .timer-progress {
             stroke: #00ffaa;
-            stroke-width: 5;
+            stroke-width: 6;
+            fill: none;
             stroke-linecap: round;
             filter: drop-shadow(0 0 8px #00ffaa);
             transition: stroke-dashoffset 0.5s ease;
         }
 
-        /* Сегменты - пустые (фон) */
-        .segment-empty {
-            stroke: #1a3a2a;
-            stroke-width: 5;
-            stroke-linecap: round;
-            opacity: 0.6;
-        }
-
-        /* Внутреннее свечение (вращающийся градиент) */
+        /* Вращающееся свечение */
         .glow-overlay {
             position: absolute;
             top: 0;
@@ -194,24 +192,11 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: conic-gradient(from 0deg, transparent, rgba(0, 255, 170, 0.2), transparent 30%, transparent 70%, rgba(0, 255, 170, 0.2), transparent);
+            background: conic-gradient(from 0deg, transparent, rgba(0, 255, 170, 0.25), transparent 30%, transparent 70%, rgba(0, 255, 170, 0.25), transparent);
             mask: radial-gradient(circle at center, transparent 40%, black 41%);
             -webkit-mask: radial-gradient(circle at center, transparent 40%, black 41%);
             animation: rotateGlow 8s infinite linear;
             pointer-events: none;
-        }
-
-        /* Центральный текст */
-        .timer-center-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-            text-shadow: 0 0 15px #00ffaa;
-            z-index: 2;
         }
 
         @keyframes rotateGlow {
@@ -219,45 +204,59 @@
             100% { transform: rotate(360deg); }
         }
 
-        .timer-sub {
-            font-size: 18px;
-            font-weight: 600;
-            margin: 4px 0 2px;
-            color: #00ffaa;
+        .timer-label {
+            font-size: 16px;
+            font-weight: 500;
+            color: #b0e0d0;
+            margin-bottom: 4px;
         }
 
-        .timer-hint {
-            font-size: 13px;
+        .timer-time {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 15px #00ffaa;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .timer-percent {
+            font-size: 14px;
             color: #8fafa0;
             background: rgba(0, 255, 170, 0.1);
             padding: 6px 16px;
             border-radius: 30px;
         }
-        /* ----------------------------------- */
 
+        /* Нижние карточки циклов */
         .cycles-row {
             display: flex;
-            gap: 10px;
-            margin: 12px 0;
+            gap: 12px;
+            margin: 12px 0 20px;
         }
         .cycles-card {
             flex: 1;
             background: rgba(0,0,0,0.2);
             border-radius: 20px;
-            padding: 14px;
+            padding: 16px;
             text-align: center;
             border: 1px solid rgba(0,255,170,0.2);
+            backdrop-filter: blur(4px);
         }
         .cycles-number {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
             color: #00ffaa;
+            line-height: 1.2;
         }
         .cycles-label {
-            font-size: 12px;
+            font-size: 13px;
             color: #b0e0d0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
+        /* Остальные экраны (без изменений) */
         .wallet-tabs {
             display: flex;
             gap: 8px;
@@ -461,12 +460,8 @@
                 font-size: 24px;
                 margin-bottom: 12px;
             }
-            .glass-card {
-                padding: 12px 16px;
-                margin-bottom: 10px;
-            }
-            .timer-large {
-                margin: 10px 0;
+            .stat-value {
+                font-size: 30px;
             }
             .premium-timer {
                 width: 150px;
@@ -478,84 +473,62 @@
 <body>
     <div class="app">
         <div class="screens-container">
-            <!-- Главная -->
+            <!-- Главная (полностью переделана под референс) -->
             <div class="screen home active" id="screen-home">
-                <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:20px;">TETHERA</h1>
+                <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:16px;">TETHERA</h1>
 
-                <div class="glass-card">
-                    <div class="stat-row">
-                        <span class="stat-label">Заработано с циклов</span>
-                        <span class="stat-value">$0.00</span>
+                <div class="stats-container">
+                    <!-- Блок Заработано с циклов + анимация графика -->
+                    <div class="stat-block">
+                        <canvas id="chartCanvas" width="400" height="120"></canvas>
+                        <div class="stat-label">Заработано с циклов</div>
+                        <div class="stat-value">$0.00</div>
                     </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Активный депозит</span>
-                        <span class="stat-value">$0.00</span>
+                    <div class="stat-block">
+                        <div class="stat-label">Активный депозит</div>
+                        <div class="stat-value">$0.00</div>
                     </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Доступно к выводу</span>
-                        <span class="stat-value accent-text">$0.00</span>
+                    <div class="stat-block">
+                        <div class="stat-label">Доступно к выводу</div>
+                        <div class="stat-value">$0.00</div>
                     </div>
                 </div>
 
-                <!-- НОВЫЙ ТАЙМЕР -->
-                <div class="timer-large">
+                <!-- Таймер с анимацией свечения -->
+                <div class="timer-section">
                     <div class="premium-timer">
                         <svg class="timer-svg" viewBox="0 0 200 200">
-                            <!-- Определение градиента для вращающегося свечения (будет использовано в overlay) -->
-                            <defs>
-                                <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-                                    <stop offset="0%" stop-color="#00ffaa" stop-opacity="0" />
-                                    <stop offset="80%" stop-color="#00ffaa" stop-opacity="0.3" />
-                                    <stop offset="100%" stop-color="#00ffaa" stop-opacity="0" />
-                                </radialGradient>
-                            </defs>
-                            
-                            <!-- 12 сегментов - пустые (фоновые) -->
-                            <g class="segments-empty">
-                                <circle cx="100" cy="100" r="80" fill="none" stroke="#1a3a2a" stroke-width="6" stroke-dasharray="2 3" stroke-linecap="round" transform="rotate(-90 100 100)" />
-                                <!-- Здесь можно добавить больше сегментов, но для простоты используем пунктир -->
-                            </g>
-                            
-                            <!-- 12 сегментов - заполненные (активные) - для примера заполнено 6 из 12 -->
-                            <g class="segments-filled">
-                                <circle cx="100" cy="100" r="80" fill="none" stroke="url(#gradient)" stroke-width="6" stroke-dasharray="41.9 418" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 100 100)" />
-                                <!-- stroke-dasharray: 41.9 = длина одного сегмента (2π*80/12 ≈ 41.9) ; 418 = общая длина окружности (502) минус 6*41.9? для 6 сегментов -->
-                            </g>
-                            
-                            <!-- Внутренний круг с градиентным свечением -->
-                            <circle cx="100" cy="100" r="70" fill="url(#glowGradient)" filter="url(#blur)" />
-                            <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
-                                <feGaussianBlur in="SourceAlpha" stdDeviation="10" />
-                                <feMerge>
-                                    <feMergeNode in="offsetblur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
+                            <!-- Фоновая дорожка (сегментированная) -->
+                            <circle class="timer-track" cx="100" cy="100" r="88" stroke-dasharray="6 10" transform="rotate(-90 100 100)" />
+                            <!-- Прогресс (заполненная часть) - для примера заполнено 40% -->
+                            <circle class="timer-progress" cx="100" cy="100" r="88" fill="none" stroke-dasharray="276 460" stroke-dashoffset="276" transform="rotate(-90 100 100)" />
                         </svg>
-                        <!-- Вращающееся свечение поверх (css анимация) -->
+                        <!-- Вращающееся свечение (анимация 1) -->
                         <div class="glow-overlay"></div>
-                        <!-- Центральный текст -->
-                        <div class="timer-center-text">6ч</div>
+                        <!-- Внутренний текст можно не добавлять, он не нужен по дизайну -->
                     </div>
-                    <span class="timer-sub">06:00:00</span>
-                    <span class="timer-hint">Следующий цикл · +1.5%</span>
+                    <div class="timer-label">Следующий цикл</div>
+                    <div class="timer-time">00:00:00</div>
+                    <div class="timer-percent">+1% за цикл (6 часов)</div>
                 </div>
 
+                <!-- Две карточки циклов -->
                 <div class="cycles-row">
                     <div class="cycles-card">
                         <div class="cycles-number">0</div>
-                        <div class="cycles-label">Новых циклов</div>
+                        <div class="cycles-label">Новый</div>
                     </div>
                     <div class="cycles-card">
                         <div class="cycles-number">0</div>
-                        <div class="cycles-label">Активных</div>
+                        <div class="cycles-label">Активных циклов</div>
                     </div>
                 </div>
 
-                <button class="gradient-btn" style="margin-top:12px;">Запустить цикл</button>
+                <!-- Кнопка Запустить цикл (на референсе её нет, но мы оставим, если нужна) -->
+                <button class="gradient-btn" style="margin-top:8px;">Запустить цикл</button>
             </div>
 
-            <!-- Кошелёк -->
+            <!-- Кошелёк (без изменений) -->
             <div class="screen wallet" id="screen-wallet">
                 <h1 class="title-main" style="font-size:24px;">КОШЕЛЁК</h1>
 
@@ -564,7 +537,6 @@
                     <div class="wallet-tab" data-wallet="withdraw">Вывод</div>
                 </div>
 
-                <!-- Пополнение -->
                 <div class="deposit-tab">
                     <div class="network-selector">
                         <span class="network-chip active">TON</span>
@@ -586,7 +558,6 @@
                     <button class="gradient-btn" style="margin-top:24px;">Пополнить (Min 5 USDT)</button>
                 </div>
 
-                <!-- Вывод (скрыт) -->
                 <div class="withdraw-tab" style="display: none;">
                     <div style="font-size:32px; font-weight:700; text-align:center; margin:10px 0; color:#00ffaa;">$0.00</div>
 
@@ -606,7 +577,7 @@
                 </div>
             </div>
 
-            <!-- Рейтинг -->
+            <!-- Рейтинг (без изменений) -->
             <div class="screen rating" id="screen-rating">
                 <h1 class="title-main" style="font-size:24px;">РЕЙТИНГ</h1>
 
@@ -670,7 +641,7 @@
                 </div>
             </div>
 
-            <!-- Рефералы -->
+            <!-- Рефералы (без изменений) -->
             <div class="screen ref" id="screen-ref">
                 <h1 class="title-main" style="font-size:24px;">РЕФЕРАЛЫ</h1>
 
@@ -801,6 +772,61 @@
                     this.classList.add('active');
                 });
             });
+
+            // Анимация графика (хаотичная линия) на канвасе
+            const canvas = document.getElementById('chartCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width = canvas.offsetWidth;
+                let height = canvas.offsetHeight;
+                
+                // Устанавливаем реальные размеры canvas для чёткости
+                function resizeCanvas() {
+                    const rect = canvas.getBoundingClientRect();
+                    canvas.width = rect.width;
+                    canvas.height = rect.height;
+                    width = canvas.width;
+                    height = canvas.height;
+                }
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+
+                let time = 0;
+                function drawWave() {
+                    if (!ctx) return;
+                    ctx.clearRect(0, 0, width, height);
+                    
+                    // Рисуем хаотичную волну
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#00ffaa';
+                    ctx.lineWidth = 2;
+                    ctx.globalAlpha = 0.6;
+                    
+                    const amplitude = height * 0.2;
+                    const baseY = height * 0.7;
+                    
+                    for (let x = 0; x < width; x++) {
+                        // Сумма нескольких синусоид с разными частотами и фазами
+                        let y = baseY 
+                            + amplitude * 0.5 * Math.sin(x * 0.02 + time) 
+                            + amplitude * 0.3 * Math.sin(x * 0.05 + time * 2) 
+                            + amplitude * 0.2 * Math.sin(x * 0.1 + time * 3);
+                        
+                        if (x === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                    }
+                    
+                    ctx.stroke();
+                    ctx.globalAlpha = 1.0;
+                    
+                    time += 0.05; // скорость анимации
+                    requestAnimationFrame(drawWave);
+                }
+                drawWave();
+            }
         })();
     </script>
 </body>
