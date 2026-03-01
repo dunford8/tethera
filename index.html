@@ -109,30 +109,54 @@
             width: 100%;
         }
 
-        .stat-row {
+        /* Обновлённая структура карточек */
+        .stat-card-left {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            height: 100%; /* растягиваем на всю высоту родителя */
+        }
+
+        .stat-card-right {
+            display: flex;
             align-items: center;
-            margin-bottom: 0;
+            justify-content: space-between;
+            height: 100%;
         }
 
-        .stat-label {
-            font-size: 14px;
-            font-weight: 400;
-            color: #b0e0d0;
+        .stat-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* всё по левому краю */
         }
 
-        .stat-value {
-            font-size: 22px;
-            font-weight: 600;
+        .stat-value-large {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.2;
             color: #fff;
         }
 
-        /* Контейнер для графика (обычная высота, как было изначально) */
+        .stat-label-small {
+            font-size: 14px;
+            font-weight: 400;
+            color: #b0e0d0;
+            margin-top: 4px;
+        }
+
+        .stat-icon {
+            font-size: 24px;
+            color: #00ffaa;
+            opacity: 0.8;
+            line-height: 1;
+            margin-left: 12px;
+        }
+
+        /* Контейнер для графика */
         .sparkline-container {
-            margin-top: 10px;
+            margin-top: auto; /* прижимает к низу */
             width: 100%;
             height: 40px;
+            margin-bottom: 0;
         }
 
         .sparkline {
@@ -145,24 +169,19 @@
         .stats-double-column {
             display: flex;
             gap: 12px;
-            align-items: stretch; /* колонки одинаковой высоты */
+            align-items: stretch;
             margin-bottom: 12px;
         }
 
         .stats-left {
             flex: 1;
-            display: flex; /* чтобы дочерняя карточка могла растянуться */
+            display: flex;
         }
 
         .stats-left .stat-card {
             display: flex;
             flex-direction: column;
             width: 100%;
-        }
-
-        /* Пустой заполнитель, который займёт всё оставшееся место в левой карточке */
-        .left-spacer {
-            flex: 1;
         }
 
         .stats-right {
@@ -173,10 +192,13 @@
         }
 
         .stats-right .stat-card {
-            flex: 1; /* карточки справа делят доступную высоту поровну */
+            flex: 1;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start; /* содержимое прижато к верху */
+            align-items: center;
+        }
+
+        .stats-right .stat-card .stat-card-right {
+            width: 100%;
         }
 
         /* Остальные стили без изменений */
@@ -493,39 +515,45 @@
 <body>
     <div class="app">
         <div class="screens-container">
-            <!-- Главная (идеально выровненные карточки) -->
+            <!-- Главная (обновлённая структура карточек) -->
             <div class="screen home active" id="screen-home">
                 <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:20px;">TETHERA</h1>
 
-                <!-- Две колонки: слева карточка с графиком, справа две карточки -->
+                <!-- Две колонки карточек -->
                 <div class="stats-double-column">
-                    <!-- Левая колонка: Заработано с циклов + график + пустой заполнитель для высоты -->
+                    <!-- Левая колонка: Заработано с циклов + график внизу -->
                     <div class="stats-left">
                         <div class="stat-card">
-                            <div class="stat-row">
-                                <span class="stat-label">Заработано с циклов</span>
-                                <span class="stat-value">$0.00</span>
+                            <div class="stat-card-left">
+                                <div class="stat-content">
+                                    <span class="stat-value-large">$0.00</span>
+                                    <span class="stat-label-small">Заработано с циклов</span>
+                                </div>
+                                <div class="sparkline-container">
+                                    <canvas class="sparkline" width="300" height="40"></canvas>
+                                </div>
                             </div>
-                            <div class="sparkline-container">
-                                <canvas class="sparkline" width="300" height="40"></canvas>
-                            </div>
-                            <!-- Пустой заполнитель: занимает всё оставшееся место, прижимая контент к верху -->
-                            <div class="left-spacer"></div>
                         </div>
                     </div>
 
-                    <!-- Правая колонка: две карточки вертикально -->
+                    <!-- Правая колонка: две карточки со стрелками -->
                     <div class="stats-right">
                         <div class="stat-card">
-                            <div class="stat-row">
-                                <span class="stat-label">Активный депозит</span>
-                                <span class="stat-value">$0.00</span>
+                            <div class="stat-card-right">
+                                <div class="stat-content">
+                                    <span class="stat-value-large">$0.00</span>
+                                    <span class="stat-label-small">Активный депозит</span>
+                                </div>
+                                <span class="stat-icon">→</span>
                             </div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-row">
-                                <span class="stat-label">Доступно к выводу</span>
-                                <span class="stat-value accent-text">$0.00</span>
+                            <div class="stat-card-right">
+                                <div class="stat-content">
+                                    <span class="stat-value-large accent-text">$0.00</span>
+                                    <span class="stat-label-small">Доступно к выводу</span>
+                                </div>
+                                <span class="stat-icon">→</span>
                             </div>
                         </div>
                     </div>
@@ -800,7 +828,7 @@
                 });
             });
 
-            // ========== Плавный анимированный график (спарклайн) ==========
+            // ========== Плавный анимированный график с заполнением (area) ==========
             const sparklines = document.querySelectorAll('.sparkline');
             if (sparklines.length > 0) {
                 // Для каждого canvas создаём массивы: текущие значения и целевые значения
@@ -819,7 +847,7 @@
                     dataMap.set(canvas, { current, target });
                 });
 
-                // Функция отрисовки одного canvas
+                // Функция отрисовки одного canvas (линия + заливка)
                 function drawSparkline(canvas, current) {
                     const ctx = canvas.getContext('2d');
                     const w = canvas.width;
@@ -827,17 +855,31 @@
 
                     ctx.clearRect(0, 0, w, h);
 
-                    // Мягкие линии
+                    // Сначала рисуем заливку (полупрозрачную область под линией)
+                    ctx.beginPath();
+                    const step = w / (current.length - 1);
+                    // Начинаем от левого нижнего угла
+                    ctx.moveTo(0, h);
+                    for (let i = 0; i < current.length; i++) {
+                        const x = i * step;
+                        const y = 5 + current[i] * (h - 10);
+                        ctx.lineTo(x, y);
+                    }
+                    // Замыкаем на правый нижний угол
+                    ctx.lineTo(w, h);
+                    ctx.closePath();
+                    ctx.fillStyle = 'rgba(0, 255, 170, 0.2)'; // полупрозрачный зелёный
+                    ctx.fill();
+
+                    // Затем рисуем линию поверх
                     ctx.strokeStyle = '#00ffaa';
                     ctx.lineWidth = 2;
                     ctx.lineJoin = 'round';
                     ctx.lineCap = 'round';
                     ctx.beginPath();
-
-                    const step = w / (current.length - 1);
                     for (let i = 0; i < current.length; i++) {
                         const x = i * step;
-                        const y = 5 + current[i] * (h - 10); // небольшой отступ сверху/снизу
+                        const y = 5 + current[i] * (h - 10);
                         if (i === 0) ctx.moveTo(x, y);
                         else ctx.lineTo(x, y);
                     }
@@ -847,10 +889,8 @@
                 // Обновление целевых значений (плавное случайное блуждание)
                 function updateTargets(target) {
                     for (let i = 0; i < target.length; i++) {
-                        // небольшое изменение
                         let delta = (Math.random() - 0.5) * 0.04;
                         let newVal = target[i] + delta;
-                        // удерживаем в разумных пределах 0.2..0.8
                         if (newVal < 0.2) newVal = 0.2;
                         if (newVal > 0.8) newVal = 0.8;
                         target[i] = newVal;
@@ -869,13 +909,11 @@
                     sparklines.forEach(canvas => {
                         const data = dataMap.get(canvas);
                         if (!data) return;
-                        // Обновляем целевые значения
                         updateTargets(data.target);
-                        // Плавно подводим текущие к целевым
                         interpolate(data.current, data.target, 0.15);
                         drawSparkline(canvas, data.current);
                     });
-                }, 50); // 50 мс для очень плавного движения
+                }, 50);
             }
         })();
     </script>
