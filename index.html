@@ -19,13 +19,13 @@
             background: radial-gradient(circle at 30% 20%, #132117, #020403);
             min-height: 100vh;
             display: flex;
-            align-items: stretch;    /* растягиваем по вертикали */
-            justify-content: stretch; /* растягиваем по горизонтали */
+            align-items: stretch;
+            justify-content: stretch;
         }
 
         .app {
             width: 100%;
-            height: 100vh;            /* полная высота экрана */
+            height: 100vh;
             background: transparent;
             display: flex;
             flex-direction: column;
@@ -98,21 +98,23 @@
             color: #00ffaa;
         }
 
-        .glass-card {
+        /* Карточки статистики (отдельные, с тонкой линией) */
+        .stat-card {
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(0, 255, 170, 0.2);
+            border: 1px solid rgba(0, 255, 170, 0.25); /* тонкая линия */
             border-radius: 24px;
             padding: 16px 20px;
             margin-bottom: 12px;
+            width: 100%;
         }
 
         .stat-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 0; /* убрали отступ, он будет через padding карточки */
         }
 
         .stat-label {
@@ -125,6 +127,19 @@
             font-size: 22px;
             font-weight: 600;
             color: #fff;
+        }
+
+        /* Контейнер для графика (спарклайн) */
+        .sparkline-container {
+            margin-top: 10px;
+            width: 100%;
+            height: 40px;
+        }
+
+        .sparkline {
+            display: block;
+            width: 100%;
+            height: 40px;
         }
 
         .gradient-btn {
@@ -420,7 +435,7 @@
                 font-size: 24px;
                 margin-bottom: 12px;
             }
-            .glass-card {
+            .stat-card {
                 padding: 12px 16px;
                 margin-bottom: 10px;
             }
@@ -441,25 +456,38 @@
 <body>
     <div class="app">
         <div class="screens-container">
-            <!-- Главная -->
+            <!-- Главная (обновлённая) -->
             <div class="screen home active" id="screen-home">
                 <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:20px;">TETHERA</h1>
 
-                <div class="glass-card">
+                <!-- Карточка 1: Заработано с циклов + график -->
+                <div class="stat-card">
                     <div class="stat-row">
                         <span class="stat-label">Заработано с циклов</span>
                         <span class="stat-value">$0.00</span>
                     </div>
+                    <div class="sparkline-container">
+                        <canvas class="sparkline" width="300" height="40"></canvas>
+                    </div>
+                </div>
+
+                <!-- Карточка 2: Активный депозит -->
+                <div class="stat-card">
                     <div class="stat-row">
                         <span class="stat-label">Активный депозит</span>
                         <span class="stat-value">$0.00</span>
                     </div>
+                </div>
+
+                <!-- Карточка 3: Доступно к выводу -->
+                <div class="stat-card">
                     <div class="stat-row">
                         <span class="stat-label">Доступно к выводу</span>
                         <span class="stat-value accent-text">$0.00</span>
                     </div>
                 </div>
 
+                <!-- Остальное содержимое главной без изменений -->
                 <div class="timer-large">
                     <div class="progress-ring"><span class="timer-value">6ч</span></div>
                     <span class="timer-sub">06:00:00</span>
@@ -480,7 +508,7 @@
                 <button class="gradient-btn" style="margin-top:12px;">Запустить цикл</button>
             </div>
 
-            <!-- Кошелёк -->
+            <!-- Кошелёк (без изменений) -->
             <div class="screen wallet" id="screen-wallet">
                 <h1 class="title-main" style="font-size:24px;">КОШЕЛЁК</h1>
 
@@ -531,7 +559,7 @@
                 </div>
             </div>
 
-            <!-- Рейтинг -->
+            <!-- Рейтинг (без изменений) -->
             <div class="screen rating" id="screen-rating">
                 <h1 class="title-main" style="font-size:24px;">РЕЙТИНГ</h1>
 
@@ -595,7 +623,7 @@
                 </div>
             </div>
 
-            <!-- Рефералы -->
+            <!-- Рефералы (без изменений) -->
             <div class="screen ref" id="screen-ref">
                 <h1 class="title-main" style="font-size:24px;">РЕФЕРАЛЫ</h1>
 
@@ -681,6 +709,7 @@
 
     <script>
         (function() {
+            // Навигация между экранами
             const screens = document.querySelectorAll('.screen');
             const navItems = document.querySelectorAll('.nav-item');
 
@@ -726,6 +755,75 @@
                     this.classList.add('active');
                 });
             });
+
+            // ========== Анимированный график (спарклайн) ==========
+            const sparklines = document.querySelectorAll('.sparkline');
+            if (sparklines.length > 0) {
+                // Для каждого canvas создаём свой массив данных (история значений)
+                const dataMap = new Map(); // ключ - canvas, значение - массив y-координат (нормализованных 0..1)
+
+                // Инициализация случайными данными
+                sparklines.forEach(canvas => {
+                    const pointsCount = 20; // количество точек
+                    const initialData = [];
+                    for (let i = 0; i < pointsCount; i++) {
+                        initialData.push(Math.random()); // случайное от 0 до 1
+                    }
+                    dataMap.set(canvas, initialData);
+                });
+
+                // Функция отрисовки одного canvas
+                function drawSparkline(canvas, data) {
+                    const ctx = canvas.getContext('2d');
+                    const w = canvas.width;
+                    const h = canvas.height;
+
+                    ctx.clearRect(0, 0, w, h);
+
+                    // Настройки линии
+                    ctx.strokeStyle = '#00ffaa';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+
+                    const step = w / (data.length - 1);
+                    for (let i = 0; i < data.length; i++) {
+                        const x = i * step;
+                        // y = отступ сверху + значение * (высота - отступы)
+                        const y = 5 + data[i] * (h - 10); // небольшой отступ сверху/снизу
+                        if (i === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    ctx.stroke();
+                }
+
+                // Функция обновления данных (случайное блуждание)
+                function updateData(data) {
+                    const newData = [];
+                    for (let i = 0; i < data.length; i++) {
+                        let val = data[i] + (Math.random() - 0.5) * 0.15; // изменение в пределах ±0.15
+                        // Ограничиваем, чтобы не выходило за 0..1
+                        if (val < 0.1) val = 0.1;
+                        if (val > 0.9) val = 0.9;
+                        newData.push(val);
+                    }
+                    return newData;
+                }
+
+                // Запускаем анимацию
+                setInterval(() => {
+                    sparklines.forEach(canvas => {
+                        let data = dataMap.get(canvas);
+                        data = updateData(data);
+                        dataMap.set(canvas, data);
+                        drawSparkline(canvas, data);
+                    });
+                }, 250); // обновление каждые 250 мс
+
+                // Первоначальная отрисовка
+                sparklines.forEach(canvas => {
+                    drawSparkline(canvas, dataMap.get(canvas));
+                });
+            }
         })();
     </script>
 </body>
