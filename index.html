@@ -436,6 +436,55 @@
                 height: 90px;
             }
         }
+        /* Премиум таймер */
+.premium-timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.timer-svg {
+    width: 140px;
+    height: 140px;
+    filter: drop-shadow(0 0 15px rgba(0, 255, 170, 0.5));
+    animation: rotateGlow 8s infinite linear;
+}
+
+.timer-glow {
+    stroke-dasharray: 4 6;
+    animation: glowPulse 3s infinite ease-in-out;
+    filter: blur(2px);
+}
+
+.timer-track {
+    stroke: #1a3a2a;
+    opacity: 0.8;
+}
+
+.timer-progress {
+    transition: stroke-dashoffset 1s ease;
+    filter: drop-shadow(0 0 8px #00ffaa);
+    stroke-linecap: round;
+}
+
+@keyframes rotateGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.5; stroke-width: 2; }
+    50% { opacity: 1; stroke-width: 3; }
+}
+
+.timer-svg text {
+    dominant-baseline: middle;
+    font-size: 24px;
+    fill: white;
+    text-shadow: 0 0 10px #00ffaa;
+}
     </style>
 </head>
 <body>
@@ -460,11 +509,35 @@
                     </div>
                 </div>
 
-                <div class="timer-large">
-                    <div class="progress-ring"><span class="timer-value">6ч</span></div>
-                    <span class="timer-sub">06:00:00</span>
-                    <span class="timer-hint">Следующий цикл · +1.5%</span>
-                </div>
+               <div class="timer-large">
+    <div class="premium-timer">
+        <svg class="timer-svg" viewBox="0 0 140 140">
+            <!-- Внешнее свечение (размытый круг) -->
+            <circle class="timer-glow" cx="70" cy="70" r="64" fill="none" stroke="rgba(0, 255, 170, 0.3)" stroke-width="4" stroke-dasharray="2 8" vector-effect="non-scaling-stroke"/>
+            
+            <!-- Основная дорожка (фоновая) -->
+            <circle class="timer-track" cx="70" cy="70" r="62" fill="none" stroke="#1a3a2a" stroke-width="6" stroke-linecap="round"/>
+            
+            <!-- Прогресс (анимируемая обводка) -->
+            <circle class="timer-progress" cx="70" cy="70" r="62" fill="none" stroke="url(#gradient)" stroke-width="6" stroke-linecap="round" stroke-dasharray="389 389" stroke-dashoffset="200" transform="rotate(-90 70 70)"/>
+            
+            <!-- Градиент для прогресса -->
+            <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#00ffaa" stop-opacity="1"/>
+                    <stop offset="50%" stop-color="#00cc88" stop-opacity="1"/>
+                    <stop offset="100%" stop-color="#00aa77" stop-opacity="1"/>
+                </linearGradient>
+            </defs>
+            
+            <!-- Центральная часть с цифрой -->
+            <circle cx="70" cy="70" r="52" fill="#0a1814" stroke="rgba(0,255,170,0.2)" stroke-width="1"/>
+            <text x="70" y="76" text-anchor="middle" fill="white" font-size="24" font-weight="600" font-family="Inter, sans-serif">6ч</text>
+        </svg>
+    </div>
+    <span class="timer-sub">06:00:00</span>
+    <span class="timer-hint">Следующий цикл · +1.5%</span>
+</div>
 
                 <div class="cycles-row">
                     <div class="cycles-card">
@@ -730,3 +803,4 @@
     </script>
 </body>
 </html>
+
