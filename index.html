@@ -141,22 +141,31 @@
             height: 40px;
         }
 
-        /* Новый контейнер для двухколоночного расположения карточек */
+        /* Две колонки карточек, выровненные по высоте */
         .stats-double-column {
             display: flex;
             gap: 12px;
+            align-items: stretch; /* колонки будут одинаковой высоты */
             margin-bottom: 12px;
         }
 
         .stats-left {
-            flex: 1; /* левая колонка занимает одну долю */
+            flex: 1;
+            /* левая карточка просто лежит, её высота определит высоту родителя */
         }
 
         .stats-right {
-            flex: 1; /* правая колонка тоже одна доля */
+            flex: 1;
             display: flex;
             flex-direction: column;
             gap: 12px;
+        }
+
+        .stats-right .stat-card {
+            flex: 1; /* карточки справа равномерно делят доступную высоту */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* содержимое прижато к верху (как и в левой) */
         }
 
         /* Остальные стили без изменений */
@@ -473,7 +482,7 @@
 <body>
     <div class="app">
         <div class="screens-container">
-            <!-- Главная (обновлённая: двухколоночные карточки) -->
+            <!-- Главная (двухколоночные карточки, выровненные по высоте) -->
             <div class="screen home active" id="screen-home">
                 <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:20px;">TETHERA</h1>
 
