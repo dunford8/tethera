@@ -206,7 +206,7 @@
         }
 
         .cycles-card-small {
-            flex: 0 0 auto; /* не растягивается, ширина по содержимому */
+            flex: 0 0 auto;
             background: rgba(0,0,0,0.2);
             border-radius: 20px;
             padding: 14px 20px;
@@ -216,11 +216,11 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-width: 100px; /* немного запаса, чтобы слово "Новый" поместилось */
+            min-width: 100px;
         }
 
         .cycles-card-large {
-            flex: 1; /* занимает всё оставшееся место */
+            flex: 1;
             background: rgba(0,0,0,0.2);
             border-radius: 20px;
             padding: 14px 20px;
@@ -262,6 +262,77 @@
             line-height: 1;
         }
 
+        /* Обновлённый таймер (более дорогой визуал) */
+        .timer-large {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0 16px;
+        }
+
+        .progress-ring {
+            width: 140px;  /* чуть больше */
+            height: 140px;
+            border-radius: 50%;
+            background: conic-gradient(#00ffaa 0deg 300deg, #2a4038 300deg 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 12px;
+            box-shadow: 0 0 20px rgba(0, 255, 170, 0.6), 0 0 40px rgba(0, 255, 170, 0.3);
+            animation: glowPulse 2s infinite alternate;
+        }
+
+        .progress-ring::before {
+            content: '';
+            position: absolute;
+            width: 120px;  /* больше внутреннее отверстие */
+            height: 120px;
+            border-radius: 50%;
+            background: #0a1814;
+            box-shadow: inset 0 0 15px rgba(0, 255, 170, 0.5);
+        }
+
+        .timer-value {
+            position: relative;
+            z-index: 2;
+            font-size: 28px;  /* крупнее */
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px #00ffaa;
+            letter-spacing: 2px;
+        }
+
+        .timer-sub {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 4px 0 2px;
+            color: #00ffaa;
+            text-shadow: 0 0 8px rgba(0, 255, 170, 0.5);
+        }
+
+        .timer-hint {
+            font-size: 14px;
+            color: #b0e0d0;
+            background: rgba(0, 255, 170, 0.15);
+            padding: 8px 20px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(0, 255, 170, 0.3);
+            box-shadow: 0 0 15px rgba(0, 255, 170, 0.2);
+        }
+
+        /* Анимация пульсации свечения */
+        @keyframes glowPulse {
+            0% {
+                box-shadow: 0 0 20px rgba(0, 255, 170, 0.6), 0 0 40px rgba(0, 255, 170, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 30px rgba(0, 255, 170, 0.9), 0 0 60px rgba(0, 255, 170, 0.5);
+            }
+        }
+
         /* Остальные стили без изменений */
         .gradient-btn {
             background: linear-gradient(135deg, #00c9a7, #00a87e);
@@ -281,53 +352,6 @@
         .gradient-btn:active {
             transform: scale(0.98);
             box-shadow: 0 4px 12px rgba(0, 255, 170, 0.5);
-        }
-
-        .timer-large {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px 0 16px;
-        }
-        .progress-ring {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            background: conic-gradient(#00ffaa 0deg 200deg, #2a4038 200deg 360deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            margin-bottom: 12px;
-        }
-        .progress-ring::before {
-            content: '';
-            position: absolute;
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            background: #0a1814;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
-        }
-        .timer-value {
-            position: relative;
-            z-index: 2;
-            font-size: 24px;
-            font-weight: 700;
-            color: #fff;
-        }
-        .timer-sub {
-            font-size: 18px;
-            font-weight: 600;
-            margin: 4px 0 2px;
-            color: #00ffaa;
-        }
-        .timer-hint {
-            font-size: 13px;
-            color: #8fafa0;
-            background: rgba(0, 255, 170, 0.1);
-            padding: 6px 16px;
-            border-radius: 30px;
         }
 
         .wallet-tabs {
@@ -540,12 +564,15 @@
                 margin: 10px 0;
             }
             .progress-ring {
-                width: 110px;
-                height: 110px;
+                width: 120px;
+                height: 120px;
             }
             .progress-ring::before {
-                width: 90px;
-                height: 90px;
+                width: 100px;
+                height: 100px;
+            }
+            .timer-value {
+                font-size: 24px;
             }
         }
     </style>
@@ -553,7 +580,7 @@
 <body>
     <div class="app">
         <div class="screens-container">
-            <!-- Главная (обновлённые нижние карточки) -->
+            <!-- Главная (обновлённый таймер) -->
             <div class="screen home active" id="screen-home">
                 <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:20px;">TETHERA</h1>
 
@@ -594,14 +621,15 @@
                     </div>
                 </div>
 
-                <!-- Таймер (без изменений) -->
+                <!-- Обновлённый таймер -->
                 <div class="timer-large">
-                    <div class="progress-ring"><span class="timer-value">6ч</span></div>
-                    <span class="timer-sub">06:00:00</span>
-                    <span class="timer-hint">Следующий цикл · +1.5%</span>
+                    <div class="progress-ring">
+                        <span class="timer-value">06:00:00</span>
+                    </div>
+                    <span class="timer-sub">+1.5% за цикл (6 часов)</span>
                 </div>
 
-                <!-- Нижние карточки: Новый и Активных -->
+                <!-- Нижние карточки (без изменений) -->
                 <div class="cycles-row">
                     <div class="cycles-card-small">
                         <div class="cycles-plus">+</div>
