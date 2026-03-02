@@ -105,16 +105,15 @@
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(0, 255, 170, 0.25);
             border-radius: 24px;
-            padding: 12px 16px;  /* уменьшенный padding */
+            padding: 12px 16px;
             width: 100%;
         }
 
-        /* Обновлённая структура карточек */
         .stat-card-left {
             display: flex;
             flex-direction: column;
-            height: 100%; /* растягиваем на всю высоту родителя */
-            justify-content: space-between; /* прижимает контент к верху и график к низу */
+            height: 100%;
+            justify-content: space-between;
         }
 
         .stat-card-right {
@@ -127,11 +126,11 @@
         .stat-content {
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* всё по левому краю */
+            align-items: flex-start;
         }
 
         .stat-value-large {
-            font-size: 24px;  /* уменьшен с 28px */
+            font-size: 24px;
             font-weight: 700;
             line-height: 1.2;
             color: #fff;
@@ -141,7 +140,7 @@
             font-size: 14px;
             font-weight: 400;
             color: #b0e0d0;
-            margin-top: 2px;  /* небольшой отступ */
+            margin-top: 2px;
         }
 
         .stat-icon {
@@ -152,11 +151,10 @@
             margin-left: 12px;
         }
 
-        /* Контейнер для графика */
         .sparkline-container {
             width: 100%;
-            height: 30px;  /* уменьшен с 40px */
-            margin-top: 8px;  /* небольшой отступ сверху, но можно и без */
+            height: 30px;
+            margin-top: 8px;
         }
 
         .sparkline {
@@ -165,7 +163,6 @@
             height: 30px;
         }
 
-        /* Две колонки карточек, выровненные по высоте */
         .stats-double-column {
             display: flex;
             gap: 12px;
@@ -199,6 +196,70 @@
 
         .stats-right .stat-card .stat-card-right {
             width: 100%;
+        }
+
+        /* Новые стили для нижних карточек (циклы) */
+        .cycles-row {
+            display: flex;
+            gap: 12px;
+            margin: 12px 0;
+        }
+
+        .cycles-card-small {
+            flex: 0 0 auto; /* не растягивается, ширина по содержимому */
+            background: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            padding: 14px 20px;
+            text-align: center;
+            border: 1px solid rgba(0,255,170,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 100px; /* немного запаса, чтобы слово "Новый" поместилось */
+        }
+
+        .cycles-card-large {
+            flex: 1; /* занимает всё оставшееся место */
+            background: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            padding: 14px 20px;
+            border: 1px solid rgba(0,255,170,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cycles-plus {
+            font-size: 32px;
+            font-weight: 700;
+            color: #00ffaa;
+            line-height: 1.2;
+        }
+
+        .cycles-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00ffaa;
+        }
+
+        .cycles-label {
+            font-size: 12px;
+            color: #b0e0d0;
+            margin-top: 4px;
+        }
+
+        .cycles-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .cycles-arrow {
+            font-size: 28px;
+            color: #00ffaa;
+            opacity: 0.8;
+            line-height: 1;
         }
 
         /* Остальные стили без изменений */
@@ -267,29 +328,6 @@
             background: rgba(0, 255, 170, 0.1);
             padding: 6px 16px;
             border-radius: 30px;
-        }
-
-        .cycles-row {
-            display: flex;
-            gap: 10px;
-            margin: 12px 0;
-        }
-        .cycles-card {
-            flex: 1;
-            background: rgba(0,0,0,0.2);
-            border-radius: 20px;
-            padding: 14px;
-            text-align: center;
-            border: 1px solid rgba(0,255,170,0.2);
-        }
-        .cycles-number {
-            font-size: 28px;
-            font-weight: 700;
-            color: #00ffaa;
-        }
-        .cycles-label {
-            font-size: 12px;
-            color: #b0e0d0;
         }
 
         .wallet-tabs {
@@ -496,7 +534,7 @@
                 margin-bottom: 12px;
             }
             .stat-card {
-                padding: 10px 14px; /* ещё немного уменьшим */
+                padding: 10px 14px;
             }
             .timer-large {
                 margin: 10px 0;
@@ -515,13 +553,12 @@
 <body>
     <div class="app">
         <div class="screens-container">
-            <!-- Главная (компактные карточки, простой график) -->
+            <!-- Главная (обновлённые нижние карточки) -->
             <div class="screen home active" id="screen-home">
                 <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:20px;">TETHERA</h1>
 
-                <!-- Две колонки карточек -->
+                <!-- Верхние карточки (без изменений) -->
                 <div class="stats-double-column">
-                    <!-- Левая колонка: Заработано с циклов + график внизу -->
                     <div class="stats-left">
                         <div class="stat-card">
                             <div class="stat-card-left">
@@ -535,8 +572,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Правая колонка: две карточки со стрелками -->
                     <div class="stats-right">
                         <div class="stat-card">
                             <div class="stat-card-right">
@@ -559,37 +594,39 @@
                     </div>
                 </div>
 
-                <!-- Остальное содержимое главной без изменений -->
+                <!-- Таймер (без изменений) -->
                 <div class="timer-large">
                     <div class="progress-ring"><span class="timer-value">6ч</span></div>
                     <span class="timer-sub">06:00:00</span>
                     <span class="timer-hint">Следующий цикл · +1.5%</span>
                 </div>
 
+                <!-- Нижние карточки: Новый и Активных -->
                 <div class="cycles-row">
-                    <div class="cycles-card">
-                        <div class="cycles-number">0</div>
-                        <div class="cycles-label">Новых циклов</div>
+                    <div class="cycles-card-small">
+                        <div class="cycles-plus">+</div>
+                        <div class="cycles-label">Новый</div>
                     </div>
-                    <div class="cycles-card">
-                        <div class="cycles-number">0</div>
-                        <div class="cycles-label">Активных</div>
+                    <div class="cycles-card-large">
+                        <div class="cycles-content">
+                            <span class="cycles-number">0</span>
+                            <span class="cycles-label">Активных</span>
+                        </div>
+                        <span class="cycles-arrow">→</span>
                     </div>
                 </div>
 
+                <!-- Кнопка запуска цикла (без изменений) -->
                 <button class="gradient-btn" style="margin-top:12px;">Запустить цикл</button>
             </div>
 
             <!-- Кошелёк (без изменений) -->
             <div class="screen wallet" id="screen-wallet">
                 <h1 class="title-main" style="font-size:24px;">КОШЕЛЁК</h1>
-
                 <div class="wallet-tabs">
                     <div class="wallet-tab active" data-wallet="deposit">Пополнение</div>
                     <div class="wallet-tab" data-wallet="withdraw">Вывод</div>
                 </div>
-
-                <!-- Пополнение -->
                 <div class="deposit-tab">
                     <div class="network-selector">
                         <span class="network-chip active">TON</span>
@@ -597,36 +634,24 @@
                         <span class="network-chip">BEP20</span>
                         <span class="network-chip">TRC20</span>
                     </div>
-
                     <div class="input-field" id="depositAddress">UQA29vQS_WlwLZp6qkxgPB0YOjEsg...</div>
                     <div style="font-size:13px; color:#b0e0d0; margin:4px 0 0 16px;">Адрес кошелька (USDT)</div>
-
                     <div class="input-field" style="margin-top:16px;" id="depositComment">405279351</div>
                     <div style="font-size:13px; color:#b0e0d0; margin:4px 0 0 16px;">Комментарий</div>
-
-                    <div class="warning">
-                        ⚠️ Комментарий обязателен при пополнении!
-                    </div>
-
+                    <div class="warning">⚠️ Комментарий обязателен при пополнении!</div>
                     <button class="gradient-btn" style="margin-top:24px;">Пополнить (Min 5 USDT)</button>
                 </div>
-
-                <!-- Вывод (скрыт) -->
                 <div class="withdraw-tab" style="display: none;">
                     <div style="font-size:32px; font-weight:700; text-align:center; margin:10px 0; color:#00ffaa;">$0.00</div>
-
                     <div class="network-selector">
                         <span class="network-chip">TON</span>
                         <span class="network-chip active">SOL</span>
                         <span class="network-chip">BEP20</span>
                     </div>
-
                     <div class="input-field">0.00</div>
                     <div style="font-size:13px; color:#b0e0d0; margin:4px 0 0 16px;">Введите сумму (USDT) · Min 1 USDT | Комиссия: 3%</div>
-
                     <div class="input-field" style="margin-top:16px;">Введите свой адрес</div>
                     <div style="font-size:13px; color:#b0e0d0; margin:4px 0 0 16px;">Ваш адрес USDT</div>
-
                     <button class="gradient-btn" style="margin-top:24px;">Вывести</button>
                 </div>
             </div>
@@ -634,143 +659,39 @@
             <!-- Рейтинг (без изменений) -->
             <div class="screen rating" id="screen-rating">
                 <h1 class="title-main" style="font-size:24px;">РЕЙТИНГ</h1>
-
                 <div class="season-header">
-                    <div class="prize-row">
-                        <span>Сезон</span>
-                        <span class="prize-amount">$10,000</span>
-                    </div>
-                    <div class="prize-row">
-                        <span>Осталось</span>
-                        <span class="time-left">29дн 04ч 18м</span>
-                    </div>
+                    <div class="prize-row"><span>Сезон</span><span class="prize-amount">$10,000</span></div>
+                    <div class="prize-row"><span>Осталось</span><span class="time-left">29дн 04ч 18м</span></div>
                 </div>
-
-                <div class="user-score">
-                    <span>Ваш Stake Score</span>
-                    <span class="accent-text">0</span>
-                </div>
-
+                <div class="user-score"><span>Ваш Stake Score</span><span class="accent-text">0</span></div>
                 <div class="rating-list">
-                    <div class="rating-item">
-                        <span class="rating-position">1</span>
-                        <div class="rating-info">
-                            <div class="rating-name">Zombini</div>
-                            <div class="rating-stake">20 Stake Score</div>
-                        </div>
-                        <div class="rating-amount">$1600</div>
-                    </div>
-                    <div class="rating-item">
-                        <span class="rating-position">2</span>
-                        <div class="rating-info">
-                            <div class="rating-name">olekitka</div>
-                            <div class="rating-stake">20 Stake Score</div>
-                        </div>
-                        <div class="rating-amount">$1100</div>
-                    </div>
-                    <div class="rating-item">
-                        <span class="rating-position">3</span>
-                        <div class="rating-info">
-                            <div class="rating-name">Evakuatordubna</div>
-                            <div class="rating-stake">15.56 Stake Score</div>
-                        </div>
-                        <div class="rating-amount">$800</div>
-                    </div>
-                    <div class="rating-item">
-                        <span class="rating-position">4</span>
-                        <div class="rating-info">
-                            <div class="rating-name">MrCryptoMon</div>
-                            <div class="rating-stake">15 Stake Score</div>
-                        </div>
-                        <div class="rating-amount">$650</div>
-                    </div>
-                    <div class="rating-item">
-                        <span class="rating-position">5</span>
-                        <div class="rating-info">
-                            <div class="rating-name">vavan42</div>
-                            <div class="rating-stake">11.11 Stake Score</div>
-                        </div>
-                        <div class="rating-amount">$550</div>
-                    </div>
+                    <div class="rating-item"><span class="rating-position">1</span><div class="rating-info"><div class="rating-name">Zombini</div><div class="rating-stake">20 Stake Score</div></div><div class="rating-amount">$1600</div></div>
+                    <div class="rating-item"><span class="rating-position">2</span><div class="rating-info"><div class="rating-name">olekitka</div><div class="rating-stake">20 Stake Score</div></div><div class="rating-amount">$1100</div></div>
+                    <div class="rating-item"><span class="rating-position">3</span><div class="rating-info"><div class="rating-name">Evakuatordubna</div><div class="rating-stake">15.56 Stake Score</div></div><div class="rating-amount">$800</div></div>
+                    <div class="rating-item"><span class="rating-position">4</span><div class="rating-info"><div class="rating-name">MrCryptoMon</div><div class="rating-stake">15 Stake Score</div></div><div class="rating-amount">$650</div></div>
+                    <div class="rating-item"><span class="rating-position">5</span><div class="rating-info"><div class="rating-name">vavan42</div><div class="rating-stake">11.11 Stake Score</div></div><div class="rating-amount">$550</div></div>
                 </div>
             </div>
 
             <!-- Рефералы (без изменений) -->
             <div class="screen ref" id="screen-ref">
                 <h1 class="title-main" style="font-size:24px;">РЕФЕРАЛЫ</h1>
-
                 <button class="invite-btn">👥 Пригласить друга</button>
-
                 <div class="ref-header">
-                    <div class="ref-stat">
-                        <div class="ref-stat-value">0</div>
-                        <div class="ref-stat-label">Ваши рефералы</div>
-                    </div>
-                    <div class="ref-stat">
-                        <div class="ref-stat-value">0</div>
-                        <div class="ref-stat-label">Вся команда</div>
-                    </div>
-                    <div class="ref-stat">
-                        <div class="ref-stat-value">0</div>
-                        <div class="ref-stat-label">Активных</div>
-                    </div>
+                    <div class="ref-stat"><div class="ref-stat-value">0</div><div class="ref-stat-label">Ваши рефералы</div></div>
+                    <div class="ref-stat"><div class="ref-stat-value">0</div><div class="ref-stat-label">Вся команда</div></div>
+                    <div class="ref-stat"><div class="ref-stat-value">0</div><div class="ref-stat-label">Активных</div></div>
                 </div>
-
                 <h3 style="margin:16px 0 8px; font-weight:500;">Уровни и вознаграждения</h3>
-
-                <div class="level-card">
-                    <div class="level-title">
-                        <span>Уровень 1</span>
-                        <span class="accent-text">10%</span>
-                    </div>
-                </div>
-
-                <div class="level-card">
-                    <div class="level-title">
-                        <span>Уровень 2</span>
-                        <span class="accent-text">5%</span>
-                    </div>
-                    <ul class="level-conditions">
-                        <li>Депозит от 500 USDT</li>
-                    </ul>
-                </div>
-
-                <div class="level-card">
-                    <div class="level-title">
-                        <span>Уровень 3</span>
-                        <span class="accent-text">5%</span>
-                    </div>
-                    <ul class="level-conditions">
-                        <li>Депозит от 1000 USDT</li>
-                        <li>Оборот команды 1-2 ур. от 25K USDT в сутки</li>
-                    </ul>
-                </div>
-
-                <div class="level-card">
-                    <div class="level-title">
-                        <span>Уровень 4</span>
-                        <span class="accent-text">3%</span>
-                    </div>
-                    <ul class="level-conditions">
-                        <li>Депозит от 2000 USDT</li>
-                        <li>Оборот всей структуры от 100K USDT в сутки</li>
-                    </ul>
-                </div>
-
-                <div class="level-card">
-                    <div class="level-title">
-                        <span>Уровень 5</span>
-                        <span class="accent-text">1%</span>
-                    </div>
-                    <ul class="level-conditions">
-                        <li>Депозит от 4000 USDT</li>
-                        <li>Оборот всей структуры от 200K USDT в сутки</li>
-                    </ul>
-                </div>
+                <div class="level-card"><div class="level-title"><span>Уровень 1</span><span class="accent-text">10%</span></div></div>
+                <div class="level-card"><div class="level-title"><span>Уровень 2</span><span class="accent-text">5%</span></div><ul class="level-conditions"><li>Депозит от 500 USDT</li></ul></div>
+                <div class="level-card"><div class="level-title"><span>Уровень 3</span><span class="accent-text">5%</span></div><ul class="level-conditions"><li>Депозит от 1000 USDT</li><li>Оборот команды 1-2 ур. от 25K USDT в сутки</li></ul></div>
+                <div class="level-card"><div class="level-title"><span>Уровень 4</span><span class="accent-text">3%</span></div><ul class="level-conditions"><li>Депозит от 2000 USDT</li><li>Оборот всей структуры от 100K USDT в сутки</li></ul></div>
+                <div class="level-card"><div class="level-title"><span>Уровень 5</span><span class="accent-text">1%</span></div><ul class="level-conditions"><li>Депозит от 4000 USDT</li><li>Оборот всей структуры от 200K USDT в сутки</li></ul></div>
             </div>
         </div>
 
-        <!-- Нижняя навигация -->
+        <!-- Нижняя навигация (без изменений) -->
         <nav class="nav">
             <div class="nav-item active" data-screen="home"><span>🏠</span><span>Главная</span></div>
             <div class="nav-item" data-screen="wallet"><span>💳</span><span>Кошелёк</span></div>
@@ -828,44 +749,36 @@
                 });
             });
 
-            // ========== Плавный анимированный график (простая линия, без заливки) ==========
+            // ========== Плавный анимированный график (простая линия) ==========
             const sparklines = document.querySelectorAll('.sparkline');
             if (sparklines.length > 0) {
-                // Для каждого canvas создаём массивы: текущие значения и целевые значения
-                const dataMap = new Map(); // ключ - canvas, значение - объект { current, target }
-                const pointsCount = 60; // больше точек для плавности
+                const dataMap = new Map();
+                const pointsCount = 60;
 
-                // Инициализация случайными данными
                 sparklines.forEach(canvas => {
                     const current = [];
                     const target = [];
                     for (let i = 0; i < pointsCount; i++) {
-                        const val = 0.3 + Math.random() * 0.4; // диапазон 0.3..0.7
+                        const val = 0.3 + Math.random() * 0.4;
                         current.push(val);
                         target.push(val);
                     }
                     dataMap.set(canvas, { current, target });
                 });
 
-                // Функция отрисовки одного canvas (только линия)
                 function drawSparkline(canvas, current) {
                     const ctx = canvas.getContext('2d');
                     const w = canvas.width;
                     const h = canvas.height;
-
                     ctx.clearRect(0, 0, w, h);
-
-                    // Рисуем только линию
                     ctx.strokeStyle = '#00ffaa';
                     ctx.lineWidth = 2;
                     ctx.lineJoin = 'round';
                     ctx.lineCap = 'round';
                     ctx.beginPath();
-
                     const step = w / (current.length - 1);
                     for (let i = 0; i < current.length; i++) {
                         const x = i * step;
-                        // Отступы сверху и снизу по 2px, чтобы линия не касалась краёв
                         const y = 2 + current[i] * (h - 4);
                         if (i === 0) ctx.moveTo(x, y);
                         else ctx.lineTo(x, y);
@@ -873,7 +786,6 @@
                     ctx.stroke();
                 }
 
-                // Обновление целевых значений (плавное случайное блуждание)
                 function updateTargets(target) {
                     for (let i = 0; i < target.length; i++) {
                         let delta = (Math.random() - 0.5) * 0.04;
@@ -884,14 +796,12 @@
                     }
                 }
 
-                // Интерполяция current -> target
                 function interpolate(current, target, factor = 0.1) {
                     for (let i = 0; i < current.length; i++) {
                         current[i] += (target[i] - current[i]) * factor;
                     }
                 }
 
-                // Запускаем анимацию с высокой частотой для плавности
                 setInterval(() => {
                     sparklines.forEach(canvas => {
                         const data = dataMap.get(canvas);
