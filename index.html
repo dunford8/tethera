@@ -262,7 +262,7 @@
             line-height: 1;
         }
 
-        /* Таймер с уменьшенным шрифтом и прогресс-полосками */
+        /* Таймер с внутренними полосками и улучшенным фоном */
         .timer-large {
             display: flex;
             flex-direction: column;
@@ -289,32 +289,44 @@
             justify-content: center;
             box-shadow: 0 0 25px rgba(0, 255, 170, 0.6), 0 0 50px rgba(0, 255, 170, 0.3);
             animation: glowPulse 2s infinite alternate;
-            background: rgba(0, 20, 15, 0.3);
+            background: radial-gradient(circle at center, rgba(0, 255, 170, 0.15) 0%, rgba(0, 20, 15, 0.25) 100%);
             backdrop-filter: blur(2px);
             position: relative;
             z-index: 2;
         }
 
-        /* Прогресс-полоски вокруг таймера (пунктирная окружность) */
-        .timer-circle-wrapper::after {
-            content: '';
+        /* Внутренний прогресс-круг (пунктирная линия) */
+        .timer-inner-progress {
             position: absolute;
-            top: -6px;
-            left: -6px;
-            right: -6px;
-            bottom: -6px;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
             border-radius: 50%;
-            border: 2px dashed rgba(0, 255, 170, 0.4);
-            box-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
-            z-index: 1;
+            border: 2px dashed rgba(0, 255, 170, 0.7);
+            box-shadow: 0 0 15px rgba(0, 255, 170, 0.5);
+            animation: rotate 10s linear infinite;
+            pointer-events: none;
+        }
+
+        /* Анимация вращения для внутренней полоски */
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .timer-value {
-            font-size: 20px;  /* значительно уменьшен */
+            font-size: 20px;
             font-weight: 700;
             color: #fff;
             text-shadow: 0 0 10px #00ffaa;
             letter-spacing: 2px;
+            position: relative;
+            z-index: 3;
         }
 
         .timer-hint {
@@ -578,7 +590,7 @@
 <body>
     <div class="app">
         <div class="screens-container">
-            <!-- Главная (график внизу, таймер с полосками) -->
+            <!-- Главная (увеличен разброс графика, таймер с внутренней полоской) -->
             <div class="screen home active" id="screen-home">
                 <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:16px;">TETHERA</h1>
 
@@ -619,11 +631,12 @@
                     </div>
                 </div>
 
-                <!-- Таймер с прогресс-полосками -->
+                <!-- Таймер с внутренней пунктирной полоской и улучшенным фоном -->
                 <div class="timer-large">
                     <div class="timer-circle-wrapper">
                         <div class="timer-circle">
                             <span class="timer-value">06:00:00</span>
+                            <div class="timer-inner-progress"></div>
                         </div>
                     </div>
                     <div class="timer-hint">+1% за цикл (6 часов)</div>
@@ -777,7 +790,7 @@
                 });
             });
 
-            // ========== Плавный анимированный график (простая линия) ==========
+            // ========== Плавный анимированный график с увеличенным разбросом ==========
             const sparklines = document.querySelectorAll('.sparkline');
             if (sparklines.length > 0) {
                 const dataMap = new Map();
@@ -787,7 +800,8 @@
                     const current = [];
                     const target = [];
                     for (let i = 0; i < pointsCount; i++) {
-                        const val = 0.3 + Math.random() * 0.4;
+                        // Увеличен разброс от 0.1 до 0.9 (было 0.3-0.7)
+                        const val = 0.1 + Math.random() * 0.8;
                         current.push(val);
                         target.push(val);
                     }
@@ -816,10 +830,12 @@
 
                 function updateTargets(target) {
                     for (let i = 0; i < target.length; i++) {
-                        let delta = (Math.random() - 0.5) * 0.04;
+                        // Увеличен шаг изменения для большей динамики
+                        let delta = (Math.random() - 0.5) * 0.08; // было 0.04
                         let newVal = target[i] + delta;
-                        if (newVal < 0.2) newVal = 0.2;
-                        if (newVal > 0.8) newVal = 0.8;
+                        // Расширен допустимый диапазон
+                        if (newVal < 0.1) newVal = 0.1;
+                        if (newVal > 0.9) newVal = 0.9;
                         target[i] = newVal;
                     }
                 }
