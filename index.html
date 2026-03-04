@@ -33,48 +33,6 @@
             color: #ffffff;
         }
 
-        /* Кастомная шапка как в Tetherium */
-        .custom-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 16px;
-            padding-top: constant(safe-area-inset-top); /* iOS safe area */
-            padding-top: env(safe-area-inset-top);
-            background: var(--tg-theme-bg-color, rgba(10, 20, 15, 0.85));
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(0, 255, 170, 0.25);
-            flex-shrink: 0;
-            z-index: 10;
-        }
-
-        .logo {
-            font-weight: 700;
-            font-size: 22px;
-            letter-spacing: 2px;
-            color: var(--tg-theme-text-color, #ffffff);
-            text-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
-        }
-
-        .close-button {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--tg-theme-text-color, #ffffff);
-            padding: 0 8px;
-            line-height: 1;
-            opacity: 0.9;
-            transition: opacity 0.2s;
-        }
-        .close-button:hover {
-            opacity: 1;
-        }
-        .close-button:active {
-            opacity: 0.6;
-        }
-
         .screens-container {
             flex: 1;
             display: flex;
@@ -458,6 +416,7 @@
 
         @media (max-height: 700px) {
             .screen { padding-top: 12px; padding-bottom: 5px; }
+            .title-main { font-size: 24px; margin-bottom: 12px; }
             .timer-circle-wrapper { width: 140px; height: 140px; }
             .timer-value { font-size: 18px; }
             .timer-progress-bar { width: 140px; }
@@ -466,15 +425,11 @@
 </head>
 <body>
     <div class="app">
-        <!-- Кастомная шапка как у Tetherium -->
-        <div class="custom-header">
-            <div class="logo">TETHERA</div>
-            <button class="close-button" id="closeAppBtn" aria-label="Закрыть">✕</button>
-        </div>
-
         <div class="screens-container">
-            <!-- Главная (убрали дублирующийся заголовок) -->
+            <!-- Главная (пустая шкала под таймером) -->
             <div class="screen home active" id="screen-home">
+                <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:16px;">TETHERA</h1>
+
                 <!-- Верхние карточки -->
                 <div class="stats-double-column">
                     <div class="stats-left">
@@ -625,42 +580,13 @@
 
     <script>
         (function() {
-            // ========== Telegram Web App API ==========
-            let tg = window.Telegram?.WebApp;
-            if (tg) {
-                // Расширяем на всю высоту
-                tg.expand();
-                // Делаем нативную шапку прозрачной (цвет фона)
-                tg.setHeaderColor('bg_color');
-                // Скрываем стандартную кнопку назад
-                tg.BackButton.hide();
-                // Отключаем вертикальные свайпы (чтобы не закрывали приложение случайно)
-                if (tg.disableVerticalSwipes) tg.disableVerticalSwipes();
-                // Применяем цвета темы Telegram к body (опционально)
-                document.body.style.backgroundColor = tg.themeParams.bg_color;
-            }
-
-            // ========== Кнопка закрытия ==========
-            const closeBtn = document.getElementById('closeAppBtn');
-            if (closeBtn) {
-                closeBtn.addEventListener('click', function() {
-                    if (tg) {
-                        tg.close();
-                    } else {
-                        // Если не в Telegram, просто для теста
-                        console.log('Закрытие приложения (эмуляция)');
-                    }
-                });
-            }
-
-            // ========== Навигация между экранами ==========
+            // Навигация между экранами
             const screens = document.querySelectorAll('.screen');
             const navItems = document.querySelectorAll('.nav-item');
 
             function showScreen(screenId) {
                 screens.forEach(s => s.classList.remove('active'));
-                const targetScreen = document.getElementById(`screen-${screenId}`);
-                if (targetScreen) targetScreen.classList.add('active');
+                document.getElementById(`screen-${screenId}`).classList.add('active');
                 navItems.forEach(item => {
                     item.classList.toggle('active', item.dataset.screen === screenId);
                 });
@@ -670,7 +596,7 @@
                 item.addEventListener('click', () => showScreen(item.dataset.screen));
             });
 
-            // ========== Переключение вкладок кошелька ==========
+            // Переключение вкладок кошелька
             const walletTabs = document.querySelectorAll('.wallet-tab');
             const depositTab = document.querySelector('.deposit-tab');
             const withdrawTab = document.querySelector('.withdraw-tab');
@@ -691,7 +617,7 @@
                 });
             }
 
-            // ========== Активация сетей ==========
+            // Активация сетей
             const chips = document.querySelectorAll('.network-chip');
             chips.forEach(chip => {
                 chip.addEventListener('click', function(e) {
