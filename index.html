@@ -153,7 +153,7 @@
         /* Контейнер для графика — прижат к низу */
         .sparkline-container {
             width: 100%;
-            height: 24px;  /* немного увеличил высоту для лучшей видимости */
+            height: 24px;
             margin-top: auto;
         }
 
@@ -262,7 +262,7 @@
             line-height: 1;
         }
 
-        /* Таймер с внутренними полосками и прогресс-баром */
+        /* Таймер с внутренними полосками и пустой шкалой прогресса */
         .timer-large {
             display: flex;
             flex-direction: column;
@@ -323,7 +323,7 @@
             z-index: 3;
         }
 
-        /* Полупрозрачная шкала прогресса под таймером */
+        /* Пустая полупрозрачная шкала прогресса (без заполнения) */
         .timer-progress-bar {
             width: 160px;
             height: 6px;
@@ -332,14 +332,6 @@
             margin-top: 12px;
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0, 255, 170, 0.3);
-        }
-
-        .timer-progress-fill {
-            width: 75%; /* для примера, можно будет менять динамически */
-            height: 100%;
-            background: rgba(0, 255, 170, 0.6);
-            border-radius: 10px;
-            box-shadow: 0 0 8px #00ffaa;
         }
 
         .timer-hint {
@@ -434,7 +426,7 @@
 <body>
     <div class="app">
         <div class="screens-container">
-            <!-- Главная (увеличен разброс графика, добавлен прогресс-бар) -->
+            <!-- Главная (пустая шкала под таймером) -->
             <div class="screen home active" id="screen-home">
                 <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:16px;">TETHERA</h1>
 
@@ -475,7 +467,7 @@
                     </div>
                 </div>
 
-                <!-- Таймер с внутренней полоской и шкалой прогресса -->
+                <!-- Таймер с пустой шкалой -->
                 <div class="timer-large">
                     <div class="timer-circle-wrapper">
                         <div class="timer-circle">
@@ -483,9 +475,7 @@
                             <div class="timer-inner-progress"></div>
                         </div>
                     </div>
-                    <div class="timer-progress-bar">
-                        <div class="timer-progress-fill" style="width: 65%;"></div>
-                    </div>
+                    <div class="timer-progress-bar"></div>
                     <div class="timer-hint">+1% за цикл (6 часов)</div>
                 </div>
 
@@ -647,8 +637,7 @@
                     const current = [];
                     const target = [];
                     for (let i = 0; i < pointsCount; i++) {
-                        // Полный разброс от 0 до 1
-                        const val = Math.random();
+                        const val = Math.random(); // полный разброс от 0 до 1
                         current.push(val);
                         target.push(val);
                     }
@@ -668,8 +657,7 @@
                     const step = w / (current.length - 1);
                     for (let i = 0; i < current.length; i++) {
                         const x = i * step;
-                        // Без отступов: y от 0 до h
-                        const y = current[i] * h;
+                        const y = current[i] * h; // без отступов
                         if (i === 0) ctx.moveTo(x, y);
                         else ctx.lineTo(x, y);
                     }
@@ -678,10 +666,8 @@
 
                 function updateTargets(target) {
                     for (let i = 0; i < target.length; i++) {
-                        // Увеличенный шаг для большей динамики
-                        let delta = (Math.random() - 0.5) * 0.12; // было 0.08
+                        let delta = (Math.random() - 0.5) * 0.12;
                         let newVal = target[i] + delta;
-                        // Разрешаем значения от 0 до 1 (без ограничений)
                         if (newVal < 0) newVal = 0;
                         if (newVal > 1) newVal = 1;
                         target[i] = newVal;
