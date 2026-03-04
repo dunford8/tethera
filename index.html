@@ -98,33 +98,6 @@
             color: #00ffaa;
         }
 
-        /* --- Стили заголовков в стиле Tetherium --- */
-        .title-main {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(0, 255, 170, 0.7), 0 0 20px rgba(0, 255, 170, 0.5);
-            position: relative;
-            padding-left: 50px;
-            margin-bottom: 16px;
-            line-height: 1.2;
-        }
-
-        .title-main::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, #00ffaa, #00a87e);
-            border-radius: 12px;
-            box-shadow: 0 0 15px #00ffaa;
-            opacity: 0.9;
-        }
-
         /* Карточки статистики — уменьшенные */
         .stat-card {
             background: rgba(255, 255, 255, 0.04);
@@ -350,6 +323,7 @@
             z-index: 3;
         }
 
+        /* Пустая полупрозрачная шкала прогресса (без заполнения) */
         .timer-progress-bar {
             width: 160px;
             height: 6px;
@@ -442,14 +416,7 @@
 
         @media (max-height: 700px) {
             .screen { padding-top: 12px; padding-bottom: 5px; }
-            .title-main {
-                font-size: 28px;
-                padding-left: 40px;
-            }
-            .title-main::before {
-                width: 30px;
-                height: 30px;
-            }
+            .title-main { font-size: 24px; margin-bottom: 12px; }
             .timer-circle-wrapper { width: 140px; height: 140px; }
             .timer-value { font-size: 18px; }
             .timer-progress-bar { width: 140px; }
@@ -459,9 +426,9 @@
 <body>
     <div class="app">
         <div class="screens-container">
-            <!-- Главная -->
+            <!-- Главная (пустая шкала под таймером) -->
             <div class="screen home active" id="screen-home">
-                <h1 class="title-main">TETHERA</h1>
+                <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:16px;">TETHERA</h1>
 
                 <!-- Верхние карточки -->
                 <div class="stats-double-column">
@@ -531,9 +498,9 @@
                 <button class="gradient-btn">Запустить цикл</button>
             </div>
 
-            <!-- Кошелёк -->
+            <!-- Кошелёк (без изменений) -->
             <div class="screen wallet" id="screen-wallet">
-                <h1 class="title-main">КОШЕЛЁК</h1>
+                <h1 class="title-main" style="font-size:24px;">КОШЕЛЁК</h1>
                 <div class="wallet-tabs">
                     <div class="wallet-tab active" data-wallet="deposit">Пополнение</div>
                     <div class="wallet-tab" data-wallet="withdraw">Вывод</div>
@@ -567,9 +534,9 @@
                 </div>
             </div>
 
-            <!-- Рейтинг -->
+            <!-- Рейтинг (без изменений) -->
             <div class="screen rating" id="screen-rating">
-                <h1 class="title-main">РЕЙТИНГ</h1>
+                <h1 class="title-main" style="font-size:24px;">РЕЙТИНГ</h1>
                 <div class="season-header">
                     <div class="prize-row"><span>Сезон</span><span class="prize-amount">$10,000</span></div>
                     <div class="prize-row"><span>Осталось</span><span class="time-left">29дн 04ч 18м</span></div>
@@ -584,9 +551,9 @@
                 </div>
             </div>
 
-            <!-- Рефералы -->
+            <!-- Рефералы (без изменений) -->
             <div class="screen ref" id="screen-ref">
-                <h1 class="title-main">РЕФЕРАЛЫ</h1>
+                <h1 class="title-main" style="font-size:24px;">РЕФЕРАЛЫ</h1>
                 <button class="invite-btn">👥 Пригласить друга</button>
                 <div class="ref-header">
                     <div class="ref-stat"><div class="ref-stat-value">0</div><div class="ref-stat-label">Ваши рефералы</div></div>
@@ -602,7 +569,7 @@
             </div>
         </div>
 
-        <!-- Нижняя навигация -->
+        <!-- Нижняя навигация (без изменений) -->
         <nav class="nav">
             <div class="nav-item active" data-screen="home"><span>🏠</span><span>Главная</span></div>
             <div class="nav-item" data-screen="wallet"><span>💳</span><span>Кошелёк</span></div>
