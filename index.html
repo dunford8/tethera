@@ -44,7 +44,7 @@
             display: none;
             flex: 1;
             flex-direction: column;
-            padding: 40px 16px 10px 16px; /* увеличен верхний отступ для Telegram Mini App */
+            padding: 40px 16px 10px 16px; /* увеличен верхний отступ для кнопки закрыть */
             overflow-y: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
@@ -415,7 +415,7 @@
         .invite-btn { background: linear-gradient(135deg, #00c9a7, #00a87e); border: none; border-radius: 40px; padding: 14px; color: #0b1f18; font-weight: 600; width: 100%; margin-top: 8px; font-size: 16px; box-shadow: 0 8px 20px rgba(0, 255, 170, 0.3); cursor: pointer; }
 
         @media (max-height: 700px) {
-            .screen { padding-top: 30px; padding-bottom: 5px; } /* уменьшен верхний отступ для маленьких экранов */
+            .screen { padding-top: 30px; padding-bottom: 5px; } /* уменьшенный верхний отступ для маленьких экранов */
             .title-main { font-size: 24px; margin-bottom: 12px; }
             .timer-circle-wrapper { width: 140px; height: 140px; }
             .timer-value { font-size: 18px; }
@@ -426,7 +426,7 @@
 <body>
     <div class="app">
         <div class="screens-container">
-            <!-- Главная (пустая шкала под таймером) -->
+            <!-- Главная -->
             <div class="screen home active" id="screen-home">
                 <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:16px;">TETHERA</h1>
 
@@ -498,7 +498,7 @@
                 <button class="gradient-btn">Запустить цикл</button>
             </div>
 
-            <!-- Кошелёк (без изменений) -->
+            <!-- Кошелёк -->
             <div class="screen wallet" id="screen-wallet">
                 <h1 class="title-main" style="font-size:24px;">КОШЕЛЁК</h1>
                 <div class="wallet-tabs">
@@ -534,7 +534,7 @@
                 </div>
             </div>
 
-            <!-- Рейтинг (без изменений) -->
+            <!-- Рейтинг -->
             <div class="screen rating" id="screen-rating">
                 <h1 class="title-main" style="font-size:24px;">РЕЙТИНГ</h1>
                 <div class="season-header">
@@ -551,7 +551,7 @@
                 </div>
             </div>
 
-            <!-- Рефералы (без изменений) -->
+            <!-- Рефералы -->
             <div class="screen ref" id="screen-ref">
                 <h1 class="title-main" style="font-size:24px;">РЕФЕРАЛЫ</h1>
                 <button class="invite-btn">👥 Пригласить друга</button>
@@ -569,11 +569,11 @@
             </div>
         </div>
 
-        <!-- Нижняя навигация (минималистичные иконки) -->
+        <!-- Нижняя навигация (без изменений, исходные иконки) -->
         <nav class="nav">
-            <div class="nav-item active" data-screen="home"><span>⌂</span><span>Главная</span></div>
-            <div class="nav-item" data-screen="wallet"><span>$</span><span>Кошелёк</span></div>
-            <div class="nav-item" data-screen="rating"><span>★</span><span>Рейтинг</span></div>
+            <div class="nav-item active" data-screen="home"><span>🏠</span><span>Главная</span></div>
+            <div class="nav-item" data-screen="wallet"><span>💳</span><span>Кошелёк</span></div>
+            <div class="nav-item" data-screen="rating"><span>🏆</span><span>Рейтинг</span></div>
             <div class="nav-item" data-screen="ref"><span>👥</span><span>Рефералы</span></div>
         </nav>
     </div>
