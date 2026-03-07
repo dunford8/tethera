@@ -263,18 +263,18 @@
             line-height: 1;
         }
 
-        /* Таймер с внутренними полосками и пустой шкалой прогресса — увеличен */
+        /* Таймер — увеличен до 240px, отступы прежние */
         .timer-large {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 16px 0 80px; /* немного уменьшил нижний отступ, чтобы сохранить общую высоту */
+            margin: 16px 0 80px; /* отступ снизу не меняем */
         }
 
         .timer-circle-wrapper {
             position: relative;
-            width: 200px; /* увеличено с 160px */
-            height: 200px;
+            width: 240px; /* увеличено с 200px */
+            height: 240px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -298,10 +298,10 @@
 
         .timer-inner-progress {
             position: absolute;
-            top: 10px; /* подогнал под новый размер */
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
+            top: 14px; /* подогнал под новый размер */
+            left: 14px;
+            right: 14px;
+            bottom: 14px;
             border-radius: 50%;
             border: 2px dashed rgba(0, 255, 170, 0.7);
             box-shadow: 0 0 15px rgba(0, 255, 170, 0.5);
@@ -315,7 +315,7 @@
         }
 
         .timer-value {
-            font-size: 28px; /* увеличено с 20px */
+            font-size: 34px; /* увеличено с 28px */
             font-weight: 700;
             color: #fff;
             text-shadow: 0 0 10px #00ffaa;
@@ -324,13 +324,12 @@
             z-index: 3;
         }
 
-        /* Пустая полупрозрачная шкала прогресса (без заполнения) */
         .timer-progress-bar {
-            width: 200px; /* ширина под новый размер */
+            width: 240px; /* увеличено с 200px */
             height: 6px;
             background: rgba(0, 255, 170, 0.2);
             border-radius: 10px;
-            margin-top: 16px; /* немного увеличил отступ */
+            margin-top: 16px;
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0, 255, 170, 0.3);
         }
@@ -344,7 +343,7 @@
             backdrop-filter: blur(4px);
             border: 1px solid rgba(0, 255, 170, 0.3);
             box-shadow: 0 0 15px rgba(0, 255, 170, 0.2);
-            margin-top: 20px; /* увеличен отступ */
+            margin-top: 22px; /* немного увеличен */
         }
 
         @keyframes glowPulse {
@@ -418,10 +417,10 @@
         @media (max-height: 700px) {
             .screen { padding-top: 80px; padding-bottom: 5px; }
             .title-main { font-size: 24px; margin-bottom: 12px; }
-            .timer-circle-wrapper { width: 160px; height: 160px; } /* чуть меньше на маленьких экранах */
-            .timer-value { font-size: 24px; }
-            .timer-progress-bar { width: 160px; }
-            .timer-hint { margin-top: 16px; }
+            .timer-circle-wrapper { width: 200px; height: 200px; } /* чуть меньше на маленьких экранах */
+            .timer-value { font-size: 28px; }
+            .timer-progress-bar { width: 200px; }
+            .timer-hint { margin-top: 18px; }
             .cycles-row { margin-top: 20px; }
             .gradient-btn { margin-top: 14px; }
             .timer-large { margin-bottom: 60px; }
@@ -551,7 +550,7 @@
                     </div>
                 </div>
 
-                <!-- Таймер с пустой шкалой (увеличен) -->
+                <!-- Таймер (увеличен до 240px, отступы прежние) -->
                 <div class="timer-large">
                     <div class="timer-circle-wrapper">
                         <div class="timer-circle">
@@ -563,7 +562,7 @@
                     <div class="timer-hint">+1% за цикл (6 часов)</div>
                 </div>
 
-                <!-- Нижние карточки -->
+                <!-- Нижние карточки (на том же месте) -->
                 <div class="cycles-row">
                     <div class="cycles-card-small">
                         <div class="cycles-plus">+</div>
@@ -578,11 +577,11 @@
                     </div>
                 </div>
 
-                <!-- Кнопка запуска цикла -->
+                <!-- Кнопка запуска цикла (на том же месте) -->
                 <button class="gradient-btn">Запустить цикл</button>
             </div>
 
-            <!-- Кошелёк -->
+            <!-- Кошелёк (без изменений) -->
             <div class="screen wallet" id="screen-wallet">
                 <h1 class="title-main" style="font-size:24px;">КОШЕЛЁК</h1>
                 <div class="wallet-tabs">
@@ -618,7 +617,7 @@
                 </div>
             </div>
 
-            <!-- Рейтинг -->
+            <!-- Рейтинг (без изменений) -->
             <div class="screen rating" id="screen-rating">
                 <h1 class="title-main" style="font-size:24px;">РЕЙТИНГ</h1>
                 <div class="season-header">
@@ -635,7 +634,7 @@
                 </div>
             </div>
 
-            <!-- Рефералы -->
+            <!-- Рефералы (без изменений) -->
             <div class="screen ref" id="screen-ref">
                 <h1 class="title-main" style="font-size:24px;">РЕФЕРАЛЫ</h1>
                 <button class="invite-btn">👥 Пригласить друга</button>
@@ -653,7 +652,7 @@
             </div>
         </div>
 
-        <!-- Нижняя навигация -->
+        <!-- Нижняя навигация (без изменений) -->
         <nav class="nav">
             <div class="nav-item active" data-screen="home"><span>🏠</span><span>Главная</span></div>
             <div class="nav-item" data-screen="wallet"><span>💳</span><span>Кошелёк</span></div>
