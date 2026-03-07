@@ -107,7 +107,7 @@
             border-radius: 24px;
             padding: 8px 12px;
             width: 100%;
-            cursor: pointer; /* добавим курсор для кликабельности */
+            cursor: pointer; /* кликабельны */
         }
 
         .stat-card-left {
@@ -426,7 +426,7 @@
             .timer-large { margin-bottom: 80px; }
         }
 
-        /* Стили для модального окна */
+        /* Стили для модальных окон */
         .modal {
             position: fixed;
             top: 0;
@@ -479,6 +479,31 @@
         .modal-hint {
             font-size: 12px;
             color: #b0e0d0;
+        }
+
+        /* Кнопки в модальном окне для вывода */
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            background: linear-gradient(135deg, #00c9a7, #00a87e);
+            border: none;
+            border-radius: 40px;
+            padding: 12px;
+            color: #0b1f18;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 255, 170, 0.3);
+            transition: transform 0.1s;
+        }
+
+        .modal-btn:active {
+            transform: scale(0.97);
         }
     </style>
 </head>
@@ -645,6 +670,19 @@
                 <div class="modal-hint">У вас ещё нет активных циклов</div>
             </div>
         </div>
+
+        <!-- Модальное окно для карточки "Доступно к выводу" -->
+        <div class="modal" id="withdrawModal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="modal-value">$0.00</div>
+                <div class="modal-label">Прибыль</div>
+                <div class="modal-buttons">
+                    <button class="modal-btn">Забрать</button>
+                    <button class="modal-btn">Реинвестировать</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -760,30 +798,54 @@
                 }, 50);
             }
 
-            // ========== Модальное окно для карточки "Активный депозит" ==========
-            const modal = document.getElementById('depositModal');
-            const closeBtn = document.querySelector('.close');
+            // ========== Модальные окна ==========
+            const depositModal = document.getElementById('depositModal');
+            const withdrawModal = document.getElementById('withdrawModal');
+            const closeBtns = document.querySelectorAll('.close');
 
             // Открытие модалки при клике на карточку "Активный депозит"
             document.querySelectorAll('.stat-card').forEach(card => {
                 card.addEventListener('click', function(e) {
                     const label = this.querySelector('.stat-label-small');
                     if (label && label.textContent.trim() === 'Активный депозит') {
-                        modal.style.display = 'flex';
+                        depositModal.style.display = 'flex';
                     }
                 });
             });
 
-            // Закрытие по крестику
-            closeBtn.addEventListener('click', function() {
-                modal.style.display = 'none';
+            // Открытие модалки при клике на карточку "Доступно к выводу"
+            document.querySelectorAll('.stat-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    const label = this.querySelector('.stat-label-small');
+                    if (label && label.textContent.trim() === 'Доступно к выводу') {
+                        withdrawModal.style.display = 'flex';
+                    }
+                });
+            });
+
+            // Закрытие по крестикам
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    depositModal.style.display = 'none';
+                    withdrawModal.style.display = 'none';
+                });
             });
 
             // Закрытие по клику вне модального окна
             window.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
+                if (e.target === depositModal) {
+                    depositModal.style.display = 'none';
                 }
+                if (e.target === withdrawModal) {
+                    withdrawModal.style.display = 'none';
+                }
+            });
+
+            // Заглушки для кнопок в модалке вывода (можно потом добавить логику)
+            document.querySelectorAll('.modal-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    alert('Функция будет реализована позже');
+                });
             });
         })();
     </script>
