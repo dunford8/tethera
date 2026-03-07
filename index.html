@@ -107,7 +107,7 @@
             border-radius: 24px;
             padding: 8px 12px;
             width: 100%;
-            cursor: pointer; /* кликабельны */
+            cursor: pointer;
         }
 
         .stat-card-left {
@@ -467,13 +467,13 @@
             font-size: 36px;
             font-weight: 700;
             color: #00ffaa;
-            margin-bottom: 5px;
+            margin: 10px 0;
         }
 
         .modal-label {
             font-size: 18px;
             color: #fff;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
 
         .modal-hint {
@@ -661,22 +661,22 @@
             <div class="nav-item" data-screen="ref"><span>👥</span><span>Рефералы</span></div>
         </nav>
 
-        <!-- Модальное окно для карточки "Активный депозит" -->
+        <!-- Модальное окно для карточки "Активный депозит" (обновлённый порядок) -->
         <div class="modal" id="depositModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <div class="modal-value">$0.00</div>
                 <div class="modal-label">Активный депозит</div>
+                <div class="modal-value">$0.00</div>
                 <div class="modal-hint">У вас ещё нет активных циклов</div>
             </div>
         </div>
 
-        <!-- Модальное окно для карточки "Доступно к выводу" -->
+        <!-- Модальное окно для карточки "Доступно к выводу" (обновлённый порядок) -->
         <div class="modal" id="withdrawModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <div class="modal-value">$0.00</div>
                 <div class="modal-label">Прибыль</div>
+                <div class="modal-value">$0.00</div>
                 <div class="modal-buttons">
                     <button class="modal-btn">Забрать</button>
                     <button class="modal-btn">Реинвестировать</button>
@@ -841,7 +841,7 @@
                 }
             });
 
-            // Заглушки для кнопок в модалке вывода (можно потом добавить логику)
+            // Заглушки для кнопок в модалке вывода
             document.querySelectorAll('.modal-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     alert('Функция будет реализована позже');
