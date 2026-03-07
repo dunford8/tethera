@@ -198,7 +198,7 @@
             width: 100%;
         }
 
-        /* Нижние карточки — с большим отступом сверху */
+        /* Нижние карточки */
         .cycles-row {
             display: flex;
             gap: 12px;
@@ -267,7 +267,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 16px 0 80px; /* увеличен нижний отступ для пустоты (было 40px) */
+            margin: 16px 0 110px; /* увеличен нижний отступ для пустоты */
         }
 
         .timer-circle-wrapper {
@@ -351,7 +351,7 @@
             100% { box-shadow: 0 0 35px rgba(0, 255, 170, 0.9), 0 0 70px rgba(0, 255, 170, 0.5); }
         }
 
-        /* Кнопка запуска цикла — увеличен отступ сверху */
+        /* Кнопка запуска цикла — уменьшен отступ сверху */
         .gradient-btn {
             background: linear-gradient(135deg, #00c9a7, #00a87e);
             border: none;
@@ -366,7 +366,7 @@
             transition: transform 0.15s, box-shadow 0.15s;
             width: 100%;
             border: 1px solid rgba(255,255,255,0.1);
-            margin-top: 24px;
+            margin-top: 16px; /* уменьшено с 24px */
         }
         .gradient-btn:active {
             transform: scale(0.98);
@@ -421,8 +421,8 @@
             .timer-value { font-size: 18px; }
             .timer-progress-bar { width: 140px; }
             .cycles-row { margin-top: 20px; }
-            .gradient-btn { margin-top: 20px; }
-            .timer-large { margin-bottom: 60px; } /* увеличен соответственно */
+            .gradient-btn { margin-top: 14px; }
+            .timer-large { margin-bottom: 80px; } /* чуть меньше на маленьких экранах */
         }
     </style>
 </head>
@@ -497,7 +497,7 @@
                     </div>
                 </div>
 
-                <!-- Кнопка запуска цикла -->
+                <!-- Кнопка запуска цикла (уменьшен отступ сверху) -->
                 <button class="gradient-btn">Запустить цикл</button>
             </div>
 
