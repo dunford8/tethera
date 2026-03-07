@@ -44,7 +44,7 @@
             display: none;
             flex: 1;
             flex-direction: column;
-            padding: 100px 16px 10px 16px; /* значительно увеличен верхний отступ */
+            padding: 100px 16px 10px 16px; /* большой верхний отступ для шапки */
             overflow-y: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
@@ -198,11 +198,11 @@
             width: 100%;
         }
 
-        /* Нижние карточки (без изменений) */
+        /* Нижние карточки — теперь с большим отступом сверху */
         .cycles-row {
             display: flex;
             gap: 12px;
-            margin: 12px 0;
+            margin: 30px 0 12px 0; /* увеличен верхний отступ с 12px до 30px */
         }
 
         .cycles-card-small {
@@ -351,7 +351,7 @@
             100% { box-shadow: 0 0 35px rgba(0, 255, 170, 0.9), 0 0 70px rgba(0, 255, 170, 0.5); }
         }
 
-        /* Кнопка запуска цикла */
+        /* Кнопка запуска цикла — увеличен отступ сверху */
         .gradient-btn {
             background: linear-gradient(135deg, #00c9a7, #00a87e);
             border: none;
@@ -366,7 +366,7 @@
             transition: transform 0.15s, box-shadow 0.15s;
             width: 100%;
             border: 1px solid rgba(255,255,255,0.1);
-            margin-top: 8px;
+            margin-top: 24px; /* увеличен с 8px до 24px */
         }
         .gradient-btn:active {
             transform: scale(0.98);
@@ -415,11 +415,13 @@
         .invite-btn { background: linear-gradient(135deg, #00c9a7, #00a87e); border: none; border-radius: 40px; padding: 14px; color: #0b1f18; font-weight: 600; width: 100%; margin-top: 8px; font-size: 16px; box-shadow: 0 8px 20px rgba(0, 255, 170, 0.3); cursor: pointer; }
 
         @media (max-height: 700px) {
-            .screen { padding-top: 80px; padding-bottom: 5px; } /* также увеличен для небольших экранов */
+            .screen { padding-top: 80px; padding-bottom: 5px; }
             .title-main { font-size: 24px; margin-bottom: 12px; }
             .timer-circle-wrapper { width: 140px; height: 140px; }
             .timer-value { font-size: 18px; }
             .timer-progress-bar { width: 140px; }
+            .cycles-row { margin-top: 20px; } /* чуть меньше на маленьких экранах */
+            .gradient-btn { margin-top: 20px; }
         }
     </style>
 </head>
@@ -479,7 +481,7 @@
                     <div class="timer-hint">+1% за цикл (6 часов)</div>
                 </div>
 
-                <!-- Нижние карточки -->
+                <!-- Нижние карточки (теперь с большим отступом сверху) -->
                 <div class="cycles-row">
                     <div class="cycles-card-small">
                         <div class="cycles-plus">+</div>
@@ -494,7 +496,7 @@
                     </div>
                 </div>
 
-                <!-- Кнопка запуска цикла -->
+                <!-- Кнопка запуска цикла (теперь с большим отступом сверху) -->
                 <button class="gradient-btn">Запустить цикл</button>
             </div>
 
