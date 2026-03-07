@@ -507,6 +507,39 @@
             transform: scale(0.97);
         }
 
+        /* Стили для окна "Активные циклы" */
+        .active-cycles-modal .modal-content {
+            max-width: 340px;
+        }
+
+        .active-cycles-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #b0e0d0;
+        }
+
+        .info-item .info-value {
+            color: #00ffaa;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
         /* Стили для нового модального окна "Новый цикл" */
         .new-cycle-modal .modal-content {
             max-width: 360px;
@@ -859,6 +892,32 @@
                 <div class="bottom-note">Циклы работают параллельно</div>
             </div>
         </div>
+
+        <!-- Модальное окно для карточки "0 Активных" -->
+        <div class="modal active-cycles-modal" id="activeCyclesModal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="active-cycles-title">Активные циклы</div>
+                <div class="info-list">
+                    <div class="info-item">
+                        <span>Всего циклов</span>
+                        <span class="info-value">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span>В работе</span>
+                        <span class="info-value">0 USDT</span>
+                    </div>
+                    <div class="info-item">
+                        <span>Начисление</span>
+                        <span class="info-value">+1,5% каждые 6 часов</span>
+                    </div>
+                    <div class="info-item">
+                        <span>Заработано с циклов</span>
+                        <span class="info-value">0 USDT</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -978,6 +1037,7 @@
             const depositModal = document.getElementById('depositModal');
             const withdrawModal = document.getElementById('withdrawModal');
             const newCycleModal = document.getElementById('newCycleModal');
+            const activeCyclesModal = document.getElementById('activeCyclesModal');
             const closeBtns = document.querySelectorAll('.close');
 
             // Открытие модалки для "Активный депозит"
@@ -1010,12 +1070,18 @@
                 document.getElementById('startCycleBtn').disabled = true;
             });
 
+            // Открытие модалки для "0 Активных"
+            document.getElementById('activeCyclesCard').addEventListener('click', function() {
+                activeCyclesModal.style.display = 'flex';
+            });
+
             // Закрытие по крестикам
             closeBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
                     depositModal.style.display = 'none';
                     withdrawModal.style.display = 'none';
                     newCycleModal.style.display = 'none';
+                    activeCyclesModal.style.display = 'none';
                 });
             });
 
@@ -1029,6 +1095,9 @@
                 }
                 if (e.target === newCycleModal) {
                     newCycleModal.style.display = 'none';
+                }
+                if (e.target === activeCyclesModal) {
+                    activeCyclesModal.style.display = 'none';
                 }
             });
 
