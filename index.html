@@ -198,11 +198,11 @@
             width: 100%;
         }
 
-        /* Нижние карточки — теперь с большим отступом сверху */
+        /* Нижние карточки — с большим отступом сверху */
         .cycles-row {
             display: flex;
             gap: 12px;
-            margin: 30px 0 12px 0; /* увеличен верхний отступ с 12px до 30px */
+            margin: 30px 0 12px 0; /* увеличен верхний отступ */
         }
 
         .cycles-card-small {
@@ -267,7 +267,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 16px 0 12px;
+            margin: 16px 0 40px; /* увеличен нижний отступ для пустоты */
         }
 
         .timer-circle-wrapper {
@@ -420,8 +420,9 @@
             .timer-circle-wrapper { width: 140px; height: 140px; }
             .timer-value { font-size: 18px; }
             .timer-progress-bar { width: 140px; }
-            .cycles-row { margin-top: 20px; } /* чуть меньше на маленьких экранах */
+            .cycles-row { margin-top: 20px; }
             .gradient-btn { margin-top: 20px; }
+            .timer-large { margin-bottom: 30px; } /* чуть меньше на маленьких экранах */
         }
     </style>
 </head>
@@ -469,7 +470,7 @@
                     </div>
                 </div>
 
-                <!-- Таймер с пустой шкалой -->
+                <!-- Таймер с пустой шкалой (увеличен нижний отступ) -->
                 <div class="timer-large">
                     <div class="timer-circle-wrapper">
                         <div class="timer-circle">
@@ -481,7 +482,7 @@
                     <div class="timer-hint">+1% за цикл (6 часов)</div>
                 </div>
 
-                <!-- Нижние карточки (теперь с большим отступом сверху) -->
+                <!-- Нижние карточки -->
                 <div class="cycles-row">
                     <div class="cycles-card-small">
                         <div class="cycles-plus">+</div>
@@ -496,7 +497,7 @@
                     </div>
                 </div>
 
-                <!-- Кнопка запуска цикла (теперь с большим отступом сверху) -->
+                <!-- Кнопка запуска цикла -->
                 <button class="gradient-btn">Запустить цикл</button>
             </div>
 
