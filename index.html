@@ -107,6 +107,7 @@
             border-radius: 24px;
             padding: 8px 12px;
             width: 100%;
+            cursor: pointer; /* добавим курсор для кликабельности */
         }
 
         .stat-card-left {
@@ -267,7 +268,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 16px 0 110px; /* увеличен нижний отступ для пустоты */
+            margin: 16px 0 110px;
         }
 
         .timer-circle-wrapper {
@@ -351,7 +352,7 @@
             100% { box-shadow: 0 0 35px rgba(0, 255, 170, 0.9), 0 0 70px rgba(0, 255, 170, 0.5); }
         }
 
-        /* Кнопка запуска цикла — уменьшен отступ сверху */
+        /* Кнопка запуска цикла */
         .gradient-btn {
             background: linear-gradient(135deg, #00c9a7, #00a87e);
             border: none;
@@ -366,7 +367,7 @@
             transition: transform 0.15s, box-shadow 0.15s;
             width: 100%;
             border: 1px solid rgba(255,255,255,0.1);
-            margin-top: 16px; /* уменьшено с 24px */
+            margin-top: 16px;
         }
         .gradient-btn:active {
             transform: scale(0.98);
@@ -422,7 +423,62 @@
             .timer-progress-bar { width: 140px; }
             .cycles-row { margin-top: 20px; }
             .gradient-btn { margin-top: 14px; }
-            .timer-large { margin-bottom: 80px; } /* чуть меньше на маленьких экранах */
+            .timer-large { margin-bottom: 80px; }
+        }
+
+        /* Стили для модального окна */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: #0a1814;
+            border: 1px solid #00ffaa;
+            border-radius: 24px;
+            padding: 30px 20px 20px;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 255, 170, 0.3);
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            color: #b0e0d0;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #00ffaa;
+            margin-bottom: 5px;
+        }
+
+        .modal-label {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .modal-hint {
+            font-size: 12px;
+            color: #b0e0d0;
         }
     </style>
 </head>
@@ -470,7 +526,7 @@
                     </div>
                 </div>
 
-                <!-- Таймер с пустой шкалой (увеличен нижний отступ) -->
+                <!-- Таймер с пустой шкалой -->
                 <div class="timer-large">
                     <div class="timer-circle-wrapper">
                         <div class="timer-circle">
@@ -497,7 +553,7 @@
                     </div>
                 </div>
 
-                <!-- Кнопка запуска цикла (уменьшен отступ сверху) -->
+                <!-- Кнопка запуска цикла -->
                 <button class="gradient-btn">Запустить цикл</button>
             </div>
 
@@ -572,13 +628,23 @@
             </div>
         </div>
 
-        <!-- Нижняя навигация (исходные иконки) -->
+        <!-- Нижняя навигация -->
         <nav class="nav">
             <div class="nav-item active" data-screen="home"><span>🏠</span><span>Главная</span></div>
             <div class="nav-item" data-screen="wallet"><span>💳</span><span>Кошелёк</span></div>
             <div class="nav-item" data-screen="rating"><span>🏆</span><span>Рейтинг</span></div>
             <div class="nav-item" data-screen="ref"><span>👥</span><span>Рефералы</span></div>
         </nav>
+
+        <!-- Модальное окно для карточки "Активный депозит" -->
+        <div class="modal" id="depositModal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="modal-value">$0.00</div>
+                <div class="modal-label">Активный депозит</div>
+                <div class="modal-hint">У вас ещё нет активных циклов</div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -640,7 +706,7 @@
                     const current = [];
                     const target = [];
                     for (let i = 0; i < pointsCount; i++) {
-                        const val = Math.random(); // полный разброс от 0 до 1
+                        const val = Math.random();
                         current.push(val);
                         target.push(val);
                     }
@@ -660,7 +726,7 @@
                     const step = w / (current.length - 1);
                     for (let i = 0; i < current.length; i++) {
                         const x = i * step;
-                        const y = current[i] * h; // без отступов
+                        const y = current[i] * h;
                         if (i === 0) ctx.moveTo(x, y);
                         else ctx.lineTo(x, y);
                     }
@@ -693,6 +759,32 @@
                     });
                 }, 50);
             }
+
+            // ========== Модальное окно для карточки "Активный депозит" ==========
+            const modal = document.getElementById('depositModal');
+            const closeBtn = document.querySelector('.close');
+
+            // Открытие модалки при клике на карточку "Активный депозит"
+            document.querySelectorAll('.stat-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    const label = this.querySelector('.stat-label-small');
+                    if (label && label.textContent.trim() === 'Активный депозит') {
+                        modal.style.display = 'flex';
+                    }
+                });
+            });
+
+            // Закрытие по крестику
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            // Закрытие по клику вне модального окна
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
         })();
     </script>
 </body>
