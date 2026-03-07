@@ -218,6 +218,7 @@
             align-items: center;
             justify-content: center;
             min-width: 90px;
+            cursor: pointer;
         }
 
         .cycles-card-large {
@@ -229,6 +230,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            cursor: pointer;
         }
 
         .cycles-plus {
@@ -268,7 +270,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 63px 0 33px; /* изменено для центрирования */
+            margin: 63px 0 33px;
         }
 
         .timer-circle-wrapper {
@@ -324,7 +326,6 @@
             z-index: 3;
         }
 
-        /* Пустая полупрозрачная шкала прогресса (без заполнения) */
         .timer-progress-bar {
             width: 200px;
             height: 6px;
@@ -424,7 +425,7 @@
             .timer-hint { margin-top: 16px; }
             .cycles-row { margin-top: 20px; }
             .gradient-btn { margin-top: 14px; }
-            .timer-large { margin-bottom: 60px; } /* margin-top остаётся 63px, но на маленьких экранах это может быть много, оставляем как было */
+            .timer-large { margin-bottom: 60px; }
         }
 
         /* Стили для модальных окон */
@@ -447,8 +448,8 @@
             border: 1px solid #00ffaa;
             border-radius: 24px;
             padding: 30px 20px 20px;
-            width: 80%;
-            max-width: 300px;
+            width: 90%;
+            max-width: 340px;
             text-align: center;
             position: relative;
             box-shadow: 0 0 30px rgba(0, 255, 170, 0.3);
@@ -505,6 +506,147 @@
         .modal-btn:active {
             transform: scale(0.97);
         }
+
+        /* Стили для нового модального окна "Новый цикл" */
+        .new-cycle-modal .modal-content {
+            max-width: 360px;
+        }
+
+        .new-cycle-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .new-cycle-sub {
+            font-size: 13px;
+            color: #b0e0d0;
+            margin-bottom: 20px;
+        }
+
+        .new-cycle-label {
+            font-size: 14px;
+            color: #b0e0d0;
+            text-align: left;
+            margin-bottom: 4px;
+        }
+
+        .new-cycle-input-wrapper {
+            display: flex;
+            align-items: center;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,255,170,0.2);
+            border-radius: 20px;
+            padding: 8px 16px;
+            margin-bottom: 15px;
+        }
+
+        .new-cycle-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            outline: none;
+            -moz-appearance: textfield;
+        }
+
+        .new-cycle-input::-webkit-outer-spin-button,
+        .new-cycle-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .new-cycle-input::placeholder {
+            color: #5f7f70;
+        }
+
+        .new-cycle-input-suffix {
+            font-size: 16px;
+            color: #00ffaa;
+            margin-left: 8px;
+        }
+
+        .quick-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .quick-btn {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(0,255,170,0.2);
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #ccf0e0;
+            cursor: pointer;
+            transition: 0.1s;
+            flex: 1 0 auto;
+        }
+
+        .quick-btn:active {
+            background: rgba(0,255,170,0.2);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #8fafa0;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .info-row span:last-child {
+            color: #00ffaa;
+        }
+
+        .total-row {
+            font-size: 14px;
+            color: #fff;
+            margin: 15px 0 10px;
+        }
+
+        .total-row span {
+            color: #00ffaa;
+            font-weight: 600;
+        }
+
+        .new-cycle-btn {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(0,255,170,0.2);
+            border-radius: 40px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #5f7f70;
+            cursor: not-allowed;
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+
+        .new-cycle-btn.active {
+            background: linear-gradient(135deg, #00c9a7, #00a87e);
+            color: #0b1f18;
+            box-shadow: 0 8px 20px rgba(0, 255, 170, 0.3);
+            cursor: pointer;
+            border: none;
+        }
+
+        .new-cycle-btn.active:active {
+            transform: scale(0.98);
+        }
+
+        .bottom-note {
+            font-size: 10px;
+            color: #5f7f70;
+            margin-top: 12px;
+        }
     </style>
 </head>
 <body>
@@ -551,7 +693,7 @@
                     </div>
                 </div>
 
-                <!-- Таймер с отцентрированными отступами -->
+                <!-- Таймер -->
                 <div class="timer-large">
                     <div class="timer-circle-wrapper">
                         <div class="timer-circle">
@@ -565,11 +707,11 @@
 
                 <!-- Нижние карточки -->
                 <div class="cycles-row">
-                    <div class="cycles-card-small">
+                    <div class="cycles-card-small" id="newCycleCard">
                         <div class="cycles-plus">+</div>
                         <div class="cycles-label">Новый</div>
                     </div>
-                    <div class="cycles-card-large">
+                    <div class="cycles-card-large" id="activeCyclesCard">
                         <div class="cycles-content">
                             <span class="cycles-number">0</span>
                             <span class="cycles-label">Активных</span>
@@ -681,6 +823,40 @@
                     <button class="modal-btn">Забрать</button>
                     <button class="modal-btn">Реинвестировать</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно для карточки "+ Новый" -->
+        <div class="modal new-cycle-modal" id="newCycleModal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="new-cycle-title">Новый цикл</div>
+                <div class="new-cycle-sub">Цикл приносит +1,5% каждые 6 часов</div>
+
+                <div class="new-cycle-label">Сумма цикла</div>
+                <div class="new-cycle-input-wrapper">
+                    <input type="number" id="cycleAmount" class="new-cycle-input" placeholder="0.00" min="0" step="0.01" value="">
+                    <span class="new-cycle-input-suffix">USDT</span>
+                </div>
+
+                <div class="quick-buttons">
+                    <button class="quick-btn" data-amount="50">50</button>
+                    <button class="quick-btn" data-amount="100">100</button>
+                    <button class="quick-btn" data-amount="500">500</button>
+                    <button class="quick-btn" data-amount="1000">1000</button>
+                </div>
+
+                <div class="info-row">
+                    <span>Мин: 5 USDT</span>
+                    <span>Доступно для новых циклов: 0 USDT</span>
+                </div>
+
+                <div class="total-row">
+                    Вы запускаете цикл на: <span id="totalAmount">0.00</span> USDT
+                </div>
+
+                <button class="new-cycle-btn" id="startCycleBtn" disabled>Запустить цикл</button>
+                <div class="bottom-note">Циклы работают параллельно</div>
             </div>
         </div>
     </div>
@@ -801,8 +977,10 @@
             // ========== Модальные окна ==========
             const depositModal = document.getElementById('depositModal');
             const withdrawModal = document.getElementById('withdrawModal');
+            const newCycleModal = document.getElementById('newCycleModal');
             const closeBtns = document.querySelectorAll('.close');
 
+            // Открытие модалки для "Активный депозит"
             document.querySelectorAll('.stat-card').forEach(card => {
                 card.addEventListener('click', function(e) {
                     const label = this.querySelector('.stat-label-small');
@@ -812,6 +990,7 @@
                 });
             });
 
+            // Открытие модалки для "Доступно к выводу"
             document.querySelectorAll('.stat-card').forEach(card => {
                 card.addEventListener('click', function(e) {
                     const label = this.querySelector('.stat-label-small');
@@ -821,13 +1000,26 @@
                 });
             });
 
+            // Открытие модалки для "+ Новый"
+            document.getElementById('newCycleCard').addEventListener('click', function() {
+                newCycleModal.style.display = 'flex';
+                // Сброс поля
+                document.getElementById('cycleAmount').value = '';
+                document.getElementById('totalAmount').textContent = '0.00';
+                document.getElementById('startCycleBtn').classList.remove('active');
+                document.getElementById('startCycleBtn').disabled = true;
+            });
+
+            // Закрытие по крестикам
             closeBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
                     depositModal.style.display = 'none';
                     withdrawModal.style.display = 'none';
+                    newCycleModal.style.display = 'none';
                 });
             });
 
+            // Закрытие по клику вне модального окна
             window.addEventListener('click', function(e) {
                 if (e.target === depositModal) {
                     depositModal.style.display = 'none';
@@ -835,8 +1027,49 @@
                 if (e.target === withdrawModal) {
                     withdrawModal.style.display = 'none';
                 }
+                if (e.target === newCycleModal) {
+                    newCycleModal.style.display = 'none';
+                }
             });
 
+            // Логика для окна нового цикла
+            const cycleInput = document.getElementById('cycleAmount');
+            const totalSpan = document.getElementById('totalAmount');
+            const startBtn = document.getElementById('startCycleBtn');
+
+            function updateTotal() {
+                let val = parseFloat(cycleInput.value);
+                if (isNaN(val) || val < 0) val = 0;
+                totalSpan.textContent = val.toFixed(2);
+                if (val >= 5) {
+                    startBtn.classList.add('active');
+                    startBtn.disabled = false;
+                } else {
+                    startBtn.classList.remove('active');
+                    startBtn.disabled = true;
+                }
+            }
+
+            cycleInput.addEventListener('input', updateTotal);
+
+            // Быстрые кнопки
+            document.querySelectorAll('.quick-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const amount = this.getAttribute('data-amount');
+                    cycleInput.value = amount;
+                    updateTotal();
+                });
+            });
+
+            // Заглушка для кнопки запуска
+            startBtn.addEventListener('click', function() {
+                if (!startBtn.disabled) {
+                    alert('Цикл запущен! (демо-режим)');
+                    newCycleModal.style.display = 'none';
+                }
+            });
+
+            // Заглушки для других модальных кнопок
             document.querySelectorAll('.modal-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     alert('Функция будет реализована позже');
