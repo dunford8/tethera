@@ -263,18 +263,18 @@
             line-height: 1;
         }
 
-        /* Таймер с внутренними полосками и пустой шкалой прогресса — увеличен */
+        /* Таймер с внутренними полосками и пустой шкалой прогресса — увеличен до 240px */
         .timer-large {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 16px 0 80px; /* немного уменьшил нижний отступ, чтобы сохранить общую высоту */
+            margin: 16px 0 70px; /* немного уменьшил нижний отступ для баланса */
         }
 
         .timer-circle-wrapper {
             position: relative;
-            width: 200px; /* увеличено с 160px */
-            height: 200px;
+            width: 240px; /* увеличено с 200px */
+            height: 240px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -298,10 +298,10 @@
 
         .timer-inner-progress {
             position: absolute;
-            top: 10px; /* подогнал под новый размер */
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
+            top: 12px; /* подогнал под новый размер */
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
             border-radius: 50%;
             border: 2px dashed rgba(0, 255, 170, 0.7);
             box-shadow: 0 0 15px rgba(0, 255, 170, 0.5);
@@ -315,7 +315,7 @@
         }
 
         .timer-value {
-            font-size: 28px; /* увеличено с 20px */
+            font-size: 34px; /* увеличено с 28px */
             font-weight: 700;
             color: #fff;
             text-shadow: 0 0 10px #00ffaa;
@@ -326,11 +326,11 @@
 
         /* Пустая полупрозрачная шкала прогресса (без заполнения) */
         .timer-progress-bar {
-            width: 200px; /* ширина под новый размер */
+            width: 240px; /* ширина под новый размер */
             height: 6px;
             background: rgba(0, 255, 170, 0.2);
             border-radius: 10px;
-            margin-top: 16px; /* немного увеличил отступ */
+            margin-top: 18px;
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0, 255, 170, 0.3);
         }
@@ -344,7 +344,7 @@
             backdrop-filter: blur(4px);
             border: 1px solid rgba(0, 255, 170, 0.3);
             box-shadow: 0 0 15px rgba(0, 255, 170, 0.2);
-            margin-top: 20px; /* увеличен отступ */
+            margin-top: 22px;
         }
 
         @keyframes glowPulse {
@@ -418,13 +418,13 @@
         @media (max-height: 700px) {
             .screen { padding-top: 80px; padding-bottom: 5px; }
             .title-main { font-size: 24px; margin-bottom: 12px; }
-            .timer-circle-wrapper { width: 160px; height: 160px; } /* чуть меньше на маленьких экранах */
-            .timer-value { font-size: 24px; }
-            .timer-progress-bar { width: 160px; }
-            .timer-hint { margin-top: 16px; }
+            .timer-circle-wrapper { width: 200px; height: 200px; } /* уменьшен для маленьких экранов, но всё ещё крупный */
+            .timer-value { font-size: 28px; }
+            .timer-progress-bar { width: 200px; }
+            .timer-hint { margin-top: 18px; }
             .cycles-row { margin-top: 20px; }
             .gradient-btn { margin-top: 14px; }
-            .timer-large { margin-bottom: 60px; }
+            .timer-large { margin-bottom: 50px; }
         }
 
         /* Стили для модальных окон */
@@ -551,7 +551,7 @@
                     </div>
                 </div>
 
-                <!-- Таймер с пустой шкалой (увеличен) -->
+                <!-- Таймер с пустой шкалой (увеличен до 240px) -->
                 <div class="timer-large">
                     <div class="timer-circle-wrapper">
                         <div class="timer-circle">
