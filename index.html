@@ -263,18 +263,18 @@
             line-height: 1;
         }
 
-        /* Таймер с внутренними полосками и пустой шкалой прогресса */
+        /* Таймер с внутренними полосками и пустой шкалой прогресса — увеличен */
         .timer-large {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 16px 0 110px;
+            margin: 16px 0 80px; /* немного уменьшил нижний отступ, чтобы сохранить общую высоту */
         }
 
         .timer-circle-wrapper {
             position: relative;
-            width: 160px;
-            height: 160px;
+            width: 200px; /* увеличено с 160px */
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -298,10 +298,10 @@
 
         .timer-inner-progress {
             position: absolute;
-            top: 8px;
-            left: 8px;
-            right: 8px;
-            bottom: 8px;
+            top: 10px; /* подогнал под новый размер */
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
             border-radius: 50%;
             border: 2px dashed rgba(0, 255, 170, 0.7);
             box-shadow: 0 0 15px rgba(0, 255, 170, 0.5);
@@ -315,7 +315,7 @@
         }
 
         .timer-value {
-            font-size: 20px;
+            font-size: 28px; /* увеличено с 20px */
             font-weight: 700;
             color: #fff;
             text-shadow: 0 0 10px #00ffaa;
@@ -326,11 +326,11 @@
 
         /* Пустая полупрозрачная шкала прогресса (без заполнения) */
         .timer-progress-bar {
-            width: 160px;
+            width: 200px; /* ширина под новый размер */
             height: 6px;
             background: rgba(0, 255, 170, 0.2);
             border-radius: 10px;
-            margin-top: 12px;
+            margin-top: 16px; /* немного увеличил отступ */
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0, 255, 170, 0.3);
         }
@@ -344,7 +344,7 @@
             backdrop-filter: blur(4px);
             border: 1px solid rgba(0, 255, 170, 0.3);
             box-shadow: 0 0 15px rgba(0, 255, 170, 0.2);
-            margin-top: 16px;
+            margin-top: 20px; /* увеличен отступ */
         }
 
         @keyframes glowPulse {
@@ -418,12 +418,13 @@
         @media (max-height: 700px) {
             .screen { padding-top: 80px; padding-bottom: 5px; }
             .title-main { font-size: 24px; margin-bottom: 12px; }
-            .timer-circle-wrapper { width: 140px; height: 140px; }
-            .timer-value { font-size: 18px; }
-            .timer-progress-bar { width: 140px; }
+            .timer-circle-wrapper { width: 160px; height: 160px; } /* чуть меньше на маленьких экранах */
+            .timer-value { font-size: 24px; }
+            .timer-progress-bar { width: 160px; }
+            .timer-hint { margin-top: 16px; }
             .cycles-row { margin-top: 20px; }
             .gradient-btn { margin-top: 14px; }
-            .timer-large { margin-bottom: 80px; }
+            .timer-large { margin-bottom: 60px; }
         }
 
         /* Стили для модальных окон */
@@ -481,7 +482,6 @@
             color: #b0e0d0;
         }
 
-        /* Кнопки в модальном окне для вывода */
         .modal-buttons {
             display: flex;
             gap: 10px;
@@ -551,7 +551,7 @@
                     </div>
                 </div>
 
-                <!-- Таймер с пустой шкалой -->
+                <!-- Таймер с пустой шкалой (увеличен) -->
                 <div class="timer-large">
                     <div class="timer-circle-wrapper">
                         <div class="timer-circle">
@@ -661,7 +661,7 @@
             <div class="nav-item" data-screen="ref"><span>👥</span><span>Рефералы</span></div>
         </nav>
 
-        <!-- Модальное окно для карточки "Активный депозит" (обновлённый порядок) -->
+        <!-- Модальное окно для карточки "Активный депозит" -->
         <div class="modal" id="depositModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -671,7 +671,7 @@
             </div>
         </div>
 
-        <!-- Модальное окно для карточки "Доступно к выводу" (обновлённый порядок) -->
+        <!-- Модальное окно для карточки "Доступно к выводу" -->
         <div class="modal" id="withdrawModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -803,7 +803,6 @@
             const withdrawModal = document.getElementById('withdrawModal');
             const closeBtns = document.querySelectorAll('.close');
 
-            // Открытие модалки при клике на карточку "Активный депозит"
             document.querySelectorAll('.stat-card').forEach(card => {
                 card.addEventListener('click', function(e) {
                     const label = this.querySelector('.stat-label-small');
@@ -813,7 +812,6 @@
                 });
             });
 
-            // Открытие модалки при клике на карточку "Доступно к выводу"
             document.querySelectorAll('.stat-card').forEach(card => {
                 card.addEventListener('click', function(e) {
                     const label = this.querySelector('.stat-label-small');
@@ -823,7 +821,6 @@
                 });
             });
 
-            // Закрытие по крестикам
             closeBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
                     depositModal.style.display = 'none';
@@ -831,7 +828,6 @@
                 });
             });
 
-            // Закрытие по клику вне модального окна
             window.addEventListener('click', function(e) {
                 if (e.target === depositModal) {
                     depositModal.style.display = 'none';
@@ -841,7 +837,6 @@
                 }
             });
 
-            // Заглушки для кнопок в модалке вывода
             document.querySelectorAll('.modal-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     alert('Функция будет реализована позже');
