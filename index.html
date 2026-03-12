@@ -384,6 +384,7 @@
         .coin-selector {
             display: flex;
             align-items: center;
+            justify-content: space-between; /* для размещения иконки справа */
             gap: 8px;
             margin: 16px 0 8px;
         }
@@ -408,6 +409,15 @@
         }
         .coin-btn.active {
             background: rgba(0, 255, 170, 0.2);
+            color: #00ffaa;
+        }
+        .history-icon {
+            font-size: 24px;
+            color: #b0e0d0;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .history-icon:hover {
             color: #00ffaa;
         }
 
@@ -480,8 +490,8 @@
             color: #00ffaa;
             font-size: 12px;
             cursor: pointer;
-            transition: 0.1s;
             white-space: nowrap;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* плавная анимация */
         }
         .copy-btn.copied {
             background: rgba(0,255,170,0.2);
@@ -782,6 +792,22 @@
             color: #5f7f70;
             margin-top: 12px;
         }
+
+        /* Стили для окна истории транзакций */
+        .history-modal .modal-content {
+            max-width: 340px;
+        }
+        .history-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .history-empty {
+            font-size: 14px;
+            color: #b0e0d0;
+            padding: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -869,12 +895,15 @@
 
                 <!-- Пополнение (deposit) -->
                 <div class="deposit-tab">
-                    <!-- Выбор монеты -->
+                    <!-- Выбор монеты с иконкой истории -->
                     <div class="coin-selector">
                         <span class="label">Монета:</span>
-                        <div class="coin-buttons">
-                            <div class="coin-btn active" data-coin="usdt">USDT</div>
-                            <div class="coin-btn" data-coin="usdc">USDC</div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <div class="coin-buttons">
+                                <div class="coin-btn active" data-coin="usdt">USDT</div>
+                                <div class="coin-btn" data-coin="usdc">USDC</div>
+                            </div>
+                            <span class="history-icon" id="historyIcon">🕒</span>
                         </div>
                     </div>
 
@@ -972,7 +1001,7 @@
             <div class="nav-item" data-screen="ref"><span>👥</span><span>Рефералы</span></div>
         </nav>
 
-        <!-- Модальные окна (без изменений) -->
+        <!-- Модальное окно для карточки "Активный депозит" -->
         <div class="modal" id="depositModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -981,6 +1010,7 @@
                 <div class="modal-hint">У вас ещё нет активных циклов</div>
             </div>
         </div>
+        <!-- Модальное окно для карточки "Доступно к выводу" -->
         <div class="modal" id="withdrawModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -992,6 +1022,7 @@
                 </div>
             </div>
         </div>
+        <!-- Модальное окно для карточки "+ Новый" -->
         <div class="modal new-cycle-modal" id="newCycleModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -1019,6 +1050,7 @@
                 <div class="bottom-note">Циклы работают параллельно</div>
             </div>
         </div>
+        <!-- Модальное окно для карточки "0 Активных" -->
         <div class="modal active-cycles-modal" id="activeCyclesModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -1041,6 +1073,14 @@
                         <span class="info-value">0 USDT</span>
                     </div>
                 </div>
+            </div>
+        </div>
+        <!-- Модальное окно для истории транзакций -->
+        <div class="modal history-modal" id="historyModal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="history-title">История транзакций</div>
+                <div class="history-empty">Нет транзакций</div>
             </div>
         </div>
     </div>
@@ -1141,7 +1181,7 @@
                 });
             });
 
-            // Функция копирования с временной заменой текста кнопки (2 секунды)
+            // Функция копирования с временной заменой текста кнопки (2 секунды) и плавной анимацией
             function copyWithFeedback(button, text) {
                 navigator.clipboard.writeText(text).then(() => {
                     const originalText = button.textContent;
@@ -1163,6 +1203,45 @@
 
             document.getElementById('copy-comment').addEventListener('click', function() {
                 copyWithFeedback(this, commentSpan.textContent);
+            });
+
+            // ========== Логика для истории транзакций ==========
+            const historyIcon = document.getElementById('historyIcon');
+            const historyModal = document.getElementById('historyModal');
+            const closeBtns = document.querySelectorAll('.close');
+
+            historyIcon.addEventListener('click', function() {
+                historyModal.style.display = 'flex';
+            });
+
+            // Закрытие по крестикам (добавим обработчик для всех модалок)
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    depositModal.style.display = 'none';
+                    withdrawModal.style.display = 'none';
+                    newCycleModal.style.display = 'none';
+                    activeCyclesModal.style.display = 'none';
+                    historyModal.style.display = 'none';
+                });
+            });
+
+            // Закрытие по клику вне модального окна
+            window.addEventListener('click', function(e) {
+                if (e.target === depositModal) {
+                    depositModal.style.display = 'none';
+                }
+                if (e.target === withdrawModal) {
+                    withdrawModal.style.display = 'none';
+                }
+                if (e.target === newCycleModal) {
+                    newCycleModal.style.display = 'none';
+                }
+                if (e.target === activeCyclesModal) {
+                    activeCyclesModal.style.display = 'none';
+                }
+                if (e.target === historyModal) {
+                    historyModal.style.display = 'none';
+                }
             });
 
             // ========== График ==========
@@ -1229,12 +1308,11 @@
                 }, 50);
             }
 
-            // ========== Модальные окна ==========
+            // ========== Модальные окна (остальные) ==========
             const depositModal = document.getElementById('depositModal');
             const withdrawModal = document.getElementById('withdrawModal');
             const newCycleModal = document.getElementById('newCycleModal');
             const activeCyclesModal = document.getElementById('activeCyclesModal');
-            const closeBtns = document.querySelectorAll('.close');
 
             document.querySelectorAll('.stat-card').forEach(card => {
                 card.addEventListener('click', function(e) {
@@ -1264,30 +1342,6 @@
 
             document.getElementById('activeCyclesCard').addEventListener('click', function() {
                 activeCyclesModal.style.display = 'flex';
-            });
-
-            closeBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    depositModal.style.display = 'none';
-                    withdrawModal.style.display = 'none';
-                    newCycleModal.style.display = 'none';
-                    activeCyclesModal.style.display = 'none';
-                });
-            });
-
-            window.addEventListener('click', function(e) {
-                if (e.target === depositModal) {
-                    depositModal.style.display = 'none';
-                }
-                if (e.target === withdrawModal) {
-                    withdrawModal.style.display = 'none';
-                }
-                if (e.target === newCycleModal) {
-                    newCycleModal.style.display = 'none';
-                }
-                if (e.target === activeCyclesModal) {
-                    activeCyclesModal.style.display = 'none';
-                }
             });
 
             const cycleInput = document.getElementById('cycleAmount');
