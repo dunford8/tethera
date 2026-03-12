@@ -380,15 +380,19 @@
         .wallet-tab { flex: 1; text-align: center; padding: 10px 0; border-radius: 26px; font-weight: 500; color: #b0e0d0; cursor: pointer; }
         .wallet-tab.active { background: rgba(0, 255, 170, 0.2); color: #00ffaa; }
 
-        /* Выбор монеты */
+        /* Выбор монеты — исправлено расположение */
         .coin-selector {
             display: flex;
             align-items: center;
-            justify-content: space-between; /* для размещения иконки справа */
-            gap: 8px;
+            justify-content: space-between;
             margin: 16px 0 8px;
         }
-        .coin-selector .label {
+        .coin-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .coin-left .label {
             font-size: 14px;
             color: #b0e0d0;
         }
@@ -414,11 +418,12 @@
         .history-icon {
             font-size: 24px;
             color: #b0e0d0;
+            opacity: 0.7; /* прозрачность */
             cursor: pointer;
-            transition: color 0.2s;
+            transition: opacity 0.2s;
         }
         .history-icon:hover {
-            color: #00ffaa;
+            opacity: 1;
         }
 
         /* Выбор сети с подписью */
@@ -491,7 +496,7 @@
             font-size: 12px;
             cursor: pointer;
             white-space: nowrap;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* плавная анимация */
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
         .copy-btn.copied {
             background: rgba(0,255,170,0.2);
@@ -499,7 +504,16 @@
             border-color: #00ffaa;
         }
 
-        .warning { font-size: 12px; color: #ffaa5e; background: rgba(255,170,94,0.1); padding: 10px; border-radius: 16px; margin-top: 12px; border-left: 3px solid #ffaa5e; }
+        /* Предупреждение — убрано уточнение */
+        .warning { 
+            font-size: 12px; 
+            color: #ffaa5e; 
+            background: rgba(255,170,94,0.1); 
+            padding: 10px; 
+            border-radius: 16px; 
+            margin-top: 12px; 
+            border-left: 3px solid #ffaa5e; 
+        }
 
         .season-header { background: rgba(0,0,0,0.3); border-radius: 20px; padding: 16px; margin-bottom: 16px; }
         .prize-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
@@ -895,16 +909,16 @@
 
                 <!-- Пополнение (deposit) -->
                 <div class="deposit-tab">
-                    <!-- Выбор монеты с иконкой истории -->
+                    <!-- Выбор монеты: слева надпись и кнопки, справа иконка истории -->
                     <div class="coin-selector">
-                        <span class="label">Монета:</span>
-                        <div style="display: flex; align-items: center; gap: 8px;">
+                        <div class="coin-left">
+                            <span class="label">Монета:</span>
                             <div class="coin-buttons">
                                 <div class="coin-btn active" data-coin="usdt">USDT</div>
                                 <div class="coin-btn" data-coin="usdc">USDC</div>
                             </div>
-                            <span class="history-icon" id="historyIcon">🕒</span>
                         </div>
+                        <span class="history-icon" id="historyIcon">🕒</span>
                     </div>
 
                     <!-- Выбор сети с подписью -->
@@ -935,8 +949,9 @@
                         </div>
                     </div>
 
+                    <!-- Предупреждение без уточнения -->
                     <div class="warning" id="comment-warning">
-                        ⚠️ Комментарий обязателен при пополнении (только для TON)!
+                        ⚠️ Комментарий обязателен при пополнении
                     </div>
 
                     <button class="gradient-btn" style="margin-top:24px;">Пополнить (Min 5 USDT)</button>
@@ -1190,7 +1205,7 @@
                     setTimeout(() => {
                         button.textContent = originalText;
                         button.classList.remove('copied');
-                    }, 2000); // 2 секунды
+                    }, 2000);
                 }).catch(() => {
                     alert('Ошибка копирования');
                 });
@@ -1214,7 +1229,7 @@
                 historyModal.style.display = 'flex';
             });
 
-            // Закрытие по крестикам (добавим обработчик для всех модалок)
+            // Закрытие по крестикам (для всех модалок)
             closeBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
                     depositModal.style.display = 'none';
@@ -1308,7 +1323,7 @@
                 }, 50);
             }
 
-            // ========== Модальные окна (остальные) ==========
+            // ========== Остальные модальные окна ==========
             const depositModal = document.getElementById('depositModal');
             const withdrawModal = document.getElementById('withdrawModal');
             const newCycleModal = document.getElementById('newCycleModal');
