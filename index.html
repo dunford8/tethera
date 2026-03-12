@@ -380,7 +380,7 @@
         .wallet-tab { flex: 1; text-align: center; padding: 10px 0; border-radius: 26px; font-weight: 500; color: #b0e0d0; cursor: pointer; }
         .wallet-tab.active { background: rgba(0, 255, 170, 0.2); color: #00ffaa; }
 
-        /* Новые стили для выбора монеты (компактно) */
+        /* Выбор монеты */
         .coin-selector {
             display: flex;
             align-items: center;
@@ -411,9 +411,39 @@
             color: #00ffaa;
         }
 
-        .network-selector { display: flex; gap: 8px; margin: 8px 0 16px; flex-wrap: wrap; }
-        .network-chip { background: rgba(255,255,255,0.03); border: 1px solid rgba(0, 255, 170, 0.3); border-radius: 30px; padding: 8px 16px; font-size: 14px; font-weight: 500; color: #ccf0e0; cursor: pointer; }
-        .network-chip.active { background: #00ffaa; color: #0b1f18; border-color: #00ffaa; font-weight: 600; }
+        /* Выбор сети с подписью */
+        .network-selector-wrapper {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 8px 0 16px;
+        }
+        .network-selector-wrapper .label {
+            font-size: 14px;
+            color: #b0e0d0;
+        }
+        .network-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .network-chip {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(0, 255, 170, 0.3);
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #ccf0e0;
+            cursor: pointer;
+        }
+        .network-chip.active {
+            background: #00ffaa;
+            color: #0b1f18;
+            border-color: #00ffaa;
+            font-weight: 600;
+        }
 
         /* Поля ввода с метками сверху и кнопками копирования */
         .input-group {
@@ -839,7 +869,7 @@
 
                 <!-- Пополнение (deposit) -->
                 <div class="deposit-tab">
-                    <!-- Выбор монеты (компактно над сетями) -->
+                    <!-- Выбор монеты -->
                     <div class="coin-selector">
                         <span class="label">Монета:</span>
                         <div class="coin-buttons">
@@ -848,12 +878,15 @@
                         </div>
                     </div>
 
-                    <!-- Выбор сети (новый порядок: TON, TRC20, SOL, BEP20) -->
-                    <div class="network-selector">
-                        <span class="network-chip active" data-network="ton">TON</span>
-                        <span class="network-chip" data-network="trc20">TRC20</span>
-                        <span class="network-chip" data-network="sol">SOL</span>
-                        <span class="network-chip" data-network="bep20">BEP20</span>
+                    <!-- Выбор сети с подписью -->
+                    <div class="network-selector-wrapper">
+                        <span class="label">Сеть:</span>
+                        <div class="network-selector">
+                            <span class="network-chip active" data-network="ton">TON</span>
+                            <span class="network-chip" data-network="trc20">TRC20</span>
+                            <span class="network-chip" data-network="sol">SOL</span>
+                            <span class="network-chip" data-network="bep20">BEP20</span>
+                        </div>
                     </div>
 
                     <!-- Динамические поля -->
@@ -1108,7 +1141,7 @@
                 });
             });
 
-            // Функция копирования с временной заменой текста кнопки
+            // Функция копирования с временной заменой текста кнопки (2 секунды)
             function copyWithFeedback(button, text) {
                 navigator.clipboard.writeText(text).then(() => {
                     const originalText = button.textContent;
@@ -1117,7 +1150,7 @@
                     setTimeout(() => {
                         button.textContent = originalText;
                         button.classList.remove('copied');
-                    }, 5000);
+                    }, 2000); // 2 секунды
                 }).catch(() => {
                     alert('Ошибка копирования');
                 });
@@ -1196,7 +1229,7 @@
                 }, 50);
             }
 
-            // ========== Модальные окна (как в предыдущей версии) ==========
+            // ========== Модальные окна ==========
             const depositModal = document.getElementById('depositModal');
             const withdrawModal = document.getElementById('withdrawModal');
             const newCycleModal = document.getElementById('newCycleModal');
