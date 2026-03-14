@@ -380,7 +380,7 @@
         .wallet-tab { flex: 1; text-align: center; padding: 10px 0; border-radius: 26px; font-weight: 500; color: #b0e0d0; cursor: pointer; }
         .wallet-tab.active { background: rgba(0, 255, 170, 0.2); color: #00ffaa; }
 
-        /* Выбор монеты — исправлено расположение */
+        /* Выбор монеты (общий стиль) */
         .coin-selector {
             display: flex;
             align-items: center;
@@ -415,10 +415,12 @@
             background: rgba(0, 255, 170, 0.2);
             color: #00ffaa;
         }
+
+        /* Иконка истории (только для пополнения) */
         .history-icon {
             font-size: 24px;
             color: #b0e0d0;
-            opacity: 0.7; /* прозрачность */
+            opacity: 0.7;
             cursor: pointer;
             transition: opacity 0.2s;
         }
@@ -460,7 +462,7 @@
             font-weight: 600;
         }
 
-        /* Поля ввода с метками сверху и кнопками копирования */
+        /* Поля ввода с метками сверху */
         .input-group {
             margin-bottom: 16px;
         }
@@ -483,10 +485,27 @@
             justify-content: space-between;
             word-break: break-all;
         }
-        .input-field span {
-            flex: 1;
-            margin-right: 10px;
+        .input-field input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 15px;
+            outline: none;
         }
+        .input-field input::placeholder {
+            color: #5f7f70;
+        }
+        .input-field input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        .input-field input[type="number"]::-webkit-outer-spin-button,
+        .input-field input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Кнопки копирования (для пополнения) */
         .copy-btn {
             background: transparent;
             border: 1px solid rgba(0,255,170,0.3);
@@ -504,7 +523,6 @@
             border-color: #00ffaa;
         }
 
-        /* Предупреждение — убрано уточнение */
         .warning { 
             font-size: 12px; 
             color: #ffaa5e; 
@@ -868,7 +886,7 @@
                     </div>
                 </div>
 
-                <!-- Таймер с исправленной подсказкой +1,5% -->
+                <!-- Таймер -->
                 <div class="timer-large">
                     <div class="timer-circle-wrapper">
                         <div class="timer-circle">
@@ -899,7 +917,7 @@
                 <button class="gradient-btn">Запустить цикл</button>
             </div>
 
-            <!-- Кошелёк (обновлённый) -->
+            <!-- Кошелёк -->
             <div class="screen wallet" id="screen-wallet">
                 <h1 class="title-main" style="font-size:24px;">КОШЕЛЁК</h1>
                 <div class="wallet-tabs">
@@ -907,9 +925,8 @@
                     <div class="wallet-tab" data-wallet="withdraw">Вывод</div>
                 </div>
 
-                <!-- Пополнение (deposit) -->
+                <!-- Пополнение (deposit) - без изменений -->
                 <div class="deposit-tab">
-                    <!-- Выбор монеты: слева надпись и кнопки, справа иконка истории -->
                     <div class="coin-selector">
                         <div class="coin-left">
                             <span class="label">Монета:</span>
@@ -921,7 +938,6 @@
                         <span class="history-icon" id="historyIcon">🕒</span>
                     </div>
 
-                    <!-- Выбор сети с подписью -->
                     <div class="network-selector-wrapper">
                         <span class="label">Сеть:</span>
                         <div class="network-selector">
@@ -932,7 +948,6 @@
                         </div>
                     </div>
 
-                    <!-- Динамические поля -->
                     <div id="wallet-address-group" class="input-group">
                         <div class="input-label">Адрес кошелька (USDT)</div>
                         <div class="input-field" id="address-field">
@@ -949,7 +964,6 @@
                         </div>
                     </div>
 
-                    <!-- Предупреждение без уточнения -->
                     <div class="warning" id="comment-warning">
                         ⚠️ Комментарий обязателен при пополнении
                     </div>
@@ -957,18 +971,48 @@
                     <button class="gradient-btn" style="margin-top:24px;">Пополнить (Min 5 USDT)</button>
                 </div>
 
-                <!-- Вывод (без изменений) -->
+                <!-- Вывод (withdraw) - обновлённый -->
                 <div class="withdraw-tab" style="display: none;">
                     <div style="font-size:32px; font-weight:700; text-align:center; margin:10px 0; color:#00ffaa;">$0.00</div>
-                    <div class="network-selector">
-                        <span class="network-chip">TON</span>
-                        <span class="network-chip active">SOL</span>
-                        <span class="network-chip">BEP20</span>
+
+                    <!-- Выбор монеты (без иконки) -->
+                    <div class="coin-selector" style="justify-content: flex-start;">
+                        <div class="coin-left">
+                            <span class="label">Монета:</span>
+                            <div class="coin-buttons">
+                                <div class="coin-btn active" data-coin="usdt">USDT</div>
+                                <div class="coin-btn" data-coin="usdc">USDC</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="input-field">0.00</div>
-                    <div style="font-size:13px; color:#b0e0d0; margin:4px 0 0 16px;">Введите сумму (USDT) · Min 1 USDT | Комиссия: 3%</div>
-                    <div class="input-field" style="margin-top:16px;">Введите свой адрес</div>
-                    <div style="font-size:13px; color:#b0e0d0; margin:4px 0 0 16px;">Ваш адрес USDT</div>
+
+                    <!-- Выбор сети -->
+                    <div class="network-selector-wrapper">
+                        <span class="label">Сеть:</span>
+                        <div class="network-selector">
+                            <span class="network-chip active" data-network="ton">TON</span>
+                            <span class="network-chip" data-network="trc20">TRC20</span>
+                            <span class="network-chip" data-network="sol">SOL</span>
+                            <span class="network-chip" data-network="bep20">BEP20</span>
+                        </div>
+                    </div>
+
+                    <!-- Поле ввода суммы -->
+                    <div class="input-group">
+                        <div class="input-label" id="withdraw-amount-label">Введите сумму (USDT) · Min 5 USDT</div>
+                        <div class="input-field">
+                            <input type="number" id="withdraw-amount" placeholder="0.00" min="5" step="0.01">
+                        </div>
+                    </div>
+
+                    <!-- Поле ввода адреса -->
+                    <div class="input-group">
+                        <div class="input-label" id="withdraw-address-label">Ваш адрес USDT</div>
+                        <div class="input-field">
+                            <input type="text" id="withdraw-address" placeholder="Введите адрес получателя">
+                        </div>
+                    </div>
+
                     <button class="gradient-btn" style="margin-top:24px;">Вывести</button>
                 </div>
             </div>
@@ -1016,7 +1060,7 @@
             <div class="nav-item" data-screen="ref"><span>👥</span><span>Рефералы</span></div>
         </nav>
 
-        <!-- Модальное окно для карточки "Активный депозит" -->
+        <!-- Модальные окна (без изменений) -->
         <div class="modal" id="depositModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -1025,7 +1069,6 @@
                 <div class="modal-hint">У вас ещё нет активных циклов</div>
             </div>
         </div>
-        <!-- Модальное окно для карточки "Доступно к выводу" -->
         <div class="modal" id="withdrawModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -1037,7 +1080,6 @@
                 </div>
             </div>
         </div>
-        <!-- Модальное окно для карточки "+ Новый" -->
         <div class="modal new-cycle-modal" id="newCycleModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -1065,7 +1107,6 @@
                 <div class="bottom-note">Циклы работают параллельно</div>
             </div>
         </div>
-        <!-- Модальное окно для карточки "0 Активных" -->
         <div class="modal active-cycles-modal" id="activeCyclesModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -1090,7 +1131,6 @@
                 </div>
             </div>
         </div>
-        <!-- Модальное окно для истории транзакций -->
         <div class="modal history-modal" id="historyModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -1139,9 +1179,9 @@
                 });
             }
 
-            // ========== Логика для кошелька ==========
-            const coinBtns = document.querySelectorAll('.coin-btn');
-            const networkChips = document.querySelectorAll('.network-chip');
+            // ========== Логика для кошелька (пополнение) ==========
+            const coinBtnsDeposit = document.querySelectorAll('.deposit-tab .coin-btn');
+            const networkChipsDeposit = document.querySelectorAll('.deposit-tab .network-chip');
             const addressSpan = document.getElementById('address-value');
             const commentGroup = document.getElementById('comment-group');
             const commentSpan = document.getElementById('comment-value');
@@ -1150,7 +1190,7 @@
             // Массив со словами для TWord
             const words = ['sunset', 'ocean', 'forest', 'mountain', 'river', 'thunder', 'galaxy', 'nebula', 'phoenix', 'crystal'];
             let currentTWord = words[Math.floor(Math.random() * words.length)];
-            commentSpan.textContent = currentTWord;
+            if (commentSpan) commentSpan.textContent = currentTWord;
 
             // Объект с адресами для разных сетей (только USDT)
             const addresses = {
@@ -1160,9 +1200,8 @@
                 bep20: '0xF990109424DAE8976FF513770EF0a0E8C4e7685d'
             };
 
-            // Функция обновления отображения в зависимости от выбранной сети
             function updateWalletDisplay(network) {
-                addressSpan.textContent = addresses[network];
+                if (addressSpan) addressSpan.textContent = addresses[network];
                 if (network === 'ton') {
                     commentGroup.style.display = 'block';
                     commentWarning.style.display = 'block';
@@ -1172,31 +1211,58 @@
                 }
             }
 
-            // Обработчики для выбора сети
-            networkChips.forEach(chip => {
+            networkChipsDeposit.forEach(chip => {
                 chip.addEventListener('click', function() {
-                    networkChips.forEach(c => c.classList.remove('active'));
+                    networkChipsDeposit.forEach(c => c.classList.remove('active'));
                     this.classList.add('active');
                     const network = this.dataset.network;
                     updateWalletDisplay(network);
                 });
             });
 
-            // Обработчики для выбора монеты (только USDT активен)
-            coinBtns.forEach(btn => {
+            coinBtnsDeposit.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    coinBtns.forEach(b => b.classList.remove('active'));
+                    coinBtnsDeposit.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     const coin = this.dataset.coin;
                     if (coin === 'usdc') {
                         alert('USDC пока не поддерживается. Используйте USDT.');
-                        document.querySelector('.coin-btn[data-coin="usdt"]').classList.add('active');
+                        document.querySelector('.deposit-tab .coin-btn[data-coin="usdt"]').classList.add('active');
                         this.classList.remove('active');
                     }
                 });
             });
 
-            // Функция копирования с временной заменой текста кнопки (2 секунды) и плавной анимацией
+            // ========== Логика для вывода ==========
+            const coinBtnsWithdraw = document.querySelectorAll('.withdraw-tab .coin-btn');
+            const networkChipsWithdraw = document.querySelectorAll('.withdraw-tab .network-chip');
+            const withdrawAmountLabel = document.getElementById('withdraw-amount-label');
+            const withdrawAddressLabel = document.getElementById('withdraw-address-label');
+            const withdrawAmountInput = document.getElementById('withdraw-amount');
+            const withdrawAddressInput = document.getElementById('withdraw-address');
+
+            // Переключение монеты в выводе
+            coinBtnsWithdraw.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    coinBtnsWithdraw.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const coin = this.dataset.coin.toUpperCase();
+                    withdrawAmountLabel.textContent = `Введите сумму (${coin}) · Min 5 ${coin}`;
+                    withdrawAddressLabel.textContent = `Ваш адрес ${coin}`;
+                    withdrawAmountInput.placeholder = '0.00';
+                    withdrawAddressInput.placeholder = `Введите адрес получателя ${coin}`;
+                });
+            });
+
+            // Переключение сети в выводе (пока без функционала)
+            networkChipsWithdraw.forEach(chip => {
+                chip.addEventListener('click', function() {
+                    networkChipsWithdraw.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // ========== Копирование для пополнения ==========
             function copyWithFeedback(button, text) {
                 navigator.clipboard.writeText(text).then(() => {
                     const originalText = button.textContent;
@@ -1211,25 +1277,31 @@
                 });
             }
 
-            // Кнопки копирования
-            document.getElementById('copy-address').addEventListener('click', function() {
-                copyWithFeedback(this, addressSpan.textContent);
-            });
+            const copyAddressBtn = document.getElementById('copy-address');
+            const copyCommentBtn = document.getElementById('copy-comment');
+            if (copyAddressBtn) {
+                copyAddressBtn.addEventListener('click', function() {
+                    copyWithFeedback(this, addressSpan.textContent);
+                });
+            }
+            if (copyCommentBtn) {
+                copyCommentBtn.addEventListener('click', function() {
+                    copyWithFeedback(this, commentSpan.textContent);
+                });
+            }
 
-            document.getElementById('copy-comment').addEventListener('click', function() {
-                copyWithFeedback(this, commentSpan.textContent);
-            });
-
-            // ========== Логика для истории транзакций ==========
+            // ========== История транзакций ==========
             const historyIcon = document.getElementById('historyIcon');
             const historyModal = document.getElementById('historyModal');
             const closeBtns = document.querySelectorAll('.close');
 
-            historyIcon.addEventListener('click', function() {
-                historyModal.style.display = 'flex';
-            });
+            if (historyIcon) {
+                historyIcon.addEventListener('click', function() {
+                    historyModal.style.display = 'flex';
+                });
+            }
 
-            // Закрытие по крестикам (для всех модалок)
+            // Закрытие по крестикам
             closeBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
                     depositModal.style.display = 'none';
