@@ -416,7 +416,7 @@
             color: #00ffaa;
         }
 
-        /* Иконка истории (только для пополнения) */
+        /* Иконка истории (для пополнения и вывода) */
         .history-icon {
             font-size: 24px;
             color: #b0e0d0;
@@ -967,16 +967,14 @@
                     <div class="warning" id="comment-warning">
                         ⚠️ Комментарий обязателен при пополнении
                     </div>
-
-                    <!-- Кнопка пополнить удалена -->
                 </div>
 
-                <!-- Вывод (withdraw) -->
+                <!-- Вывод (withdraw) - обновлённый -->
                 <div class="withdraw-tab" style="display: none;">
                     <div style="font-size:32px; font-weight:700; text-align:center; margin:10px 0; color:#00ffaa;">$0.00</div>
 
-                    <!-- Выбор монеты (без иконки) -->
-                    <div class="coin-selector" style="justify-content: flex-start;">
+                    <!-- Выбор монеты с иконкой истории -->
+                    <div class="coin-selector">
                         <div class="coin-left">
                             <span class="label">Монета:</span>
                             <div class="coin-buttons">
@@ -984,12 +982,13 @@
                                 <div class="coin-btn" data-coin="usdc">USDC</div>
                             </div>
                         </div>
+                        <span class="history-icon" id="withdrawHistoryIcon">🕒</span>
                     </div>
 
-                    <!-- Выбор сети -->
+                    <!-- Выбор сети (будет динамически обновляться) -->
                     <div class="network-selector-wrapper">
                         <span class="label">Сеть:</span>
-                        <div class="network-selector">
+                        <div class="network-selector" id="withdraw-network-selector">
                             <span class="network-chip active" data-network="ton">TON</span>
                             <span class="network-chip" data-network="trc20">TRC20</span>
                             <span class="network-chip" data-network="sol">SOL</span>
@@ -1187,12 +1186,10 @@
             const commentSpan = document.getElementById('comment-value');
             const commentWarning = document.getElementById('comment-warning');
 
-            // Массив со словами для TWord
             const words = ['sunset', 'ocean', 'forest', 'mountain', 'river', 'thunder', 'galaxy', 'nebula', 'phoenix', 'crystal'];
             let currentTWord = words[Math.floor(Math.random() * words.length)];
             if (commentSpan) commentSpan.textContent = currentTWord;
 
-            // Объект с адресами для разных сетей (только USDT)
             const addresses = {
                 ton: 'UQB9ZLQiBDcAi3bSHyYqN0qit8Fo9tPN_GPoWmFRLM8nnZL2',
                 trc20: 'TLoZopiKVoveXKVN4roLTB3ZJGAhAaLedY',
@@ -1235,34 +1232,67 @@
 
             // ========== Логика для вывода ==========
             const coinBtnsWithdraw = document.querySelectorAll('.withdraw-tab .coin-btn');
-            const networkChipsWithdraw = document.querySelectorAll('.withdraw-tab .network-chip');
+            const withdrawNetworkSelector = document.getElementById('withdraw-network-selector');
             const withdrawAmountLabel = document.getElementById('withdraw-amount-label');
             const withdrawAddressLabel = document.getElementById('withdraw-address-label');
             const withdrawAmountInput = document.getElementById('withdraw-amount');
             const withdrawAddressInput = document.getElementById('withdraw-address');
+
+            // Списки сетей для разных монет
+            const networksForUSDT = [
+                { name: 'TON', network: 'ton' },
+                { name: 'TRC20', network: 'trc20' },
+                { name: 'SOL', network: 'sol' },
+                { name: 'BEP20', network: 'bep20' }
+            ];
+            const networksForUSDC = [
+                { name: 'ETH', network: 'eth' },
+                { name: 'SOL', network: 'sol' },
+                { name: 'BEP20', network: 'bep20' }
+            ];
+
+            // Функция обновления сетей в выводе
+            function updateWithdrawNetworks(coin) {
+                const networks = coin === 'usdt' ? networksForUSDT : networksForUSDC;
+                const activeNetwork = networks[0].network;
+                // Очищаем и заново создаём элементы
+                withdrawNetworkSelector.innerHTML = '';
+                networks.forEach(net => {
+                    const chip = document.createElement('span');
+                    chip.className = 'network-chip';
+                    if (net.network === activeNetwork) chip.classList.add('active');
+                    chip.setAttribute('data-network', net.network);
+                    chip.textContent = net.name;
+                    withdrawNetworkSelector.appendChild(chip);
+                });
+                // Добавляем обработчики для новых чипов
+                document.querySelectorAll('.withdraw-tab .network-chip').forEach(chip => {
+                    chip.addEventListener('click', function() {
+                        document.querySelectorAll('.withdraw-tab .network-chip').forEach(c => c.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                });
+            }
 
             // Переключение монеты в выводе
             coinBtnsWithdraw.forEach(btn => {
                 btn.addEventListener('click', function() {
                     coinBtnsWithdraw.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
-                    const coin = this.dataset.coin.toUpperCase();
-                    withdrawAmountLabel.textContent = `Введите сумму (${coin}) · Min 5 ${coin}`;
-                    withdrawAddressLabel.textContent = `Ваш адрес ${coin}`;
+                    const coin = this.dataset.coin;
+                    const coinUpper = coin.toUpperCase();
+                    withdrawAmountLabel.textContent = `Введите сумму (${coinUpper}) · Min 5 ${coinUpper}`;
+                    withdrawAddressLabel.textContent = `Ваш адрес ${coinUpper}`;
                     withdrawAmountInput.placeholder = '0.00';
-                    withdrawAddressInput.placeholder = `Введите адрес получателя ${coin}`;
+                    withdrawAddressInput.placeholder = `Введите адрес получателя ${coinUpper}`;
+                    updateWithdrawNetworks(coin);
                 });
             });
 
-            // Переключение сети в выводе (пока без функционала)
-            networkChipsWithdraw.forEach(chip => {
-                chip.addEventListener('click', function() {
-                    networkChipsWithdraw.forEach(c => c.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
+            // Инициализация сетей для вывода (по умолчанию USDT)
+            updateWithdrawNetworks('usdt');
 
-            // ========== Копирование для пополнения ==========
+            // Копирование для пополнения
             function copyWithFeedback(button, text) {
                 navigator.clipboard.writeText(text).then(() => {
                     const originalText = button.textContent;
@@ -1290,16 +1320,16 @@
                 });
             }
 
-            // ========== История транзакций ==========
-            const historyIcon = document.getElementById('historyIcon');
+            // ========== История транзакций (общая иконка) ==========
+            const historyIcons = document.querySelectorAll('.history-icon');
             const historyModal = document.getElementById('historyModal');
             const closeBtns = document.querySelectorAll('.close');
 
-            if (historyIcon) {
-                historyIcon.addEventListener('click', function() {
+            historyIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
                     historyModal.style.display = 'flex';
                 });
-            }
+            });
 
             // Закрытие по крестикам
             closeBtns.forEach(btn => {
