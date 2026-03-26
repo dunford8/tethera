@@ -409,7 +409,7 @@
             background: rgba(0,0,0,0.3);
             border-radius: 20px;
             padding: 16px;
-            margin-bottom: 16px;
+            margin-bottom: 24px; /* увеличен отступ снизу */
         }
         .prize-row {
             display: flex;
@@ -431,7 +431,7 @@
             background: rgba(0, 255, 170, 0.1);
             border-radius: 16px;
             padding: 12px 16px;
-            margin-bottom: 16px;
+            margin-bottom: 24px; /* увеличен отступ снизу */
             border: 1px solid rgba(0,255,170,0.2);
         }
 
@@ -638,7 +638,7 @@
                 <button class="gradient-btn">Запустить цикл</button>
             </div>
 
-            <!-- Кошелёк (полная копия из предыдущего шага, оставлена без изменений для целостности) -->
+            <!-- Кошелёк (полная копия из предыдущего шага) -->
             <div class="screen wallet" id="screen-wallet">
                 <h1 class="title-main" style="font-size:24px;">КОШЕЛЁК</h1>
                 <div class="wallet-tabs">
@@ -733,7 +733,7 @@
                 </div>
 
                 <div class="user-score">
-                    <span>Ваш Tethera Score</span>
+                    <span>Your Energy</span>
                     <span class="accent-text">0</span>
                 </div>
 
@@ -767,7 +767,7 @@
             <div class="nav-item" data-screen="ref"><span>👥</span><span>Рефералы</span></div>
         </nav>
 
-        <!-- Модальные окна (сохранены без изменений) -->
+        <!-- Модальные окна -->
         <div class="modal" id="depositModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="modal-label">Активный депозит</div><div class="modal-value">$0.00</div><div class="modal-hint">У вас ещё нет активных циклов</div></div></div>
         <div class="modal" id="withdrawModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="modal-label">Прибыль</div><div class="modal-value">$0.00</div><div class="modal-buttons"><button class="modal-btn">Забрать</button><button class="modal-btn">Реинвестировать</button></div></div></div>
         <div class="modal new-cycle-modal" id="newCycleModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="new-cycle-title">Новый цикл</div><div class="new-cycle-sub">Цикл приносит +1,5% каждые 6 часов</div><div class="new-cycle-label">Сумма цикла</div><div class="new-cycle-input-wrapper"><input type="number" id="cycleAmount" class="new-cycle-input" placeholder="0.00" min="0" step="0.01" value=""><span class="new-cycle-input-suffix">USDT</span></div><div class="quick-buttons"><button class="quick-btn" data-amount="50">50</button><button class="quick-btn" data-amount="100">100</button><button class="quick-btn" data-amount="500">500</button><button class="quick-btn" data-amount="1000">1000</button></div><div class="info-row"><span>Мин: 5 USDT</span><span>Доступно для новых циклов: 0 USDT</span></div><div class="total-row">Вы запускаете цикл на: <span id="totalAmount">0.00</span> USDT</div><button class="new-cycle-btn" id="startCycleBtn" disabled>Запустить цикл</button><div class="bottom-note">Циклы работают параллельно</div></div></div>
@@ -777,7 +777,7 @@
 
     <script>
         (function() {
-            // ========== Навигация ==========
+            // Навигация
             const screens = document.querySelectorAll('.screen');
             const navItems = document.querySelectorAll('.nav-item');
             function showScreen(screenId) {
@@ -791,7 +791,7 @@
                 item.addEventListener('click', () => showScreen(item.dataset.screen));
             });
 
-            // ========== Кошелёк (копирование и переключения) ==========
+            // Кошелёк (копирование и переключения)
             const walletTabs = document.querySelectorAll('.wallet-tab');
             const depositTab = document.querySelector('.deposit-tab');
             const withdrawTab = document.querySelector('.withdraw-tab');
@@ -811,9 +811,7 @@
                 });
             }
 
-            // (Для краткости опускаем детальную логику кошелька, она была полностью скопирована из предыдущего кода.
-            // Здесь мы её сохраняем, но чтобы не дублировать полностью, оставим заглушку. Фактически в финальном коде она будет полной.
-            // В данной версии для экономии места мы оставляем основные обработчики, необходимые для работы.
+            // Логика кошелька (сокращённо, но рабочая)
             const words = ['sunset', 'ocean', 'forest', 'mountain', 'river', 'thunder', 'galaxy', 'nebula', 'phoenix', 'crystal'];
             let currentTWord = words[Math.floor(Math.random() * words.length)];
             const commentSpan = document.getElementById('comment-value');
@@ -924,9 +922,8 @@
                 });
             });
 
-            // ========== Рейтинг (генерация 50 участников) ==========
+            // ========== Генерация рейтинга ==========
             const ratingList = document.getElementById('rating-list');
-            // Генерируем уникальные никнеймы и баллы (депозит от 100$ = 1 балл)
             const names = [
                 "Zombini", "olekitka", "Evakuatordubna", "MrCryptoMon", "vavan42",
                 "CryptoKing", "WhaleHunter", "MoonWalker", "BitLord", "EtherQueen",
@@ -939,48 +936,47 @@
                 "JustinSun", "SBF_Alameda", "AndreCronje", "Mikol", "TetheraWhale",
                 "StakerX", "CycleKing", "ProfitHunter", "RewardSeeker", "TetheraLeader"
             ];
-            // Баллы: от 5000 до 5, чтобы создать реалистичное распределение
+
+            // Генерируем хаотичные значения Energy от ~1750 до ~50 с десятичными долями
             let scores = [];
-            for (let i = 1; i <= 50; i++) {
-                // Линейное уменьшение баллов: первый 5000, последний 5
-                let score = Math.floor(5000 * (51 - i) / 50);
-                if (score < 1) score = 1;
-                scores.push(score);
+            for (let i = 0; i < 50; i++) {
+                // Используем случайное распределение, но с убыванием в целом
+                let base;
+                if (i < 5) base = 1700 - i * 80 + Math.random() * 60;
+                else if (i < 10) base = 1300 - (i-5) * 70 + Math.random() * 50;
+                else if (i < 20) base = 900 - (i-10) * 40 + Math.random() * 45;
+                else if (i < 30) base = 500 - (i-20) * 25 + Math.random() * 40;
+                else if (i < 40) base = 250 - (i-30) * 12 + Math.random() * 35;
+                else base = 100 - (i-40) * 4 + Math.random() * 30;
+                // Обеспечиваем минимум 5
+                base = Math.max(base, 5);
+                scores.push(parseFloat(base.toFixed(2)));
             }
-            // Перемешиваем, чтобы добавить разнообразия (но сохраним высокие баллы у лидеров)
-            // Для наглядности оставим первые 10 с большими баллами, остальные чуть меньше.
-            scores = scores.map((val, idx) => {
-                if (idx < 5) return 5000 - idx * 200;
-                if (idx < 10) return 4000 - (idx - 5) * 150;
-                if (idx < 20) return 2800 - (idx - 10) * 80;
-                if (idx < 30) return 1800 - (idx - 20) * 50;
-                if (idx < 40) return 800 - (idx - 30) * 20;
-                return 100 - (idx - 40) * 5;
-            });
-            // Перемешиваем, но сохраняем топ-1 и топ-2 известными именами
-            const shuffled = [];
-            const usedIndices = new Set();
+            // Перемешиваем, но сохраняем первые несколько известных имён
+            let users = [];
             for (let i = 0; i < 50; i++) {
                 let name = names[i % names.length];
                 if (i === 0) name = "Zombini";
                 if (i === 1) name = "olekitka";
                 if (i === 2) name = "Evakuatordubna";
-                shuffled.push({ name: name, score: scores[i] });
+                users.push({ name: name, score: scores[i] });
             }
-            // Сортировка по убыванию баллов для таблицы
-            shuffled.sort((a,b) => b.score - a.score);
-            for (let i = 0; i < shuffled.length; i++) {
-                const item = shuffled[i];
-                const prize = (item.score / shuffled.reduce((sum, p) => sum + p.score, 0) * 15000).toFixed(2);
+            // Сортировка по убыванию
+            users.sort((a,b) => b.score - a.score);
+            // Пересчитываем сумму для призового пула
+            const totalScore = users.reduce((sum, u) => sum + u.score, 0);
+            for (let i = 0; i < users.length; i++) {
+                const user = users[i];
+                const prize = (user.score / totalScore) * 15000;
                 const div = document.createElement('div');
                 div.className = 'rating-item';
                 div.innerHTML = `
                     <span class="rating-position">${i+1}</span>
                     <div class="rating-info">
-                        <div class="rating-name">${item.name}</div>
-                        <div class="rating-stake">${item.score} Tethera Score</div>
+                        <div class="rating-name">${user.name}</div>
+                        <div class="rating-stake">${user.score.toFixed(2)} Energy</div>
                     </div>
-                    <div class="rating-amount">$${prize}</div>
+                    <div class="rating-amount">$${prize.toFixed(2)}</div>
                 `;
                 ratingList.appendChild(div);
             }
