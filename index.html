@@ -431,8 +431,8 @@
             font-size: 28px;
             font-weight: 700;
             color: #00ffaa;
-            text-align: center;
-            width: 140px; /* фиксированная ширина, чтобы центры совпадали */
+            text-align: right;
+            margin-right: -8px; /* смещаем влево, чтобы центр совпал с центром таймера */
         }
         .time-left {
             font-size: 18px;
@@ -441,8 +441,7 @@
             background: rgba(0,0,0,0.2);
             padding: 4px 12px;
             border-radius: 30px;
-            text-align: center;
-            width: 140px; /* такая же ширина, как у prize-amount */
+            text-align: right;
         }
 
         .user-score {
@@ -533,8 +532,8 @@
             .timer-large { margin-bottom: 60px; }
             .season-header { padding: 16px 20px; }
             .prize-label { font-size: 16px; }
-            .prize-amount { font-size: 24px; width: 120px; }
-            .time-left { font-size: 14px; width: 120px; }
+            .prize-amount { font-size: 24px; margin-right: -5px; }
+            .time-left { font-size: 14px; padding: 3px 10px; }
             .user-score .accent-text { font-size: 20px; }
         }
 
