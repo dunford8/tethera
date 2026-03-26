@@ -423,16 +423,18 @@
         }
         .prize-label {
             font-size: 18px;
-            font-weight: 700; /* жирный шрифт для "СЕЗОН I" */
+            font-weight: 700;
             color: #b0e0d0;
             letter-spacing: 0.5px;
+        }
+        .right-col {
+            width: 150px;
+            text-align: center;
         }
         .prize-amount {
             font-size: 28px;
             font-weight: 700;
             color: #00ffaa;
-            text-align: right;
-            margin-right: -8px; /* смещаем влево, чтобы центр совпал с центром таймера */
         }
         .time-left {
             font-size: 18px;
@@ -441,7 +443,7 @@
             background: rgba(0,0,0,0.2);
             padding: 4px 12px;
             border-radius: 30px;
-            text-align: right;
+            display: inline-block;
         }
 
         .user-score {
@@ -532,7 +534,8 @@
             .timer-large { margin-bottom: 60px; }
             .season-header { padding: 16px 20px; }
             .prize-label { font-size: 16px; }
-            .prize-amount { font-size: 24px; margin-right: -5px; }
+            .right-col { width: 130px; }
+            .prize-amount { font-size: 24px; }
             .time-left { font-size: 14px; padding: 3px 10px; }
             .user-score .accent-text { font-size: 20px; }
         }
@@ -766,11 +769,11 @@
                 <div class="season-header">
                     <div class="prize-row">
                         <span class="prize-label">СЕЗОН I</span>
-                        <span class="prize-amount">$15,000</span>
+                        <div class="right-col"><span class="prize-amount">$15,000</span></div>
                     </div>
                     <div class="prize-row">
                         <span class="prize-label">Осталось</span>
-                        <span class="time-left">29дн 04ч 18м</span>
+                        <div class="right-col"><span class="time-left">29дн 04ч 18м</span></div>
                     </div>
                 </div>
 
