@@ -825,7 +825,7 @@
             margin-top: 12px;
         }
 
-        /* Стили для окна истории транзакций */
+        /* Стили для окна истории транзакций (универсальное) */
         .history-modal .modal-content {
             max-width: 340px;
         }
@@ -925,7 +925,7 @@
                     <div class="wallet-tab" data-wallet="withdraw">Вывод</div>
                 </div>
 
-                <!-- Пополнение (deposit) - без кнопки -->
+                <!-- Пополнение (deposit) - обновлённое для USDC -->
                 <div class="deposit-tab">
                     <div class="coin-selector">
                         <div class="coin-left">
@@ -940,7 +940,7 @@
 
                     <div class="network-selector-wrapper">
                         <span class="label">Сеть:</span>
-                        <div class="network-selector">
+                        <div class="network-selector" id="deposit-network-selector">
                             <span class="network-chip active" data-network="ton">TON</span>
                             <span class="network-chip" data-network="trc20">TRC20</span>
                             <span class="network-chip" data-network="sol">SOL</span>
@@ -985,7 +985,7 @@
                         <span class="history-icon" id="withdrawHistoryIcon">🕒</span>
                     </div>
 
-                    <!-- Выбор сети (будет динамически обновляться) -->
+                    <!-- Выбор сети (динамический) -->
                     <div class="network-selector-wrapper">
                         <span class="label">Сеть:</span>
                         <div class="network-selector" id="withdraw-network-selector">
@@ -1059,7 +1059,7 @@
             <div class="nav-item" data-screen="ref"><span>👥</span><span>Рефералы</span></div>
         </nav>
 
-        <!-- Модальные окна (без изменений) -->
+        <!-- Модальные окна -->
         <div class="modal" id="depositModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -1130,10 +1130,11 @@
                 </div>
             </div>
         </div>
+        <!-- Общее модальное окно для истории (заголовок будет меняться) -->
         <div class="modal history-modal" id="historyModal" style="display: none;">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <div class="history-title">История транзакций</div>
+                <div class="history-title" id="historyModalTitle">История транзакций</div>
                 <div class="history-empty">Нет транзакций</div>
             </div>
         </div>
@@ -1178,84 +1179,126 @@
                 });
             }
 
-            // ========== Логика для кошелька (пополнение) ==========
-            const coinBtnsDeposit = document.querySelectorAll('.deposit-tab .coin-btn');
-            const networkChipsDeposit = document.querySelectorAll('.deposit-tab .network-chip');
+            // ========== Логика для пополнения (обновлённая) ==========
+            const depositCoinBtns = document.querySelectorAll('.deposit-tab .coin-btn');
+            const depositNetworkSelector = document.getElementById('deposit-network-selector');
             const addressSpan = document.getElementById('address-value');
             const commentGroup = document.getElementById('comment-group');
             const commentSpan = document.getElementById('comment-value');
             const commentWarning = document.getElementById('comment-warning');
+            const addressLabel = document.querySelector('#wallet-address-group .input-label');
 
             const words = ['sunset', 'ocean', 'forest', 'mountain', 'river', 'thunder', 'galaxy', 'nebula', 'phoenix', 'crystal'];
             let currentTWord = words[Math.floor(Math.random() * words.length)];
             if (commentSpan) commentSpan.textContent = currentTWord;
 
-            const addresses = {
+            // Адреса для USDT
+            const addressesUSDT = {
                 ton: 'UQB9ZLQiBDcAi3bSHyYqN0qit8Fo9tPN_GPoWmFRLM8nnZL2',
                 trc20: 'TLoZopiKVoveXKVN4roLTB3ZJGAhAaLedY',
                 sol: '69voGycFKw9qPZ6JGqqmqXXVPP9Rk5HkWTxBYhGrVRsk',
                 bep20: '0xF990109424DAE8976FF513770EF0a0E8C4e7685d'
             };
+            // Адреса для USDC
+            const addressesUSDC = {
+                eth: '0xF990109424DAE8976FF513770EF0a0E8C4e7685d',
+                sol: '69voGycFKw9qPZ6JGqqmqXXVPP9Rk5HkWTxBYhGrVRsk',
+                bep20: '0xF990109424DAE8976FF513770EF0a0E8C4e7685d'
+            };
 
-            function updateWalletDisplay(network) {
-                if (addressSpan) addressSpan.textContent = addresses[network];
-                if (network === 'ton') {
-                    commentGroup.style.display = 'block';
-                    commentWarning.style.display = 'block';
+            // Списки сетей для пополнения
+            const networksForDepositUSDT = [
+                { name: 'TON', network: 'ton' },
+                { name: 'TRC20', network: 'trc20' },
+                { name: 'SOL', network: 'sol' },
+                { name: 'BEP20', network: 'bep20' }
+            ];
+            const networksForDepositUSDC = [
+                { name: 'ETH', network: 'eth' },
+                { name: 'SOL', network: 'sol' },
+                { name: 'BEP20', network: 'bep20' }
+            ];
+
+            function updateDepositNetworks(coin) {
+                const networks = coin === 'usdt' ? networksForDepositUSDT : networksForDepositUSDC;
+                const activeNetwork = networks[0].network;
+                depositNetworkSelector.innerHTML = '';
+                networks.forEach(net => {
+                    const chip = document.createElement('span');
+                    chip.className = 'network-chip';
+                    if (net.network === activeNetwork) chip.classList.add('active');
+                    chip.setAttribute('data-network', net.network);
+                    chip.textContent = net.name;
+                    depositNetworkSelector.appendChild(chip);
+                });
+                // Добавляем обработчики
+                document.querySelectorAll('.deposit-tab .network-chip').forEach(chip => {
+                    chip.addEventListener('click', function() {
+                        document.querySelectorAll('.deposit-tab .network-chip').forEach(c => c.classList.remove('active'));
+                        this.classList.add('active');
+                        const network = this.dataset.network;
+                        updateDepositAddressAndComment(coin, network);
+                    });
+                });
+                // Обновляем адрес и комментарий для первой сети
+                updateDepositAddressAndComment(coin, activeNetwork);
+            }
+
+            function updateDepositAddressAndComment(coin, network) {
+                if (coin === 'usdt') {
+                    addressSpan.textContent = addressesUSDT[network] || '';
+                    addressLabel.textContent = 'Адрес кошелька (USDT)';
+                    if (network === 'ton') {
+                        commentGroup.style.display = 'block';
+                        commentWarning.style.display = 'block';
+                    } else {
+                        commentGroup.style.display = 'none';
+                        commentWarning.style.display = 'none';
+                    }
                 } else {
+                    addressSpan.textContent = addressesUSDC[network] || '';
+                    addressLabel.textContent = 'Адрес кошелька (USDC)';
                     commentGroup.style.display = 'none';
                     commentWarning.style.display = 'none';
                 }
             }
 
-            networkChipsDeposit.forEach(chip => {
-                chip.addEventListener('click', function() {
-                    networkChipsDeposit.forEach(c => c.classList.remove('active'));
-                    this.classList.add('active');
-                    const network = this.dataset.network;
-                    updateWalletDisplay(network);
-                });
-            });
-
-            coinBtnsDeposit.forEach(btn => {
+            // Обработчики выбора монеты для пополнения
+            depositCoinBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    coinBtnsDeposit.forEach(b => b.classList.remove('active'));
+                    depositCoinBtns.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     const coin = this.dataset.coin;
-                    if (coin === 'usdc') {
-                        alert('USDC пока не поддерживается. Используйте USDT.');
-                        document.querySelector('.deposit-tab .coin-btn[data-coin="usdt"]').classList.add('active');
-                        this.classList.remove('active');
-                    }
+                    updateDepositNetworks(coin);
                 });
             });
 
+            // Инициализация пополнения (USDT)
+            updateDepositNetworks('usdt');
+
             // ========== Логика для вывода ==========
-            const coinBtnsWithdraw = document.querySelectorAll('.withdraw-tab .coin-btn');
+            const withdrawCoinBtns = document.querySelectorAll('.withdraw-tab .coin-btn');
             const withdrawNetworkSelector = document.getElementById('withdraw-network-selector');
             const withdrawAmountLabel = document.getElementById('withdraw-amount-label');
             const withdrawAddressLabel = document.getElementById('withdraw-address-label');
             const withdrawAmountInput = document.getElementById('withdraw-amount');
             const withdrawAddressInput = document.getElementById('withdraw-address');
 
-            // Списки сетей для разных монет
-            const networksForUSDT = [
+            const networksForWithdrawUSDT = [
                 { name: 'TON', network: 'ton' },
                 { name: 'TRC20', network: 'trc20' },
                 { name: 'SOL', network: 'sol' },
                 { name: 'BEP20', network: 'bep20' }
             ];
-            const networksForUSDC = [
+            const networksForWithdrawUSDC = [
                 { name: 'ETH', network: 'eth' },
                 { name: 'SOL', network: 'sol' },
                 { name: 'BEP20', network: 'bep20' }
             ];
 
-            // Функция обновления сетей в выводе
             function updateWithdrawNetworks(coin) {
-                const networks = coin === 'usdt' ? networksForUSDT : networksForUSDC;
+                const networks = coin === 'usdt' ? networksForWithdrawUSDT : networksForWithdrawUSDC;
                 const activeNetwork = networks[0].network;
-                // Очищаем и заново создаём элементы
                 withdrawNetworkSelector.innerHTML = '';
                 networks.forEach(net => {
                     const chip = document.createElement('span');
@@ -1265,7 +1308,6 @@
                     chip.textContent = net.name;
                     withdrawNetworkSelector.appendChild(chip);
                 });
-                // Добавляем обработчики для новых чипов
                 document.querySelectorAll('.withdraw-tab .network-chip').forEach(chip => {
                     chip.addEventListener('click', function() {
                         document.querySelectorAll('.withdraw-tab .network-chip').forEach(c => c.classList.remove('active'));
@@ -1274,10 +1316,9 @@
                 });
             }
 
-            // Переключение монеты в выводе
-            coinBtnsWithdraw.forEach(btn => {
+            withdrawCoinBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    coinBtnsWithdraw.forEach(b => b.classList.remove('active'));
+                    withdrawCoinBtns.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     const coin = this.dataset.coin;
                     const coinUpper = coin.toUpperCase();
@@ -1288,11 +1329,9 @@
                     updateWithdrawNetworks(coin);
                 });
             });
-
-            // Инициализация сетей для вывода (по умолчанию USDT)
             updateWithdrawNetworks('usdt');
 
-            // Копирование для пополнения
+            // ========== Копирование для пополнения ==========
             function copyWithFeedback(button, text) {
                 navigator.clipboard.writeText(text).then(() => {
                     const originalText = button.textContent;
@@ -1320,13 +1359,21 @@
                 });
             }
 
-            // ========== История транзакций (общая иконка) ==========
+            // ========== История транзакций ==========
             const historyIcons = document.querySelectorAll('.history-icon');
             const historyModal = document.getElementById('historyModal');
+            const historyModalTitle = document.getElementById('historyModalTitle');
             const closeBtns = document.querySelectorAll('.close');
 
             historyIcons.forEach(icon => {
                 icon.addEventListener('click', function() {
+                    // Определяем, из какой вкладки вызвано
+                    const isWithdraw = this.closest('.withdraw-tab') !== null;
+                    if (isWithdraw) {
+                        historyModalTitle.textContent = 'История вывода';
+                    } else {
+                        historyModalTitle.textContent = 'История транзакций';
+                    }
                     historyModal.style.display = 'flex';
                 });
             });
