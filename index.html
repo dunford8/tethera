@@ -405,40 +405,73 @@
         .warning { font-size: 12px; color: #ffaa5e; background: rgba(255,170,94,0.1); padding: 10px; border-radius: 16px; margin-top: 12px; border-left: 3px solid #ffaa5e; }
 
         /* Стили для рейтинга (обновлённые) */
+        .rating-screen .season-header {
+            margin-top: 12px; /* небольшой отступ сверху */
+        }
         .season-header {
-            background: rgba(0,0,0,0.3);
-            border-radius: 20px;
-            padding: 16px;
-            margin-bottom: 24px; /* увеличен отступ снизу */
+            background: rgba(0, 20, 15, 0.5);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0, 255, 170, 0.4);
+            box-shadow: 0 0 20px rgba(0, 255, 170, 0.2);
+            transition: all 0.2s;
         }
         .prize-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            align-items: baseline;
+            margin-bottom: 12px;
+        }
+        .prize-row:last-child {
+            margin-bottom: 0;
+        }
+        .prize-label {
+            font-size: 14px;
+            color: #b0e0d0;
+            letter-spacing: 0.5px;
         }
         .prize-amount {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             color: #00ffaa;
+            text-shadow: 0 0 8px rgba(0, 255, 170, 0.5);
         }
         .time-left {
+            font-size: 16px;
+            font-weight: 500;
             color: #b0e0d0;
+            background: rgba(0,0,0,0.2);
+            padding: 4px 12px;
+            border-radius: 30px;
         }
 
         .user-score {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             background: rgba(0, 255, 170, 0.1);
-            border-radius: 16px;
-            padding: 12px 16px;
-            margin-bottom: 24px; /* увеличен отступ снизу */
-            border: 1px solid rgba(0,255,170,0.2);
+            border-radius: 24px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0,255,170,0.3);
+            backdrop-filter: blur(4px);
+        }
+        .user-score span:first-child {
+            font-size: 14px;
+            color: #b0e0d0;
+        }
+        .user-score .accent-text {
+            font-size: 24px;
+            font-weight: 700;
         }
 
         .rating-list {
             max-height: 500px;
             overflow-y: auto;
             scrollbar-width: thin;
+            padding-right: 4px;
         }
         .rating-item {
             display: flex;
@@ -448,6 +481,10 @@
             border-radius: 20px;
             padding: 12px 16px;
             margin-bottom: 8px;
+            transition: background 0.2s;
+        }
+        .rating-item:hover {
+            background: rgba(255,255,255,0.05);
         }
         .rating-position {
             font-weight: 700;
@@ -460,14 +497,17 @@
         }
         .rating-name {
             font-weight: 600;
+            font-size: 15px;
         }
         .rating-stake {
-            font-size: 13px;
+            font-size: 12px;
             color: #b0e0d0;
+            margin-top: 2px;
         }
         .rating-amount {
             font-weight: 600;
             color: #fff;
+            font-size: 14px;
         }
 
         .ref-header { display: flex; justify-content: space-between; background: rgba(0,0,0,0.2); border-radius: 20px; padding: 16px; margin: 16px 0; }
@@ -493,6 +533,9 @@
             .cycles-row { margin-top: 20px; }
             .gradient-btn { margin-top: 14px; }
             .timer-large { margin-bottom: 60px; }
+            .season-header { padding: 16px 20px; margin-top: 8px; }
+            .prize-amount { font-size: 24px; }
+            .user-score .accent-text { font-size: 20px; }
         }
 
         /* Модальные окна (без изменений) */
@@ -723,17 +766,17 @@
                 <h1 class="title-main" style="font-size:24px;">РЕЙТИНГ</h1>
                 <div class="season-header">
                     <div class="prize-row">
-                        <span>Сезон</span>
+                        <span class="prize-label">Сезон 1</span>
                         <span class="prize-amount">$15,000</span>
                     </div>
                     <div class="prize-row">
-                        <span>Осталось</span>
+                        <span class="prize-label">Осталось</span>
                         <span class="time-left">29дн 04ч 18м</span>
                     </div>
                 </div>
 
                 <div class="user-score">
-                    <span>Your Energy</span>
+                    <span>Your Energy Score</span>
                     <span class="accent-text">0</span>
                 </div>
 
@@ -922,7 +965,7 @@
                 });
             });
 
-            // ========== Генерация рейтинга ==========
+            // ========== Генерация рейтинга (с ES) ==========
             const ratingList = document.getElementById('rating-list');
             const names = [
                 "Zombini", "olekitka", "Evakuatordubna", "MrCryptoMon", "vavan42",
@@ -937,10 +980,8 @@
                 "StakerX", "CycleKing", "ProfitHunter", "RewardSeeker", "TetheraLeader"
             ];
 
-            // Генерируем хаотичные значения Energy от ~1750 до ~50 с десятичными долями
             let scores = [];
             for (let i = 0; i < 50; i++) {
-                // Используем случайное распределение, но с убыванием в целом
                 let base;
                 if (i < 5) base = 1700 - i * 80 + Math.random() * 60;
                 else if (i < 10) base = 1300 - (i-5) * 70 + Math.random() * 50;
@@ -948,11 +989,9 @@
                 else if (i < 30) base = 500 - (i-20) * 25 + Math.random() * 40;
                 else if (i < 40) base = 250 - (i-30) * 12 + Math.random() * 35;
                 else base = 100 - (i-40) * 4 + Math.random() * 30;
-                // Обеспечиваем минимум 5
                 base = Math.max(base, 5);
                 scores.push(parseFloat(base.toFixed(2)));
             }
-            // Перемешиваем, но сохраняем первые несколько известных имён
             let users = [];
             for (let i = 0; i < 50; i++) {
                 let name = names[i % names.length];
@@ -961,9 +1000,7 @@
                 if (i === 2) name = "Evakuatordubna";
                 users.push({ name: name, score: scores[i] });
             }
-            // Сортировка по убыванию
             users.sort((a,b) => b.score - a.score);
-            // Пересчитываем сумму для призового пула
             const totalScore = users.reduce((sum, u) => sum + u.score, 0);
             for (let i = 0; i < users.length; i++) {
                 const user = users[i];
@@ -974,7 +1011,7 @@
                     <span class="rating-position">${i+1}</span>
                     <div class="rating-info">
                         <div class="rating-name">${user.name}</div>
-                        <div class="rating-stake">${user.score.toFixed(2)} Energy</div>
+                        <div class="rating-stake">${user.score.toFixed(2)} ES</div>
                     </div>
                     <div class="rating-amount">$${prize.toFixed(2)}</div>
                 `;
