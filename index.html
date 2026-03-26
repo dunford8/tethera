@@ -415,7 +415,7 @@
         .prize-row {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
+            align-items: center;
             margin-bottom: 12px;
         }
         .prize-row:last-child {
@@ -423,7 +423,7 @@
         }
         .prize-label {
             font-size: 18px;
-            font-weight: 600;
+            font-weight: 700; /* жирный шрифт для "СЕЗОН I" */
             color: #b0e0d0;
             letter-spacing: 0.5px;
         }
@@ -431,8 +431,8 @@
             font-size: 28px;
             font-weight: 700;
             color: #00ffaa;
-            text-align: center;
-            width: 120px; /* фиксированная ширина для выравнивания */
+            text-align: right;
+            min-width: 140px; /* фиксированная ширина для выравнивания */
         }
         .time-left {
             font-size: 18px;
@@ -441,8 +441,8 @@
             background: rgba(0,0,0,0.2);
             padding: 4px 12px;
             border-radius: 30px;
-            text-align: center;
-            width: 120px; /* фиксированная ширина, совпадает с priza-amount */
+            text-align: right;
+            min-width: 140px; /* такая же ширина, как у prize-amount */
         }
 
         .user-score {
@@ -533,8 +533,8 @@
             .timer-large { margin-bottom: 60px; }
             .season-header { padding: 16px 20px; }
             .prize-label { font-size: 16px; }
-            .prize-amount { font-size: 24px; width: 100px; }
-            .time-left { font-size: 16px; width: 100px; }
+            .prize-amount { font-size: 24px; min-width: 120px; }
+            .time-left { font-size: 14px; min-width: 120px; }
             .user-score .accent-text { font-size: 20px; }
         }
 
@@ -763,10 +763,10 @@
 
             <!-- Рейтинг (обновлённый) -->
             <div class="screen rating" id="screen-rating">
-                <h1 class="title-main" style="font-size:24px; margin-bottom: 20px;">РЕЙТИНГ</h1> <!-- уменьшен отступ -->
+                <h1 class="title-main" style="font-size:24px; margin-bottom: 20px;">РЕЙТИНГ</h1>
                 <div class="season-header">
                     <div class="prize-row">
-                        <span class="prize-label">СЕЗОН I</span> <!-- капс -->
+                        <span class="prize-label">СЕЗОН I</span>
                         <span class="prize-amount">$15,000</span>
                     </div>
                     <div class="prize-row">
