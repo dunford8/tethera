@@ -405,18 +405,19 @@
         .warning { font-size: 12px; color: #ffaa5e; background: rgba(255,170,94,0.1); padding: 10px; border-radius: 16px; margin-top: 12px; border-left: 3px solid #ffaa5e; }
 
         /* Стили для рейтинга (обновлённые) */
-        .rating-screen .season-header {
-            margin-top: 12px; /* небольшой отступ сверху */
+        .rating-screen .screen {
+            /* дополнительный отступ задаётся через margin-top для .season-header */
+        }
+        .rating-header {
+            margin-bottom: 20px; /* увеличиваем отступ после заголовка */
         }
         .season-header {
-            background: rgba(0, 20, 15, 0.5);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 20, 15, 0.4);
             border-radius: 28px;
             padding: 20px 24px;
             margin-bottom: 24px;
-            border: 1px solid rgba(0, 255, 170, 0.4);
-            box-shadow: 0 0 20px rgba(0, 255, 170, 0.2);
-            transition: all 0.2s;
+            border: 1px solid rgba(0, 255, 170, 0.3);
+            /* убираем свечение */
         }
         .prize-row {
             display: flex;
@@ -428,7 +429,8 @@
             margin-bottom: 0;
         }
         .prize-label {
-            font-size: 14px;
+            font-size: 18px;
+            font-weight: 600;
             color: #b0e0d0;
             letter-spacing: 0.5px;
         }
@@ -436,10 +438,9 @@
             font-size: 28px;
             font-weight: 700;
             color: #00ffaa;
-            text-shadow: 0 0 8px rgba(0, 255, 170, 0.5);
         }
         .time-left {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 500;
             color: #b0e0d0;
             background: rgba(0,0,0,0.2);
@@ -533,9 +534,11 @@
             .cycles-row { margin-top: 20px; }
             .gradient-btn { margin-top: 14px; }
             .timer-large { margin-bottom: 60px; }
-            .season-header { padding: 16px 20px; margin-top: 8px; }
+            .season-header { padding: 16px 20px; margin-top: 0; }
+            .prize-label { font-size: 16px; }
             .prize-amount { font-size: 24px; }
             .user-score .accent-text { font-size: 20px; }
+            .time-left { font-size: 16px; }
         }
 
         /* Модальные окна (без изменений) */
@@ -681,7 +684,7 @@
                 <button class="gradient-btn">Запустить цикл</button>
             </div>
 
-            <!-- Кошелёк (полная копия из предыдущего шага) -->
+            <!-- Кошелёк (полная копия) -->
             <div class="screen wallet" id="screen-wallet">
                 <h1 class="title-main" style="font-size:24px;">КОШЕЛЁК</h1>
                 <div class="wallet-tabs">
@@ -763,10 +766,10 @@
 
             <!-- Рейтинг (обновлённый) -->
             <div class="screen rating" id="screen-rating">
-                <h1 class="title-main" style="font-size:24px;">РЕЙТИНГ</h1>
+                <h1 class="title-main" style="font-size:24px; margin-bottom: 32px;">РЕЙТИНГ</h1> <!-- увеличен отступ снизу -->
                 <div class="season-header">
                     <div class="prize-row">
-                        <span class="prize-label">Сезон 1</span>
+                        <span class="prize-label">Сезон I</span> <!-- римская единица -->
                         <span class="prize-amount">$15,000</span>
                     </div>
                     <div class="prize-row">
@@ -810,7 +813,7 @@
             <div class="nav-item" data-screen="ref"><span>👥</span><span>Рефералы</span></div>
         </nav>
 
-        <!-- Модальные окна -->
+        <!-- Модальные окна (без изменений) -->
         <div class="modal" id="depositModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="modal-label">Активный депозит</div><div class="modal-value">$0.00</div><div class="modal-hint">У вас ещё нет активных циклов</div></div></div>
         <div class="modal" id="withdrawModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="modal-label">Прибыль</div><div class="modal-value">$0.00</div><div class="modal-buttons"><button class="modal-btn">Забрать</button><button class="modal-btn">Реинвестировать</button></div></div></div>
         <div class="modal new-cycle-modal" id="newCycleModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="new-cycle-title">Новый цикл</div><div class="new-cycle-sub">Цикл приносит +1,5% каждые 6 часов</div><div class="new-cycle-label">Сумма цикла</div><div class="new-cycle-input-wrapper"><input type="number" id="cycleAmount" class="new-cycle-input" placeholder="0.00" min="0" step="0.01" value=""><span class="new-cycle-input-suffix">USDT</span></div><div class="quick-buttons"><button class="quick-btn" data-amount="50">50</button><button class="quick-btn" data-amount="100">100</button><button class="quick-btn" data-amount="500">500</button><button class="quick-btn" data-amount="1000">1000</button></div><div class="info-row"><span>Мин: 5 USDT</span><span>Доступно для новых циклов: 0 USDT</span></div><div class="total-row">Вы запускаете цикл на: <span id="totalAmount">0.00</span> USDT</div><button class="new-cycle-btn" id="startCycleBtn" disabled>Запустить цикл</button><div class="bottom-note">Циклы работают параллельно</div></div></div>
