@@ -509,18 +509,119 @@
             font-size: 14px;
         }
 
-        .ref-header { display: flex; justify-content: space-between; background: rgba(0,0,0,0.2); border-radius: 20px; padding: 16px; margin: 16px 0; }
-        .ref-stat { text-align: center; }
-        .ref-stat-value { font-size: 28px; font-weight: 700; color: #00ffaa; }
-        .ref-stat-label { font-size: 12px; color: #b0e0d0; }
+        /* Стили для вкладки рефералов */
+        .ref-header {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+        .ref-stat {
+            text-align: center;
+        }
+        .ref-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00ffaa;
+        }
+        .ref-stat-label {
+            font-size: 12px;
+            color: #b0e0d0;
+        }
 
-        .level-card { background: rgba(0,0,0,0.2); border-left: 4px solid #00ffaa; border-radius: 16px; padding: 16px; margin-bottom: 12px; }
-        .level-title { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 6px; }
-        .level-conditions { font-size: 12px; color: #b0e0d0; list-style: none; padding-left: 0; }
-        .level-conditions li { margin-bottom: 4px; padding-left: 12px; position: relative; }
-        .level-conditions li::before { content: "•"; color: #00ffaa; position: absolute; left: 0; }
+        .level-card {
+            background: rgba(0,0,0,0.2);
+            border-left: 4px solid #00ffaa;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        .level-title {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .level-conditions {
+            font-size: 12px;
+            color: #b0e0d0;
+            list-style: none;
+            padding-left: 0;
+        }
+        .level-conditions li {
+            margin-bottom: 4px;
+            padding-left: 12px;
+            position: relative;
+        }
+        .level-conditions li::before {
+            content: "•";
+            color: #00ffaa;
+            position: absolute;
+            left: 0;
+        }
 
-        .invite-btn { background: linear-gradient(135deg, #00c9a7, #00a87e); border: none; border-radius: 40px; padding: 14px; color: #0b1f18; font-weight: 600; width: 100%; margin-top: 8px; font-size: 16px; box-shadow: 0 8px 20px rgba(0, 255, 170, 0.3); cursor: pointer; }
+        .invite-btn {
+            background: linear-gradient(135deg, #00c9a7, #00a87e);
+            border: none;
+            border-radius: 40px;
+            padding: 14px;
+            color: #0b1f18;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 8px;
+            font-size: 16px;
+            box-shadow: 0 8px 20px rgba(0, 255, 170, 0.3);
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .invite-btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 4px 12px rgba(0, 255, 170, 0.5);
+        }
+
+        /* Стили для модального окна рефералов */
+        .referral-modal .modal-content {
+            max-width: 340px;
+            text-align: center;
+        }
+        .referral-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .referral-sub {
+            font-size: 14px;
+            color: #b0e0d0;
+            margin-bottom: 20px;
+        }
+        .referral-link {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,255,170,0.3);
+            border-radius: 20px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            word-break: break-all;
+            font-size: 14px;
+            color: #fff;
+        }
+        .referral-copy-btn {
+            background: linear-gradient(135deg, #00c9a7, #00a87e);
+            border: none;
+            border-radius: 40px;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #0b1f18;
+            cursor: pointer;
+            transition: transform 0.15s;
+            width: 100%;
+        }
+        .referral-copy-btn:active {
+            transform: scale(0.98);
+        }
 
         @media (max-height: 700px) {
             .screen { padding-top: 80px; padding-bottom: 5px; }
@@ -540,7 +641,7 @@
             .user-score .accent-text { font-size: 20px; }
         }
 
-        /* Модальные окна (без изменений) */
+        /* Общие стили для модальных окон */
         .modal {
             position: fixed;
             top: 0;
@@ -763,7 +864,7 @@
                 </div>
             </div>
 
-            <!-- Рейтинг (обновлённый) -->
+            <!-- Рейтинг -->
             <div class="screen rating" id="screen-rating">
                 <h1 class="title-main" style="font-size:24px; margin-bottom: 20px;">РЕЙТИНГ</h1>
                 <div class="season-header">
@@ -776,25 +877,30 @@
                         <div class="right-col"><span class="time-left">29дн 04ч 18м</span></div>
                     </div>
                 </div>
-
                 <div class="user-score">
                     <span>Your Energy Score</span>
                     <span class="accent-text">0</span>
                 </div>
-
-                <div class="rating-list" id="rating-list">
-                    <!-- 50 участников будут добавлены скриптом -->
-                </div>
+                <div class="rating-list" id="rating-list"></div>
             </div>
 
-            <!-- Рефералы -->
+            <!-- Рефералы (обновлённые) -->
             <div class="screen ref" id="screen-ref">
                 <h1 class="title-main" style="font-size:24px;">РЕФЕРАЛЫ</h1>
-                <button class="invite-btn">👥 Пригласить друга</button>
+                <button class="invite-btn" id="inviteFriendBtn">👥 Пригласить друга</button>
                 <div class="ref-header">
-                    <div class="ref-stat"><div class="ref-stat-value">0</div><div class="ref-stat-label">Ваши рефералы</div></div>
-                    <div class="ref-stat"><div class="ref-stat-value">0</div><div class="ref-stat-label">Вся команда</div></div>
-                    <div class="ref-stat"><div class="ref-stat-value">0</div><div class="ref-stat-label">Активных</div></div>
+                    <div class="ref-stat">
+                        <div class="ref-stat-value">0</div>
+                        <div class="ref-stat-label">Ваши рефералы</div>
+                    </div>
+                    <div class="ref-stat">
+                        <div class="ref-stat-value">0</div>
+                        <div class="ref-stat-label">Вся команда</div>
+                    </div>
+                    <div class="ref-stat">
+                        <div class="ref-stat-value">0</div>
+                        <div class="ref-stat-label">Активных</div>
+                    </div>
                 </div>
                 <h3 style="margin:16px 0 8px; font-weight:500;">Уровни и вознаграждения</h3>
                 <div class="level-card"><div class="level-title"><span>Уровень 1</span><span class="accent-text">10%</span></div></div>
@@ -818,6 +924,16 @@
         <div class="modal new-cycle-modal" id="newCycleModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="new-cycle-title">Новый цикл</div><div class="new-cycle-sub">Цикл приносит +1,5% каждые 6 часов</div><div class="new-cycle-label">Сумма цикла</div><div class="new-cycle-input-wrapper"><input type="number" id="cycleAmount" class="new-cycle-input" placeholder="0.00" min="0" step="0.01" value=""><span class="new-cycle-input-suffix">USDT</span></div><div class="quick-buttons"><button class="quick-btn" data-amount="50">50</button><button class="quick-btn" data-amount="100">100</button><button class="quick-btn" data-amount="500">500</button><button class="quick-btn" data-amount="1000">1000</button></div><div class="info-row"><span>Мин: 5 USDT</span><span>Доступно для новых циклов: 0 USDT</span></div><div class="total-row">Вы запускаете цикл на: <span id="totalAmount">0.00</span> USDT</div><button class="new-cycle-btn" id="startCycleBtn" disabled>Запустить цикл</button><div class="bottom-note">Циклы работают параллельно</div></div></div>
         <div class="modal active-cycles-modal" id="activeCyclesModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="active-cycles-title">Активные циклы</div><div class="info-list"><div class="info-item"><span>Всего циклов</span><span class="info-value">0</span></div><div class="info-item"><span>В работе</span><span class="info-value">0 USDT</span></div><div class="info-item"><span>Начисление</span><span class="info-value">+1,5% каждые 6 часов</span></div><div class="info-item"><span>Заработано с циклов</span><span class="info-value">0 USDT</span></div></div></div></div>
         <div class="modal history-modal" id="historyModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="history-title">История транзакций</div><div class="history-empty">Нет транзакций</div></div></div>
+        <!-- Модальное окно для рефералов -->
+        <div class="modal referral-modal" id="referralModal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="referral-title">Пригласить друга</div>
+                <div class="referral-sub">Поделитесь ссылкой на бот</div>
+                <div class="referral-link" id="referralLink">https://t.me/tethera_aibot</div>
+                <button class="referral-copy-btn" id="copyReferralLink">Копировать</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -836,7 +952,7 @@
                 item.addEventListener('click', () => showScreen(item.dataset.screen));
             });
 
-            // Кошелёк (копирование и переключения)
+            // Кошелёк (копирование и переключения) - сокращённо, но рабочая версия
             const walletTabs = document.querySelectorAll('.wallet-tab');
             const depositTab = document.querySelector('.deposit-tab');
             const withdrawTab = document.querySelector('.withdraw-tab');
@@ -856,7 +972,6 @@
                 });
             }
 
-            // Логика кошелька (сокращённо, но рабочая)
             const words = ['sunset', 'ocean', 'forest', 'mountain', 'river', 'thunder', 'galaxy', 'nebula', 'phoenix', 'crystal'];
             let currentTWord = words[Math.floor(Math.random() * words.length)];
             const commentSpan = document.getElementById('comment-value');
@@ -967,57 +1082,76 @@
                 });
             });
 
-            // ========== Генерация рейтинга ==========
+            // ========== Рейтинг ==========
             const ratingList = document.getElementById('rating-list');
-            const names = [
-                "Zombini", "olekitka", "Evakuatordubna", "MrCryptoMon", "vavan42",
-                "CryptoKing", "WhaleHunter", "MoonWalker", "BitLord", "EtherQueen",
-                "SolanaStar", "TetheraFan", "BlockMaster", "DeFiGuru", "StakeWizard",
-                "LiquidityPro", "YieldFarmer", "NodeRunner", "HashBreaker", "MinerJoe",
-                "SatoshiFan", "VitalikLover", "PumpKing", "DumpLord", "HodlMaster",
-                "BullRunner", "BearSlayer", "AltSeason", "CryptoNerd", "TokenSeeker",
-                "ChainExplorer", "SmartContract", "Web3Builder", "MetaVerse", "NFTCollector",
-                "DiamondHands", "PaperHands", "LamboDream", "SatoshiNakamoto", "CZ_Binance",
-                "JustinSun", "SBF_Alameda", "AndreCronje", "Mikol", "TetheraWhale",
-                "StakerX", "CycleKing", "ProfitHunter", "RewardSeeker", "TetheraLeader"
-            ];
+            if (ratingList) {
+                const names = [
+                    "Zombini", "olekitka", "Evakuatordubna", "MrCryptoMon", "vavan42",
+                    "CryptoKing", "WhaleHunter", "MoonWalker", "BitLord", "EtherQueen",
+                    "SolanaStar", "TetheraFan", "BlockMaster", "DeFiGuru", "StakeWizard",
+                    "LiquidityPro", "YieldFarmer", "NodeRunner", "HashBreaker", "MinerJoe",
+                    "SatoshiFan", "VitalikLover", "PumpKing", "DumpLord", "HodlMaster",
+                    "BullRunner", "BearSlayer", "AltSeason", "CryptoNerd", "TokenSeeker",
+                    "ChainExplorer", "SmartContract", "Web3Builder", "MetaVerse", "NFTCollector",
+                    "DiamondHands", "PaperHands", "LamboDream", "SatoshiNakamoto", "CZ_Binance",
+                    "JustinSun", "SBF_Alameda", "AndreCronje", "Mikol", "TetheraWhale",
+                    "StakerX", "CycleKing", "ProfitHunter", "RewardSeeker", "TetheraLeader"
+                ];
+                let scores = [];
+                for (let i = 0; i < 50; i++) {
+                    let base;
+                    if (i < 5) base = 1700 - i * 80 + Math.random() * 60;
+                    else if (i < 10) base = 1300 - (i-5) * 70 + Math.random() * 50;
+                    else if (i < 20) base = 900 - (i-10) * 40 + Math.random() * 45;
+                    else if (i < 30) base = 500 - (i-20) * 25 + Math.random() * 40;
+                    else if (i < 40) base = 250 - (i-30) * 12 + Math.random() * 35;
+                    else base = 100 - (i-40) * 4 + Math.random() * 30;
+                    base = Math.max(base, 5);
+                    scores.push(parseFloat(base.toFixed(2)));
+                }
+                let users = [];
+                for (let i = 0; i < 50; i++) {
+                    let name = names[i % names.length];
+                    if (i === 0) name = "Zombini";
+                    if (i === 1) name = "olekitka";
+                    if (i === 2) name = "Evakuatordubna";
+                    users.push({ name: name, score: scores[i] });
+                }
+                users.sort((a,b) => b.score - a.score);
+                const totalScore = users.reduce((sum, u) => sum + u.score, 0);
+                for (let i = 0; i < users.length; i++) {
+                    const user = users[i];
+                    const prize = (user.score / totalScore) * 15000;
+                    const div = document.createElement('div');
+                    div.className = 'rating-item';
+                    div.innerHTML = `
+                        <span class="rating-position">${i+1}</span>
+                        <div class="rating-info">
+                            <div class="rating-name">${user.name}</div>
+                            <div class="rating-stake">${user.score.toFixed(2)} ES</div>
+                        </div>
+                        <div class="rating-amount">$${prize.toFixed(2)}</div>
+                    `;
+                    ratingList.appendChild(div);
+                }
+            }
 
-            let scores = [];
-            for (let i = 0; i < 50; i++) {
-                let base;
-                if (i < 5) base = 1700 - i * 80 + Math.random() * 60;
-                else if (i < 10) base = 1300 - (i-5) * 70 + Math.random() * 50;
-                else if (i < 20) base = 900 - (i-10) * 40 + Math.random() * 45;
-                else if (i < 30) base = 500 - (i-20) * 25 + Math.random() * 40;
-                else if (i < 40) base = 250 - (i-30) * 12 + Math.random() * 35;
-                else base = 100 - (i-40) * 4 + Math.random() * 30;
-                base = Math.max(base, 5);
-                scores.push(parseFloat(base.toFixed(2)));
+            // ========== Рефералы: кнопка приглашения ==========
+            const inviteBtn = document.getElementById('inviteFriendBtn');
+            const referralModal = document.getElementById('referralModal');
+            const copyReferralLinkBtn = document.getElementById('copyReferralLink');
+            const referralLinkSpan = document.getElementById('referralLink');
+            const closeBtns = document.querySelectorAll('.close');
+
+            if (inviteBtn) {
+                inviteBtn.addEventListener('click', () => {
+                    referralModal.style.display = 'flex';
+                });
             }
-            let users = [];
-            for (let i = 0; i < 50; i++) {
-                let name = names[i % names.length];
-                if (i === 0) name = "Zombini";
-                if (i === 1) name = "olekitka";
-                if (i === 2) name = "Evakuatordubna";
-                users.push({ name: name, score: scores[i] });
-            }
-            users.sort((a,b) => b.score - a.score);
-            const totalScore = users.reduce((sum, u) => sum + u.score, 0);
-            for (let i = 0; i < users.length; i++) {
-                const user = users[i];
-                const prize = (user.score / totalScore) * 15000;
-                const div = document.createElement('div');
-                div.className = 'rating-item';
-                div.innerHTML = `
-                    <span class="rating-position">${i+1}</span>
-                    <div class="rating-info">
-                        <div class="rating-name">${user.name}</div>
-                        <div class="rating-stake">${user.score.toFixed(2)} ES</div>
-                    </div>
-                    <div class="rating-amount">$${prize.toFixed(2)}</div>
-                `;
-                ratingList.appendChild(div);
+            if (copyReferralLinkBtn) {
+                copyReferralLinkBtn.addEventListener('click', () => {
+                    copyWithFeedback(copyReferralLinkBtn, referralLinkSpan.textContent);
+                });
             }
 
             // ========== Остальные модальные окна ==========
@@ -1025,7 +1159,6 @@
             const withdrawModal = document.getElementById('withdrawModal');
             const newCycleModal = document.getElementById('newCycleModal');
             const activeCyclesModal = document.getElementById('activeCyclesModal');
-            const closeBtns = document.querySelectorAll('.close');
             closeBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     depositModal.style.display = 'none';
@@ -1033,6 +1166,7 @@
                     newCycleModal.style.display = 'none';
                     activeCyclesModal.style.display = 'none';
                     historyModal.style.display = 'none';
+                    referralModal.style.display = 'none';
                 });
             });
             window.addEventListener('click', (e) => {
@@ -1041,6 +1175,7 @@
                 if (e.target === newCycleModal) newCycleModal.style.display = 'none';
                 if (e.target === activeCyclesModal) activeCyclesModal.style.display = 'none';
                 if (e.target === historyModal) historyModal.style.display = 'none';
+                if (e.target === referralModal) referralModal.style.display = 'none';
             });
             document.querySelectorAll('.stat-card').forEach(card => {
                 card.addEventListener('click', (e) => {
