@@ -884,7 +884,7 @@
                 <div class="rating-list" id="rating-list"></div>
             </div>
 
-            <!-- Рефералы (обновлённые) -->
+            <!-- Рефералы -->
             <div class="screen ref" id="screen-ref">
                 <h1 class="title-main" style="font-size:24px;">РЕФЕРАЛЫ</h1>
                 <button class="invite-btn" id="inviteFriendBtn">👥 Пригласить друга</button>
@@ -923,7 +923,13 @@
         <div class="modal" id="withdrawModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="modal-label">Прибыль</div><div class="modal-value">$0.00</div><div class="modal-buttons"><button class="modal-btn">Забрать</button><button class="modal-btn">Реинвестировать</button></div></div></div>
         <div class="modal new-cycle-modal" id="newCycleModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="new-cycle-title">Новый цикл</div><div class="new-cycle-sub">Цикл приносит +1,5% каждые 6 часов</div><div class="new-cycle-label">Сумма цикла</div><div class="new-cycle-input-wrapper"><input type="number" id="cycleAmount" class="new-cycle-input" placeholder="0.00" min="0" step="0.01" value=""><span class="new-cycle-input-suffix">USDT</span></div><div class="quick-buttons"><button class="quick-btn" data-amount="50">50</button><button class="quick-btn" data-amount="100">100</button><button class="quick-btn" data-amount="500">500</button><button class="quick-btn" data-amount="1000">1000</button></div><div class="info-row"><span>Мин: 5 USDT</span><span>Доступно для новых циклов: 0 USDT</span></div><div class="total-row">Вы запускаете цикл на: <span id="totalAmount">0.00</span> USDT</div><button class="new-cycle-btn" id="startCycleBtn" disabled>Запустить цикл</button><div class="bottom-note">Циклы работают параллельно</div></div></div>
         <div class="modal active-cycles-modal" id="activeCyclesModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="active-cycles-title">Активные циклы</div><div class="info-list"><div class="info-item"><span>Всего циклов</span><span class="info-value">0</span></div><div class="info-item"><span>В работе</span><span class="info-value">0 USDT</span></div><div class="info-item"><span>Начисление</span><span class="info-value">+1,5% каждые 6 часов</span></div><div class="info-item"><span>Заработано с циклов</span><span class="info-value">0 USDT</span></div></div></div></div>
-        <div class="modal history-modal" id="historyModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="history-title">История транзакций</div><div class="history-empty">Нет транзакций</div></div></div>
+        <div class="modal history-modal" id="historyModal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="history-title" id="historyModalTitle">История транзакций</div>
+                <div class="history-empty">Нет транзакций</div>
+            </div>
+        </div>
         <!-- Модальное окно для рефералов -->
         <div class="modal referral-modal" id="referralModal" style="display: none;">
             <div class="modal-content">
@@ -952,7 +958,7 @@
                 item.addEventListener('click', () => showScreen(item.dataset.screen));
             });
 
-            // Кошелёк (копирование и переключения) - сокращённо, но рабочая версия
+            // Кошелёк (копирование и переключения)
             const walletTabs = document.querySelectorAll('.wallet-tab');
             const depositTab = document.querySelector('.deposit-tab');
             const withdrawTab = document.querySelector('.withdraw-tab');
@@ -1071,16 +1077,20 @@
             if (copyAddress) copyAddress.addEventListener('click', () => copyWithFeedback(copyAddress, addressSpan.textContent));
             if (copyComment) copyComment.addEventListener('click', () => copyWithFeedback(copyComment, commentSpan.textContent));
 
-            const historyIcons = document.querySelectorAll('.history-icon');
+            // ========== История транзакций (делегированный обработчик для надёжности) ==========
             const historyModal = document.getElementById('historyModal');
             const historyModalTitle = document.getElementById('historyModalTitle');
-            historyIcons.forEach(icon => {
-                icon.addEventListener('click', () => {
-                    const isWithdraw = icon.closest('.withdraw-tab') !== null;
-                    historyModalTitle.textContent = isWithdraw ? 'История вывода' : 'История транзакций';
-                    historyModal.style.display = 'flex';
+            const walletContainer = document.querySelector('.wallet');
+            if (walletContainer) {
+                walletContainer.addEventListener('click', function(e) {
+                    const icon = e.target.closest('.history-icon');
+                    if (icon) {
+                        const isWithdraw = icon.closest('.withdraw-tab') !== null;
+                        historyModalTitle.textContent = isWithdraw ? 'История вывода' : 'История транзакций';
+                        historyModal.style.display = 'flex';
+                    }
                 });
-            });
+            }
 
             // ========== Рейтинг ==========
             const ratingList = document.getElementById('rating-list');
