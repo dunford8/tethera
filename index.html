@@ -623,6 +623,92 @@
             transform: scale(0.98);
         }
 
+        /* Стили для окна запуска цикла */
+        .cycle-launch-modal .modal-content {
+            max-width: 340px;
+            text-align: center;
+        }
+        .cycle-launch-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .balance-info {
+            background: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #b0e0d0;
+        }
+        .balance-info span {
+            color: #00ffaa;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        .launch-input-wrapper {
+            margin-bottom: 20px;
+        }
+        .launch-input-label {
+            font-size: 14px;
+            color: #b0e0d0;
+            margin-bottom: 8px;
+            display: block;
+            text-align: left;
+        }
+        .launch-input-field {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,255,170,0.2);
+            border-radius: 20px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+        }
+        .launch-input-field input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+        .launch-input-field input::placeholder {
+            color: #5f7f70;
+        }
+        .launch-input-suffix {
+            color: #00ffaa;
+            margin-left: 8px;
+        }
+        .error-message {
+            font-size: 12px;
+            color: #ffaa5e;
+            margin-top: 8px;
+            text-align: left;
+        }
+        .launch-btn {
+            background: linear-gradient(135deg, #00c9a7, #00a87e);
+            border: none;
+            border-radius: 40px;
+            padding: 14px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #0b1f18;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: transform 0.15s;
+        }
+        .launch-btn:active {
+            transform: scale(0.98);
+        }
+        .launch-btn.disabled {
+            background: rgba(0,0,0,0.2);
+            color: #5f7f70;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
         @media (max-height: 700px) {
             .screen { padding-top: 80px; padding-bottom: 5px; }
             .title-main { font-size: 24px; margin-bottom: 12px; }
@@ -781,7 +867,7 @@
                     </div>
                 </div>
 
-                <button class="gradient-btn">Запустить цикл</button>
+                <button class="gradient-btn" id="startCycleMainBtn">Запустить цикл</button>
             </div>
 
             <!-- Кошелёк -->
@@ -940,6 +1026,25 @@
                 <button class="referral-copy-btn" id="copyReferralLink">Копировать</button>
             </div>
         </div>
+        <!-- Модальное окно для запуска цикла -->
+        <div class="modal cycle-launch-modal" id="cycleLaunchModal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="cycle-launch-title">Запустить цикл</div>
+                <div class="balance-info">
+                    Доступно: <span id="availableBalance">0.00</span> USDT
+                </div>
+                <div class="launch-input-wrapper">
+                    <div class="launch-input-label">Сумма цикла</div>
+                    <div class="launch-input-field">
+                        <input type="number" id="cycleLaunchAmount" placeholder="0.00" min="0" step="0.01">
+                        <span class="launch-input-suffix">USDT</span>
+                    </div>
+                    <div class="error-message" id="cycleLaunchError"></div>
+                </div>
+                <button class="launch-btn" id="confirmLaunchBtn">Запустить цикл</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1077,7 +1182,7 @@
             if (copyAddress) copyAddress.addEventListener('click', () => copyWithFeedback(copyAddress, addressSpan.textContent));
             if (copyComment) copyComment.addEventListener('click', () => copyWithFeedback(copyComment, commentSpan.textContent));
 
-            // ========== История транзакций (делегированный обработчик для надёжности) ==========
+            // История транзакций (делегированный обработчик)
             const historyModal = document.getElementById('historyModal');
             const historyModalTitle = document.getElementById('historyModalTitle');
             const walletContainer = document.querySelector('.wallet');
@@ -1146,7 +1251,7 @@
                 }
             }
 
-            // ========== Рефералы: кнопка приглашения ==========
+            // ========== Рефералы ==========
             const inviteBtn = document.getElementById('inviteFriendBtn');
             const referralModal = document.getElementById('referralModal');
             const copyReferralLinkBtn = document.getElementById('copyReferralLink');
@@ -1164,6 +1269,70 @@
                 });
             }
 
+            // ========== Модальное окно для запуска цикла ==========
+            const startCycleMainBtn = document.getElementById('startCycleMainBtn');
+            const cycleLaunchModal = document.getElementById('cycleLaunchModal');
+            const cycleLaunchAmount = document.getElementById('cycleLaunchAmount');
+            const cycleLaunchError = document.getElementById('cycleLaunchError');
+            const confirmLaunchBtn = document.getElementById('confirmLaunchBtn');
+            const availableBalanceSpan = document.getElementById('availableBalance');
+
+            // Текущий доступный баланс (пока заглушка 0)
+            let availableBalance = 0.00;
+            availableBalanceSpan.textContent = availableBalance.toFixed(2);
+
+            function updateLaunchButtonState() {
+                let amount = parseFloat(cycleLaunchAmount.value);
+                if (isNaN(amount) || amount <= 0) {
+                    cycleLaunchError.textContent = '';
+                    confirmLaunchBtn.classList.add('disabled');
+                    confirmLaunchBtn.disabled = true;
+                    return;
+                }
+                if (amount > availableBalance) {
+                    cycleLaunchError.textContent = 'Недостаточно средств';
+                    confirmLaunchBtn.classList.add('disabled');
+                    confirmLaunchBtn.disabled = true;
+                } else {
+                    cycleLaunchError.textContent = '';
+                    confirmLaunchBtn.classList.remove('disabled');
+                    confirmLaunchBtn.disabled = false;
+                }
+            }
+
+            cycleLaunchAmount.addEventListener('input', updateLaunchButtonState);
+
+            // Открытие модального окна
+            startCycleMainBtn.addEventListener('click', () => {
+                cycleLaunchAmount.value = '';
+                cycleLaunchError.textContent = '';
+                updateLaunchButtonState();
+                cycleLaunchModal.style.display = 'flex';
+            });
+
+            // Закрытие по крестику
+            const closeLaunchModal = cycleLaunchModal.querySelector('.close');
+            closeLaunchModal.addEventListener('click', () => {
+                cycleLaunchModal.style.display = 'none';
+            });
+
+            // Закрытие по клику вне окна
+            window.addEventListener('click', (e) => {
+                if (e.target === cycleLaunchModal) {
+                    cycleLaunchModal.style.display = 'none';
+                }
+            });
+
+            // Кнопка "Запустить цикл" в модальном окне
+            confirmLaunchBtn.addEventListener('click', () => {
+                if (confirmLaunchBtn.disabled) return;
+                let amount = parseFloat(cycleLaunchAmount.value);
+                if (amount > 0 && amount <= availableBalance) {
+                    alert(`Цикл на сумму ${amount.toFixed(2)} USDT запущен! (демо-режим)`);
+                    cycleLaunchModal.style.display = 'none';
+                }
+            });
+
             // ========== Остальные модальные окна ==========
             const depositModal = document.getElementById('depositModal');
             const withdrawModal = document.getElementById('withdrawModal');
@@ -1177,6 +1346,7 @@
                     activeCyclesModal.style.display = 'none';
                     historyModal.style.display = 'none';
                     referralModal.style.display = 'none';
+                    cycleLaunchModal.style.display = 'none';
                 });
             });
             window.addEventListener('click', (e) => {
@@ -1186,6 +1356,7 @@
                 if (e.target === activeCyclesModal) activeCyclesModal.style.display = 'none';
                 if (e.target === historyModal) historyModal.style.display = 'none';
                 if (e.target === referralModal) referralModal.style.display = 'none';
+                if (e.target === cycleLaunchModal) cycleLaunchModal.style.display = 'none';
             });
             document.querySelectorAll('.stat-card').forEach(card => {
                 card.addEventListener('click', (e) => {
