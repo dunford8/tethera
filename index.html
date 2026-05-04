@@ -74,12 +74,12 @@
             text-shadow: 0 0 8px rgba(0,255,170,0.5);
         }
 
-        /* Боковое меню */
+        /* Боковое меню — шире, чтобы английские слова помещались */
         .side-menu {
             position: fixed;
             top: 0;
-            left: -280px;
-            width: 280px;
+            left: -320px;
+            width: 300px;
             height: 100%;
             background: rgba(10, 20, 15, 0.95);
             backdrop-filter: blur(20px);
@@ -165,7 +165,7 @@
             display: none;
             flex: 1;
             flex-direction: column;
-            padding: 20px 16px 10px 16px;
+            padding: 30px 16px 10px 16px; /* верхний отступ уменьшен, чтобы суммарно с margin-top = 100px */
             overflow-y: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
@@ -702,7 +702,152 @@
             box-shadow: 0 4px 12px rgba(0, 255, 170, 0.5);
         }
 
-        /* Стили для модальных окон */
+        /* Стили для модального окна рефералов */
+        .referral-modal .modal-content {
+            max-width: 340px;
+            text-align: center;
+        }
+        .referral-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .referral-sub {
+            font-size: 14px;
+            color: #b0e0d0;
+            margin-bottom: 20px;
+        }
+        .referral-link {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,255,170,0.3);
+            border-radius: 20px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            word-break: break-all;
+            font-size: 14px;
+            color: #fff;
+        }
+        .referral-copy-btn {
+            background: linear-gradient(135deg, #00c9a7, #00a87e);
+            border: none;
+            border-radius: 40px;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #0b1f18;
+            cursor: pointer;
+            transition: transform 0.15s;
+            width: 100%;
+        }
+        .referral-copy-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Стили для окна запуска цикла */
+        .cycle-launch-modal .modal-content {
+            max-width: 340px;
+            text-align: center;
+        }
+        .cycle-launch-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .balance-info {
+            background: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #b0e0d0;
+        }
+        .balance-info span {
+            color: #00ffaa;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        .launch-input-wrapper {
+            margin-bottom: 20px;
+        }
+        .launch-input-label {
+            font-size: 14px;
+            color: #b0e0d0;
+            margin-bottom: 8px;
+            display: block;
+            text-align: left;
+        }
+        .launch-input-field {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,255,170,0.2);
+            border-radius: 20px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+        }
+        .launch-input-field input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+        .launch-input-field input::placeholder {
+            color: #5f7f70;
+        }
+        .launch-input-suffix {
+            color: #00ffaa;
+            margin-left: 8px;
+        }
+        .error-message {
+            font-size: 12px;
+            color: #ffaa5e;
+            margin-top: 8px;
+            text-align: left;
+        }
+        .launch-btn {
+            background: linear-gradient(135deg, #00c9a7, #00a87e);
+            border: none;
+            border-radius: 40px;
+            padding: 14px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #0b1f18;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: transform 0.15s;
+        }
+        .launch-btn:active {
+            transform: scale(0.98);
+        }
+        .launch-btn.disabled {
+            background: rgba(0,0,0,0.2);
+            color: #5f7f70;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        @media (max-height: 700px) {
+            .screen { padding-top: 20px; padding-bottom: 5px; } /* чуть уменьшен отступ на маленьких экранах */
+            .timer-circle-wrapper { width: 160px; height: 160px; }
+            .timer-value { font-size: 24px; }
+            .timer-progress-bar { width: 160px; }
+            .timer-hint { margin-top: 16px; }
+            .cycles-row { margin-top: 20px; }
+            .gradient-btn { margin-top: 14px; }
+            .timer-large { margin-bottom: 60px; }
+            .season-header { padding: 16px 20px; }
+            .prize-label { font-size: 16px; }
+            .right-col { width: 130px; }
+            .prize-amount { font-size: 24px; }
+            .time-left { font-size: 14px; padding: 3px 10px; }
+            .user-score .accent-text { font-size: 20px; }
+        }
+
+        /* Общие стили для модальных окон */
         .modal {
             position: fixed;
             top: 0;
@@ -772,23 +917,6 @@
         .history-modal .modal-content { max-width: 340px; }
         .history-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 20px; }
         .history-empty { font-size: 14px; color: #b0e0d0; padding: 20px 0; }
-
-        @media (max-height: 700px) {
-            .screen { padding-top: 12px; padding-bottom: 5px; }
-            .timer-circle-wrapper { width: 160px; height: 160px; }
-            .timer-value { font-size: 24px; }
-            .timer-progress-bar { width: 160px; }
-            .timer-hint { margin-top: 16px; }
-            .cycles-row { margin-top: 20px; }
-            .gradient-btn { margin-top: 14px; }
-            .timer-large { margin-bottom: 60px; }
-            .season-header { padding: 16px 20px; }
-            .prize-label { font-size: 16px; }
-            .right-col { width: 130px; }
-            .prize-amount { font-size: 24px; }
-            .time-left { font-size: 14px; padding: 3px 10px; }
-            .user-score .accent-text { font-size: 20px; }
-        }
     </style>
 </head>
 <body>
@@ -798,7 +926,7 @@
             <span></span><span></span><span></span>
         </div>
         <div class="app-title">TETHERA</div>
-        <div style="width: 40px;"></div> <!-- баланс для центрирования -->
+        <div style="width: 40px;"></div>
     </div>
 
     <div class="side-menu" id="sideMenu">
@@ -892,7 +1020,7 @@
             <button class="gradient-btn" id="startCycleMainBtn" data-lang="startCycleBtn">Запустить цикл</button>
         </div>
 
-        <!-- Кошелёк (без изменений, но добавим атрибуты для перевода) -->
+        <!-- Кошелёк (без изменений, но с атрибутами перевода) -->
         <div class="screen wallet" id="screen-wallet">
             <h1 class="title-main" style="font-size:24px;" data-lang="walletTitle">КОШЕЛЁК</h1>
             <div class="wallet-tabs">
@@ -1026,7 +1154,7 @@
         <div class="nav-item" data-screen="ref"><span>👥</span><span data-lang="navRef">Рефералы</span></div>
     </nav>
 
-    <!-- Модальные окна (без изменений, но тексты переведены) -->
+    <!-- Модальные окна -->
     <div class="modal" id="depositModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="modal-label" data-lang="modalDepositTitle">Активный депозит</div><div class="modal-value">$0.00</div><div class="modal-hint" data-lang="modalDepositHint">У вас ещё нет активных циклов</div></div></div>
     <div class="modal" id="withdrawModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="modal-label" data-lang="modalWithdrawTitle">Прибыль</div><div class="modal-value">$0.00</div><div class="modal-buttons"><button class="modal-btn" data-lang="modalWithdrawBtn">Забрать</button><button class="modal-btn" data-lang="modalReinvestBtn">Реинвестировать</button></div></div></div>
     <div class="modal new-cycle-modal" id="newCycleModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="new-cycle-title" data-lang="newCycleTitle">Новый цикл</div><div class="new-cycle-sub" data-lang="newCycleSub">Цикл приносит +1,5% каждые 6 часов</div><div class="new-cycle-label" data-lang="newCycleAmountLabel">Сумма цикла</div><div class="new-cycle-input-wrapper"><input type="number" id="cycleAmount" class="new-cycle-input" placeholder="0.00" min="0" step="0.01" value=""><span class="new-cycle-input-suffix">USDT</span></div><div class="quick-buttons"><button class="quick-btn" data-amount="50">50</button><button class="quick-btn" data-amount="100">100</button><button class="quick-btn" data-amount="500">500</button><button class="quick-btn" data-amount="1000">1000</button></div><div class="info-row"><span data-lang="minLabel">Мин: 5 USDT</span><span data-lang="availableForCycles">Доступно для новых циклов: 0 USDT</span></div><div class="total-row" data-lang="totalRow">Вы запускаете цикл на: <span id="totalAmount">0.00</span> USDT</div><button class="new-cycle-btn" id="startCycleBtn" disabled data-lang="startCycleModalBtn">Запустить цикл</button><div class="bottom-note" data-lang="parallelNote">Циклы работают параллельно</div></div></div>
@@ -1202,19 +1330,17 @@
                         el.textContent = translations[currentLang][key];
                     }
                 });
-                // Обновляем спец элементы
-                const userIdSpan = document.getElementById('userIdDisplay');
-                if (userIdSpan && userIdSpan.getAttribute('data-lang') === null) {
-                    // не меняем, имя пользователя остаётся
-                }
+                // Обновляем специальные элементы
                 document.getElementById('langLabel').textContent = translations[currentLang].language;
                 document.getElementById('supportLabel').textContent = translations[currentLang].support;
                 document.getElementById('newsLabel').textContent = translations[currentLang].news;
-                // Активная кнопка языка
                 document.querySelectorAll('.lang-btn').forEach(btn => {
                     if (btn.getAttribute('data-lang') === currentLang) btn.classList.add('active');
                     else btn.classList.remove('active');
                 });
+                // Обновляем заголовок модалки истории
+                const historyTitle = document.getElementById('historyModalTitle');
+                if (historyTitle) historyTitle.textContent = translations[currentLang].historyTitle;
             }
 
             document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -1249,13 +1375,12 @@
             function toggleMenu() { sideMenu.classList.toggle('open'); }
             menuBtn.addEventListener('click', toggleMenu);
             closeMenu.addEventListener('click', toggleMenu);
-            // Закрытие при клике на пункты (кроме языкового)
             document.querySelectorAll('.menu-item').forEach(item => {
                 if (item.id !== 'menuLanguage') {
                     item.addEventListener('click', () => sideMenu.classList.remove('open'));
                 }
             });
-            // Поддержка и новости пока ничего не делают, просто визуал
+            // Пустые обработчики для поддержки и новостей (визуал)
             document.getElementById('menuSupport').addEventListener('click', () => {});
             document.getElementById('menuNews').addEventListener('click', () => {});
 
@@ -1270,7 +1395,7 @@
             }
             navItems.forEach(item => item.addEventListener('click', () => showScreen(item.dataset.screen)));
 
-            // Кошелёк (копирование, переключения) - полная копия из исходника
+            // Кошелёк, переключение вкладок
             const walletTabs = document.querySelectorAll('.wallet-tab');
             const depositTab = document.querySelector('.deposit-tab');
             const withdrawTab = document.querySelector('.withdraw-tab');
@@ -1376,17 +1501,15 @@
             document.getElementById('copy-comment')?.addEventListener('click', function() { copyWithFeedback(this, commentSpan?.textContent || ''); });
 
             const historyModal = document.getElementById('historyModal');
-            const historyModalTitle = document.getElementById('historyModalTitle');
             document.querySelector('.wallet')?.addEventListener('click', (e) => {
                 const icon = e.target.closest('.history-icon');
                 if (icon) {
                     const isWithdraw = icon.closest('.withdraw-tab') !== null;
-                    historyModalTitle.textContent = isWithdraw ? (translations[currentLang].withdrawHistoryTitle || 'История вывода') : (translations[currentLang].historyTitle);
                     historyModal.style.display = 'flex';
                 }
             });
 
-            // Рейтинг (генерация списка)
+            // Рейтинг
             const ratingList = document.getElementById('rating-list');
             if (ratingList) {
                 const names = ["Zombini","olekitka","Evakuatordubna","MrCryptoMon","vavan42","CryptoKing","WhaleHunter","MoonWalker","BitLord","EtherQueen","SolanaStar","TetheraFan","BlockMaster","DeFiGuru","StakeWizard","LiquidityPro","YieldFarmer","NodeRunner","HashBreaker","MinerJoe","SatoshiFan","VitalikLover","PumpKing","DumpLord","HodlMaster","BullRunner","BearSlayer","AltSeason","CryptoNerd","TokenSeeker","ChainExplorer","SmartContract","Web3Builder","MetaVerse","NFTCollector","DiamondHands","PaperHands","LamboDream","SatoshiNakamoto","CZ_Binance","JustinSun","SBF_Alameda","AndreCronje","Mikol","TetheraWhale","StakerX","CycleKing","ProfitHunter","RewardSeeker","TetheraLeader"];
@@ -1492,8 +1615,8 @@
             });
             document.querySelectorAll('.stat-card').forEach(card => card.addEventListener('click', (e) => {
                 const label = card.querySelector('.stat-label-small');
-                if (label && label.textContent.trim() === (currentLang === 'ru' ? 'Активный депозит' : 'Active deposit')) depositModal.style.display='flex';
-                if (label && label.textContent.trim() === (currentLang === 'ru' ? 'Доступно к выводу' : 'Available for withdrawal')) withdrawModal.style.display='flex';
+                if (label && (label.textContent.trim() === (currentLang === 'ru' ? 'Активный депозит' : 'Active deposit'))) depositModal.style.display='flex';
+                if (label && (label.textContent.trim() === (currentLang === 'ru' ? 'Доступно к выводу' : 'Available for withdrawal'))) withdrawModal.style.display='flex';
             }));
             document.getElementById('newCycleCard').addEventListener('click',()=>{
                 newCycleModal.style.display='flex';
