@@ -33,105 +33,6 @@
             color: #ffffff;
         }
 
-        /* Гамбургер-меню (абсолютное, поверх контента) — скорректировано для одной линии с заголовком */
-        .menu-btn {
-            position: fixed;
-            top: 100px;      /* центрировано относительно заголовка TETHERA (padding-top 85px + высота шрифта) */
-            left: 20px;
-            z-index: 1100;
-            width: 40px;
-            height: 40px;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(8px);
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-            border: 1px solid rgba(0,255,170,0.3);
-        }
-        .menu-btn span {
-            width: 22px;
-            height: 2px;
-            background: #00ffaa;
-            border-radius: 2px;
-        }
-        .menu-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* Боковое меню — ширина 280px */
-        .side-menu {
-            position: fixed;
-            top: 0;
-            left: -300px;
-            width: 280px;
-            height: 100%;
-            background: rgba(10, 20, 15, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 1200;
-            transition: left 0.3s ease;
-            padding: 80px 20px 20px;
-            border-right: 1px solid rgba(0,255,170,0.3);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .side-menu.open {
-            left: 0;
-        }
-        .close-menu {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 28px;
-            color: #b0e0d0;
-            cursor: pointer;
-        }
-        .menu-item {
-            background: rgba(0,0,0,0.2);
-            border: 1px solid rgba(0,255,170,0.2);
-            border-radius: 20px;
-            padding: 14px 18px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 500;
-        }
-        .menu-item:active {
-            transform: scale(0.98);
-            background: rgba(0,255,170,0.1);
-        }
-        .menu-item span:first-child {
-            font-size: 22px;
-        }
-        .language-selector {
-            display: flex;
-            gap: 12px;
-            margin-left: auto;
-        }
-        .lang-btn {
-            background: transparent;
-            border: 1px solid rgba(0,255,170,0.4);
-            border-radius: 30px;
-            padding: 4px 12px;
-            font-size: 14px;
-            color: #b0e0d0;
-            cursor: pointer;
-        }
-        .lang-btn.active {
-            background: rgba(0,255,170,0.2);
-            color: #00ffaa;
-            border-color: #00ffaa;
-        }
-
         .screens-container {
             flex: 1;
             display: flex;
@@ -139,12 +40,11 @@
             overflow: hidden;
         }
 
-        /* Уменьшен верхний отступ — «на дольку» меньше */
         .screen {
             display: none;
             flex: 1;
             flex-direction: column;
-            padding: 85px 16px 10px 16px;   /* было 100px, стало 85px */
+            padding: 100px 16px 10px 16px;
             overflow-y: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
@@ -475,7 +375,7 @@
             box-shadow: 0 4px 12px rgba(0, 255, 170, 0.5);
         }
 
-        /* Остальные стили (без изменений) */
+        /* Остальные стили */
         .wallet-tabs { display: flex; gap: 8px; background: rgba(0,0,0,0.2); border-radius: 30px; padding: 4px; margin: 16px 0; }
         .wallet-tab { flex: 1; text-align: center; padding: 10px 0; border-radius: 26px; font-weight: 500; color: #b0e0d0; cursor: pointer; }
         .wallet-tab.active { background: rgba(0, 255, 170, 0.2); color: #00ffaa; }
@@ -681,7 +581,153 @@
             box-shadow: 0 4px 12px rgba(0, 255, 170, 0.5);
         }
 
-        /* Стили для модальных окон */
+        /* Стили для модального окна рефералов */
+        .referral-modal .modal-content {
+            max-width: 340px;
+            text-align: center;
+        }
+        .referral-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .referral-sub {
+            font-size: 14px;
+            color: #b0e0d0;
+            margin-bottom: 20px;
+        }
+        .referral-link {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,255,170,0.3);
+            border-radius: 20px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            word-break: break-all;
+            font-size: 14px;
+            color: #fff;
+        }
+        .referral-copy-btn {
+            background: linear-gradient(135deg, #00c9a7, #00a87e);
+            border: none;
+            border-radius: 40px;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #0b1f18;
+            cursor: pointer;
+            transition: transform 0.15s;
+            width: 100%;
+        }
+        .referral-copy-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Стили для окна запуска цикла */
+        .cycle-launch-modal .modal-content {
+            max-width: 340px;
+            text-align: center;
+        }
+        .cycle-launch-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .balance-info {
+            background: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #b0e0d0;
+        }
+        .balance-info span {
+            color: #00ffaa;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        .launch-input-wrapper {
+            margin-bottom: 20px;
+        }
+        .launch-input-label {
+            font-size: 14px;
+            color: #b0e0d0;
+            margin-bottom: 8px;
+            display: block;
+            text-align: left;
+        }
+        .launch-input-field {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,255,170,0.2);
+            border-radius: 20px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+        }
+        .launch-input-field input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+        .launch-input-field input::placeholder {
+            color: #5f7f70;
+        }
+        .launch-input-suffix {
+            color: #00ffaa;
+            margin-left: 8px;
+        }
+        .error-message {
+            font-size: 12px;
+            color: #ffaa5e;
+            margin-top: 8px;
+            text-align: left;
+        }
+        .launch-btn {
+            background: linear-gradient(135deg, #00c9a7, #00a87e);
+            border: none;
+            border-radius: 40px;
+            padding: 14px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #0b1f18;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: transform 0.15s;
+        }
+        .launch-btn:active {
+            transform: scale(0.98);
+        }
+        .launch-btn.disabled {
+            background: rgba(0,0,0,0.2);
+            color: #5f7f70;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        @media (max-height: 700px) {
+            .screen { padding-top: 80px; padding-bottom: 5px; }
+            .title-main { font-size: 24px; margin-bottom: 12px; }
+            .timer-circle-wrapper { width: 160px; height: 160px; }
+            .timer-value { font-size: 24px; }
+            .timer-progress-bar { width: 160px; }
+            .timer-hint { margin-top: 16px; }
+            .cycles-row { margin-top: 20px; }
+            .gradient-btn { margin-top: 14px; }
+            .timer-large { margin-bottom: 60px; }
+            .season-header { padding: 16px 20px; }
+            .prize-label { font-size: 16px; }
+            .right-col { width: 130px; }
+            .prize-amount { font-size: 24px; }
+            .time-left { font-size: 14px; padding: 3px 10px; }
+            .user-score .accent-text { font-size: 20px; }
+        }
+
+        /* Общие стили для модальных окон */
         .modal {
             position: fixed;
             top: 0;
@@ -751,517 +797,296 @@
         .history-modal .modal-content { max-width: 340px; }
         .history-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 20px; }
         .history-empty { font-size: 14px; color: #b0e0d0; padding: 20px 0; }
-
-        /* Адаптив для маленьких экранов */
-        @media (max-height: 700px) {
-            .screen { padding-top: 65px; padding-bottom: 5px; }
-            .menu-btn { top: 80px; }
-            .timer-circle-wrapper { width: 160px; height: 160px; }
-            .timer-value { font-size: 24px; }
-            .timer-progress-bar { width: 160px; }
-            .timer-hint { margin-top: 16px; }
-            .cycles-row { margin-top: 20px; }
-            .gradient-btn { margin-top: 14px; }
-            .timer-large { margin-bottom: 60px; }
-            .season-header { padding: 16px 20px; }
-            .prize-label { font-size: 16px; }
-            .right-col { width: 130px; }
-            .prize-amount { font-size: 24px; }
-            .time-left { font-size: 14px; padding: 3px 10px; }
-            .user-score .accent-text { font-size: 20px; }
-        }
     </style>
 </head>
 <body>
-<div class="app">
-    <!-- Гамбургер-меню -->
-    <div class="menu-btn" id="menuBtn">
-        <span></span><span></span><span></span>
+    <div class="app">
+        <div class="screens-container">
+            <!-- Главная -->
+            <div class="screen home active" id="screen-home">
+                <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:16px;">TETHERA</h1>
+
+                <div class="stats-double-column">
+                    <div class="stats-left">
+                        <div class="stat-card">
+                            <div class="stat-card-left">
+                                <div class="stat-content">
+                                    <span class="stat-value-large">$0.00</span>
+                                    <span class="stat-label-small">Заработано с циклов</span>
+                                </div>
+                                <div class="sparkline-container">
+                                    <canvas class="sparkline" width="300" height="24"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-right">
+                        <div class="stat-card">
+                            <div class="stat-card-right">
+                                <div class="stat-content">
+                                    <span class="stat-value-large">$0.00</span>
+                                    <span class="stat-label-small">Активный депозит</span>
+                                </div>
+                                <span class="stat-icon">→</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-right">
+                                <div class="stat-content">
+                                    <span class="stat-value-large accent-text">$0.00</span>
+                                    <span class="stat-label-small">Доступно к выводу</span>
+                                </div>
+                                <span class="stat-icon">→</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timer-large">
+                    <div class="timer-circle-wrapper">
+                        <div class="timer-circle">
+                            <span class="timer-value">06:00:00</span>
+                            <div class="timer-inner-progress"></div>
+                        </div>
+                    </div>
+                    <div class="timer-progress-bar"></div>
+                    <div class="timer-hint">+1,5% за цикл (6 часов)</div>
+                </div>
+
+                <div class="cycles-row">
+                    <div class="cycles-card-small" id="newCycleCard">
+                        <div class="cycles-plus">+</div>
+                        <div class="cycles-label">Новый</div>
+                    </div>
+                    <div class="cycles-card-large" id="activeCyclesCard">
+                        <div class="cycles-content">
+                            <span class="cycles-number">0</span>
+                            <span class="cycles-label">Активных</span>
+                        </div>
+                        <span class="cycles-arrow">→</span>
+                    </div>
+                </div>
+
+                <button class="gradient-btn" id="startCycleMainBtn">Запустить цикл</button>
+            </div>
+
+            <!-- Кошелёк -->
+            <div class="screen wallet" id="screen-wallet">
+                <h1 class="title-main" style="font-size:24px;">КОШЕЛЁК</h1>
+                <div class="wallet-tabs">
+                    <div class="wallet-tab active" data-wallet="deposit">Пополнение</div>
+                    <div class="wallet-tab" data-wallet="withdraw">Вывод</div>
+                </div>
+                <div class="deposit-tab">
+                    <div class="coin-selector">
+                        <div class="coin-left">
+                            <span class="label">Монета:</span>
+                            <div class="coin-buttons">
+                                <div class="coin-btn active" data-coin="usdt">USDT</div>
+                                <div class="coin-btn" data-coin="usdc">USDC</div>
+                            </div>
+                        </div>
+                        <span class="history-icon" id="historyIcon">🕒</span>
+                    </div>
+                    <div class="network-selector-wrapper">
+                        <span class="label">Сеть:</span>
+                        <div class="network-selector" id="deposit-network-selector">
+                            <span class="network-chip active" data-network="ton">TON</span>
+                            <span class="network-chip" data-network="trc20">TRC20</span>
+                            <span class="network-chip" data-network="sol">SOL</span>
+                            <span class="network-chip" data-network="bep20">BEP20</span>
+                        </div>
+                    </div>
+                    <div id="wallet-address-group" class="input-group">
+                        <div class="input-label">Адрес кошелька (USDT)</div>
+                        <div class="input-field" id="address-field">
+                            <span id="address-value">UQB9ZLQiBDcAi3bSHyYqN0qit8Fo9tPN_GPoWmFRLM8nnZL2</span>
+                            <button class="copy-btn" id="copy-address">Копировать</button>
+                        </div>
+                    </div>
+                    <div id="comment-group" class="input-group">
+                        <div class="input-label">Комментарий (TWord)</div>
+                        <div class="input-field" id="comment-field">
+                            <span id="comment-value">sunset</span>
+                            <button class="copy-btn" id="copy-comment">Копировать</button>
+                        </div>
+                    </div>
+                    <div class="warning" id="comment-warning">⚠️ Комментарий обязателен при пополнении</div>
+                </div>
+                <div class="withdraw-tab" style="display: none;">
+                    <div style="font-size:32px; font-weight:700; text-align:center; margin:10px 0; color:#00ffaa;">$0.00</div>
+                    <div class="coin-selector">
+                        <div class="coin-left">
+                            <span class="label">Монета:</span>
+                            <div class="coin-buttons">
+                                <div class="coin-btn active" data-coin="usdt">USDT</div>
+                                <div class="coin-btn" data-coin="usdc">USDC</div>
+                            </div>
+                        </div>
+                        <span class="history-icon" id="withdrawHistoryIcon">🕒</span>
+                    </div>
+                    <div class="network-selector-wrapper">
+                        <span class="label">Сеть:</span>
+                        <div class="network-selector" id="withdraw-network-selector">
+                            <span class="network-chip active" data-network="ton">TON</span>
+                            <span class="network-chip" data-network="trc20">TRC20</span>
+                            <span class="network-chip" data-network="sol">SOL</span>
+                            <span class="network-chip" data-network="bep20">BEP20</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-label" id="withdraw-amount-label">Введите сумму (USDT) · Min 5 USDT</div>
+                        <div class="input-field">
+                            <input type="number" id="withdraw-amount" placeholder="0.00" min="5" step="0.01">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-label" id="withdraw-address-label">Ваш адрес USDT</div>
+                        <div class="input-field">
+                            <input type="text" id="withdraw-address" placeholder="Введите адрес получателя">
+                        </div>
+                    </div>
+                    <button class="gradient-btn" style="margin-top:24px;">Вывести</button>
+                </div>
+            </div>
+
+            <!-- Рейтинг -->
+            <div class="screen rating" id="screen-rating">
+                <h1 class="title-main" style="font-size:24px; margin-bottom: 20px;">РЕЙТИНГ</h1>
+                <div class="season-header">
+                    <div class="prize-row">
+                        <span class="prize-label">СЕЗОН I</span>
+                        <div class="right-col"><span class="prize-amount">$15,000</span></div>
+                    </div>
+                    <div class="prize-row">
+                        <span class="prize-label">Осталось</span>
+                        <div class="right-col"><span class="time-left">29дн 04ч 18м</span></div>
+                    </div>
+                </div>
+                <div class="user-score">
+                    <span>Your Energy Score</span>
+                    <span class="accent-text">0</span>
+                </div>
+                <div class="rating-list" id="rating-list"></div>
+            </div>
+
+            <!-- Рефералы -->
+            <div class="screen ref" id="screen-ref">
+                <h1 class="title-main" style="font-size:24px;">РЕФЕРАЛЫ</h1>
+                <button class="invite-btn" id="inviteFriendBtn">👥 Пригласить друга</button>
+                <div class="ref-header">
+                    <div class="ref-stat">
+                        <div class="ref-stat-value">0</div>
+                        <div class="ref-stat-label">Ваши рефералы</div>
+                    </div>
+                    <div class="ref-stat">
+                        <div class="ref-stat-value">0</div>
+                        <div class="ref-stat-label">Вся команда</div>
+                    </div>
+                    <div class="ref-stat">
+                        <div class="ref-stat-value">0</div>
+                        <div class="ref-stat-label">Активных</div>
+                    </div>
+                </div>
+                <h3 style="margin:16px 0 8px; font-weight:500;">Уровни и вознаграждения</h3>
+                <div class="level-card"><div class="level-title"><span>Уровень 1</span><span class="accent-text">10%</span></div></div>
+                <div class="level-card"><div class="level-title"><span>Уровень 2</span><span class="accent-text">5%</span></div><ul class="level-conditions"><li>Депозит от 500 USDT</li></ul></div>
+                <div class="level-card"><div class="level-title"><span>Уровень 3</span><span class="accent-text">5%</span></div><ul class="level-conditions"><li>Депозит от 1000 USDT</li><li>Оборот команды 1-2 ур. от 25K USDT в сутки</li></ul></div>
+                <div class="level-card"><div class="level-title"><span>Уровень 4</span><span class="accent-text">3%</span></div><ul class="level-conditions"><li>Депозит от 2000 USDT</li><li>Оборот всей структуры от 100K USDT в сутки</li></ul></div>
+                <div class="level-card"><div class="level-title"><span>Уровень 5</span><span class="accent-text">1%</span></div><ul class="level-conditions"><li>Депозит от 4000 USDT</li><li>Оборот всей структуры от 200K USDT в сутки</li></ul></div>
+            </div>
+        </div>
+
+        <nav class="nav">
+            <div class="nav-item active" data-screen="home"><span>🏠</span><span>Главная</span></div>
+            <div class="nav-item" data-screen="wallet"><span>💳</span><span>Кошелёк</span></div>
+            <div class="nav-item" data-screen="rating"><span>🏆</span><span>Рейтинг</span></div>
+            <div class="nav-item" data-screen="ref"><span>👥</span><span>Рефералы</span></div>
+        </nav>
+
+        <!-- Модальные окна -->
+        <div class="modal" id="depositModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="modal-label">Активный депозит</div><div class="modal-value">$0.00</div><div class="modal-hint">У вас ещё нет активных циклов</div></div></div>
+        <div class="modal" id="withdrawModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="modal-label">Прибыль</div><div class="modal-value">$0.00</div><div class="modal-buttons"><button class="modal-btn">Забрать</button><button class="modal-btn">Реинвестировать</button></div></div></div>
+        <div class="modal new-cycle-modal" id="newCycleModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="new-cycle-title">Новый цикл</div><div class="new-cycle-sub">Цикл приносит +1,5% каждые 6 часов</div><div class="new-cycle-label">Сумма цикла</div><div class="new-cycle-input-wrapper"><input type="number" id="cycleAmount" class="new-cycle-input" placeholder="0.00" min="0" step="0.01" value=""><span class="new-cycle-input-suffix">USDT</span></div><div class="quick-buttons"><button class="quick-btn" data-amount="50">50</button><button class="quick-btn" data-amount="100">100</button><button class="quick-btn" data-amount="500">500</button><button class="quick-btn" data-amount="1000">1000</button></div><div class="info-row"><span>Мин: 5 USDT</span><span>Доступно для новых циклов: 0 USDT</span></div><div class="total-row">Вы запускаете цикл на: <span id="totalAmount">0.00</span> USDT</div><button class="new-cycle-btn" id="startCycleBtn" disabled>Запустить цикл</button><div class="bottom-note">Циклы работают параллельно</div></div></div>
+        <div class="modal active-cycles-modal" id="activeCyclesModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="active-cycles-title">Активные циклы</div><div class="info-list"><div class="info-item"><span>Всего циклов</span><span class="info-value">0</span></div><div class="info-item"><span>В работе</span><span class="info-value">0 USDT</span></div><div class="info-item"><span>Начисление</span><span class="info-value">+1,5% каждые 6 часов</span></div><div class="info-item"><span>Заработано с циклов</span><span class="info-value">0 USDT</span></div></div></div></div>
+        <div class="modal history-modal" id="historyModal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="history-title" id="historyModalTitle">История транзакций</div>
+                <div class="history-empty">Нет транзакций</div>
+            </div>
+        </div>
+        <!-- Модальное окно для рефералов -->
+        <div class="modal referral-modal" id="referralModal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="referral-title">Пригласить друга</div>
+                <div class="referral-sub">Поделитесь ссылкой на Tethera</div>
+                <div class="referral-link" id="referralLink">https://t.me/tethera_aibot</div>
+                <button class="referral-copy-btn" id="copyReferralLink">Копировать</button>
+            </div>
+        </div>
+        <!-- Модальное окно для запуска цикла -->
+        <div class="modal cycle-launch-modal" id="cycleLaunchModal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="cycle-launch-title">Запустить цикл</div>
+                <div class="balance-info">
+                    Доступно: <span id="availableBalance">0.00</span> USDT
+                </div>
+                <div class="launch-input-wrapper">
+                    <div class="launch-input-label">Сумма цикла</div>
+                    <div class="launch-input-field">
+                        <input type="number" id="cycleLaunchAmount" placeholder="0.00" min="0" step="0.01">
+                        <span class="launch-input-suffix">USDT</span>
+                    </div>
+                    <div class="error-message" id="cycleLaunchError"></div>
+                </div>
+                <button class="launch-btn" id="confirmLaunchBtn">Запустить цикл</button>
+            </div>
+        </div>
     </div>
-    <!-- Боковое меню -->
-    <div class="side-menu" id="sideMenu">
-        <div class="close-menu" id="closeMenu">&times;</div>
-        <div class="menu-item" id="menuUserId">
-            <span>👤</span>
-            <span id="userIdDisplay">Tethera ID</span>
-        </div>
-        <div class="menu-item" id="menuLanguage">
-            <span>🌐</span>
-            <span id="langLabel">Язык</span>
-            <div class="language-selector">
-                <button class="lang-btn" data-lang="ru">RU</button>
-                <button class="lang-btn" data-lang="en">EN</button>
-            </div>
-        </div>
-        <div class="menu-item" id="menuSupport">
-            <span>💬</span>
-            <span id="supportLabel">Поддержка</span>
-        </div>
-        <div class="menu-item" id="menuNews">
-            <span>📢</span>
-            <span id="newsLabel">Новости</span>
-        </div>
-    </div>
-
-    <div class="screens-container">
-        <!-- Главная -->
-        <div class="screen home active" id="screen-home">
-            <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:16px; text-align:center;">TETHERA</h1>
-            <div class="stats-double-column">
-                <div class="stats-left">
-                    <div class="stat-card">
-                        <div class="stat-card-left">
-                            <div class="stat-content">
-                                <span class="stat-value-large">$0.00</span>
-                                <span class="stat-label-small" data-lang="earned">Заработано с циклов</span>
-                            </div>
-                            <div class="sparkline-container">
-                                <canvas class="sparkline" width="300" height="24"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="stats-right">
-                    <div class="stat-card">
-                        <div class="stat-card-right">
-                            <div class="stat-content">
-                                <span class="stat-value-large">$0.00</span>
-                                <span class="stat-label-small" data-lang="activeDeposit">Активный депозит</span>
-                            </div>
-                            <span class="stat-icon">→</span>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-right">
-                            <div class="stat-content">
-                                <span class="stat-value-large accent-text">$0.00</span>
-                                <span class="stat-label-small" data-lang="availableWithdraw">Доступно к выводу</span>
-                            </div>
-                            <span class="stat-icon">→</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="timer-large">
-                <div class="timer-circle-wrapper">
-                    <div class="timer-circle">
-                        <span class="timer-value">06:00:00</span>
-                        <div class="timer-inner-progress"></div>
-                    </div>
-                </div>
-                <div class="timer-progress-bar"></div>
-                <div class="timer-hint" data-lang="cycleHint">+1,5% за цикл (6 часов)</div>
-            </div>
-
-            <div class="cycles-row">
-                <div class="cycles-card-small" id="newCycleCard">
-                    <div class="cycles-plus">+</div>
-                    <div class="cycles-label" data-lang="newCycleLabel">Новый</div>
-                </div>
-                <div class="cycles-card-large" id="activeCyclesCard">
-                    <div class="cycles-content">
-                        <span class="cycles-number">0</span>
-                        <span class="cycles-label" data-lang="activeCyclesLabel">Активных</span>
-                    </div>
-                    <span class="cycles-arrow">→</span>
-                </div>
-            </div>
-
-            <button class="gradient-btn" id="startCycleMainBtn" data-lang="startCycleBtn">Запустить цикл</button>
-        </div>
-
-        <!-- Кошелёк -->
-        <div class="screen wallet" id="screen-wallet">
-            <h1 class="title-main" style="font-size:24px; text-align:center;" data-lang="walletTitle">КОШЕЛЁК</h1>
-            <div class="wallet-tabs">
-                <div class="wallet-tab active" data-wallet="deposit" data-lang="depositTab">Пополнение</div>
-                <div class="wallet-tab" data-wallet="withdraw" data-lang="withdrawTab">Вывод</div>
-            </div>
-            <div class="deposit-tab">
-                <div class="coin-selector">
-                    <div class="coin-left">
-                        <span class="label" data-lang="coinLabel">Монета:</span>
-                        <div class="coin-buttons">
-                            <div class="coin-btn active" data-coin="usdt">USDT</div>
-                            <div class="coin-btn" data-coin="usdc">USDC</div>
-                        </div>
-                    </div>
-                    <span class="history-icon" id="historyIcon">🕒</span>
-                </div>
-                <div class="network-selector-wrapper">
-                    <span class="label" data-lang="networkLabel">Сеть:</span>
-                    <div class="network-selector" id="deposit-network-selector">
-                        <span class="network-chip active" data-network="ton">TON</span>
-                        <span class="network-chip" data-network="trc20">TRC20</span>
-                        <span class="network-chip" data-network="sol">SOL</span>
-                        <span class="network-chip" data-network="bep20">BEP20</span>
-                    </div>
-                </div>
-                <div id="wallet-address-group" class="input-group">
-                    <div class="input-label" data-lang="addressLabel">Адрес кошелька (USDT)</div>
-                    <div class="input-field" id="address-field">
-                        <span id="address-value">UQB9ZLQiBDcAi3bSHyYqN0qit8Fo9tPN_GPoWmFRLM8nnZL2</span>
-                        <button class="copy-btn" id="copy-address" data-lang="copyBtn">Копировать</button>
-                    </div>
-                </div>
-                <div id="comment-group" class="input-group">
-                    <div class="input-label" data-lang="commentLabel">Комментарий (TWord)</div>
-                    <div class="input-field" id="comment-field">
-                        <span id="comment-value">sunset</span>
-                        <button class="copy-btn" id="copy-comment" data-lang="copyBtn">Копировать</button>
-                    </div>
-                </div>
-                <div class="warning" id="comment-warning" data-lang="commentWarning">⚠️ Комментарий обязателен при пополнении</div>
-            </div>
-            <div class="withdraw-tab" style="display: none;">
-                <div style="font-size:32px; font-weight:700; text-align:center; margin:10px 0; color:#00ffaa;">$0.00</div>
-                <div class="coin-selector">
-                    <div class="coin-left">
-                        <span class="label" data-lang="coinLabel">Монета:</span>
-                        <div class="coin-buttons">
-                            <div class="coin-btn active" data-coin="usdt">USDT</div>
-                            <div class="coin-btn" data-coin="usdc">USDC</div>
-                        </div>
-                    </div>
-                    <span class="history-icon" id="withdrawHistoryIcon">🕒</span>
-                </div>
-                <div class="network-selector-wrapper">
-                    <span class="label" data-lang="networkLabel">Сеть:</span>
-                    <div class="network-selector" id="withdraw-network-selector">
-                        <span class="network-chip active" data-network="ton">TON</span>
-                        <span class="network-chip" data-network="trc20">TRC20</span>
-                        <span class="network-chip" data-network="sol">SOL</span>
-                        <span class="network-chip" data-network="bep20">BEP20</span>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="input-label" id="withdraw-amount-label" data-lang="withdrawAmountLabel">Введите сумму (USDT) · Min 5 USDT</div>
-                    <div class="input-field">
-                        <input type="number" id="withdraw-amount" placeholder="0.00" min="5" step="0.01">
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="input-label" id="withdraw-address-label" data-lang="withdrawAddressLabel">Ваш адрес USDT</div>
-                    <div class="input-field">
-                        <input type="text" id="withdraw-address" placeholder="Введите адрес получателя">
-                    </div>
-                </div>
-                <button class="gradient-btn" style="margin-top:24px;" data-lang="withdrawSubmitBtn">Вывести</button>
-            </div>
-        </div>
-
-        <!-- Рейтинг -->
-        <div class="screen rating" id="screen-rating">
-            <h1 class="title-main" style="font-size:24px; margin-bottom:20px; text-align:center;" data-lang="ratingTitle">РЕЙТИНГ</h1>
-            <div class="season-header">
-                <div class="prize-row">
-                    <span class="prize-label" data-lang="seasonLabel">СЕЗОН I</span>
-                    <div class="right-col"><span class="prize-amount">$15,000</span></div>
-                </div>
-                <div class="prize-row">
-                    <span class="prize-label" data-lang="remainingLabel">Осталось</span>
-                    <div class="right-col"><span class="time-left">29дн 04ч 18м</span></div>
-                </div>
-            </div>
-            <div class="user-score">
-                <span data-lang="yourEnergyScore">Your Energy Score</span>
-                <span class="accent-text">0</span>
-            </div>
-            <div class="rating-list" id="rating-list"></div>
-        </div>
-
-        <!-- Рефералы -->
-        <div class="screen ref" id="screen-ref">
-            <h1 class="title-main" style="font-size:24px; text-align:center;" data-lang="refTitle">РЕФЕРАЛЫ</h1>
-            <button class="invite-btn" id="inviteFriendBtn" data-lang="inviteBtn">👥 Пригласить друга</button>
-            <div class="ref-header">
-                <div class="ref-stat">
-                    <div class="ref-stat-value">0</div>
-                    <div class="ref-stat-label" data-lang="yourRefs">Ваши рефералы</div>
-                </div>
-                <div class="ref-stat">
-                    <div class="ref-stat-value">0</div>
-                    <div class="ref-stat-label" data-lang="teamRefs">Вся команда</div>
-                </div>
-                <div class="ref-stat">
-                    <div class="ref-stat-value">0</div>
-                    <div class="ref-stat-label" data-lang="activeRefs">Активных</div>
-                </div>
-            </div>
-            <h3 style="margin:16px 0 8px; font-weight:500;" data-lang="levelsTitle">Уровни и вознаграждения</h3>
-            <div class="level-card"><div class="level-title"><span data-lang="level1">Уровень 1</span><span class="accent-text">10%</span></div></div>
-            <div class="level-card"><div class="level-title"><span data-lang="level2">Уровень 2</span><span class="accent-text">5%</span></div><ul class="level-conditions"><li data-lang="level2Cond">Депозит от 500 USDT</li></ul></div>
-            <div class="level-card"><div class="level-title"><span data-lang="level3">Уровень 3</span><span class="accent-text">5%</span></div><ul class="level-conditions"><li data-lang="level3Cond1">Депозит от 1000 USDT</li><li data-lang="level3Cond2">Оборот команды 1-2 ур. от 25K USDT в сутки</li></ul></div>
-            <div class="level-card"><div class="level-title"><span data-lang="level4">Уровень 4</span><span class="accent-text">3%</span></div><ul class="level-conditions"><li data-lang="level4Cond1">Депозит от 2000 USDT</li><li data-lang="level4Cond2">Оборот всей структуры от 100K USDT в сутки</li></ul></div>
-            <div class="level-card"><div class="level-title"><span data-lang="level5">Уровень 5</span><span class="accent-text">1%</span></div><ul class="level-conditions"><li data-lang="level5Cond1">Депозит от 4000 USDT</li><li data-lang="level5Cond2">Оборот всей структуры от 200K USDT в сутки</li></ul></div>
-        </div>
-    </div>
-
-    <nav class="nav">
-        <div class="nav-item active" data-screen="home"><span>🏠</span><span data-lang="navHome">Главная</span></div>
-        <div class="nav-item" data-screen="wallet"><span>💳</span><span data-lang="navWallet">Кошелёк</span></div>
-        <div class="nav-item" data-screen="rating"><span>🏆</span><span data-lang="navRating">Рейтинг</span></div>
-        <div class="nav-item" data-screen="ref"><span>👥</span><span data-lang="navRef">Рефералы</span></div>
-    </nav>
-
-    <!-- Модальные окна (без изменений) -->
-    <div class="modal" id="depositModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="modal-label" data-lang="modalDepositTitle">Активный депозит</div><div class="modal-value">$0.00</div><div class="modal-hint" data-lang="modalDepositHint">У вас ещё нет активных циклов</div></div></div>
-    <div class="modal" id="withdrawModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="modal-label" data-lang="modalWithdrawTitle">Прибыль</div><div class="modal-value">$0.00</div><div class="modal-buttons"><button class="modal-btn" data-lang="modalWithdrawBtn">Забрать</button><button class="modal-btn" data-lang="modalReinvestBtn">Реинвестировать</button></div></div></div>
-    <div class="modal new-cycle-modal" id="newCycleModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="new-cycle-title" data-lang="newCycleTitle">Новый цикл</div><div class="new-cycle-sub" data-lang="newCycleSub">Цикл приносит +1,5% каждые 6 часов</div><div class="new-cycle-label" data-lang="newCycleAmountLabel">Сумма цикла</div><div class="new-cycle-input-wrapper"><input type="number" id="cycleAmount" class="new-cycle-input" placeholder="0.00" min="0" step="0.01" value=""><span class="new-cycle-input-suffix">USDT</span></div><div class="quick-buttons"><button class="quick-btn" data-amount="50">50</button><button class="quick-btn" data-amount="100">100</button><button class="quick-btn" data-amount="500">500</button><button class="quick-btn" data-amount="1000">1000</button></div><div class="info-row"><span data-lang="minLabel">Мин: 5 USDT</span><span data-lang="availableForCycles">Доступно для новых циклов: 0 USDT</span></div><div class="total-row" data-lang="totalRow">Вы запускаете цикл на: <span id="totalAmount">0.00</span> USDT</div><button class="new-cycle-btn" id="startCycleBtn" disabled data-lang="startCycleModalBtn">Запустить цикл</button><div class="bottom-note" data-lang="parallelNote">Циклы работают параллельно</div></div></div>
-    <div class="modal active-cycles-modal" id="activeCyclesModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="active-cycles-title" data-lang="activeCyclesTitle">Активные циклы</div><div class="info-list"><div class="info-item"><span data-lang="totalCycles">Всего циклов</span><span class="info-value">0</span></div><div class="info-item"><span data-lang="inWork">В работе</span><span class="info-value">0 USDT</span></div><div class="info-item"><span data-lang="accrual">Начисление</span><span class="info-value">+1,5% каждые 6 часов</span></div><div class="info-item"><span data-lang="earnedFromCycles">Заработано с циклов</span><span class="info-value">0 USDT</span></div></div></div></div>
-    <div class="modal history-modal" id="historyModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="history-title" id="historyModalTitle" data-lang="historyTitle">История транзакций</div><div class="history-empty" data-lang="noTransactions">Нет транзакций</div></div></div>
-    <div class="modal referral-modal" id="referralModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="referral-title" data-lang="inviteFriendTitle">Пригласить друга</div><div class="referral-sub" data-lang="shareLinkText">Поделитесь ссылкой на Tethera</div><div class="referral-link" id="referralLink">https://t.me/tethera_aibot</div><button class="referral-copy-btn" id="copyReferralLink" data-lang="copyBtn">Копировать</button></div></div>
-    <div class="modal cycle-launch-modal" id="cycleLaunchModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="cycle-launch-title" data-lang="startCycleModalTitle">Запустить цикл</div><div class="balance-info"><span data-lang="availableBalanceLabel">Доступно:</span> <span id="availableBalance">0.00</span> USDT</div><div class="launch-input-wrapper"><div class="launch-input-label" data-lang="cycleAmountLabel">Сумма цикла</div><div class="launch-input-field"><input type="number" id="cycleLaunchAmount" placeholder="0.00" min="0" step="0.01"><span class="launch-input-suffix">USDT</span></div><div class="error-message" id="cycleLaunchError"></div></div><button class="launch-btn" id="confirmLaunchBtn" data-lang="startCycleBtn">Запустить цикл</button></div></div>
 
     <script>
         (function() {
-            // ========== ЛОКАЛИЗАЦИЯ ==========
-            const translations = {
-                ru: {
-                    earned: "Заработано с циклов",
-                    activeDeposit: "Активный депозит",
-                    availableWithdraw: "Доступно к выводу",
-                    cycleHint: "+1,5% за цикл (6 часов)",
-                    newCycleLabel: "Новый",
-                    activeCyclesLabel: "Активных",
-                    startCycleBtn: "Запустить цикл",
-                    walletTitle: "КОШЕЛЁК",
-                    depositTab: "Пополнение",
-                    withdrawTab: "Вывод",
-                    coinLabel: "Монета:",
-                    networkLabel: "Сеть:",
-                    addressLabel: "Адрес кошелька (USDT)",
-                    copyBtn: "Копировать",
-                    commentLabel: "Комментарий (TWord)",
-                    commentWarning: "⚠️ Комментарий обязателен при пополнении",
-                    withdrawAmountLabel: "Введите сумму (USDT) · Min 5 USDT",
-                    withdrawAddressLabel: "Ваш адрес USDT",
-                    withdrawSubmitBtn: "Вывести",
-                    ratingTitle: "РЕЙТИНГ",
-                    seasonLabel: "СЕЗОН I",
-                    remainingLabel: "Осталось",
-                    yourEnergyScore: "Your Energy Score",
-                    refTitle: "РЕФЕРАЛЫ",
-                    inviteBtn: "👥 Пригласить друга",
-                    yourRefs: "Ваши рефералы",
-                    teamRefs: "Вся команда",
-                    activeRefs: "Активных",
-                    levelsTitle: "Уровни и вознаграждения",
-                    level1: "Уровень 1",
-                    level2: "Уровень 2",
-                    level2Cond: "Депозит от 500 USDT",
-                    level3: "Уровень 3",
-                    level3Cond1: "Депозит от 1000 USDT",
-                    level3Cond2: "Оборот команды 1-2 ур. от 25K USDT в сутки",
-                    level4: "Уровень 4",
-                    level4Cond1: "Депозит от 2000 USDT",
-                    level4Cond2: "Оборот всей структуры от 100K USDT в сутки",
-                    level5: "Уровень 5",
-                    level5Cond1: "Депозит от 4000 USDT",
-                    level5Cond2: "Оборот всей структуры от 200K USDT в сутки",
-                    navHome: "Главная",
-                    navWallet: "Кошелёк",
-                    navRating: "Рейтинг",
-                    navRef: "Рефералы",
-                    modalDepositTitle: "Активный депозит",
-                    modalDepositHint: "У вас ещё нет активных циклов",
-                    modalWithdrawTitle: "Прибыль",
-                    modalWithdrawBtn: "Забрать",
-                    modalReinvestBtn: "Реинвестировать",
-                    newCycleTitle: "Новый цикл",
-                    newCycleSub: "Цикл приносит +1,5% каждые 6 часов",
-                    newCycleAmountLabel: "Сумма цикла",
-                    minLabel: "Мин: 5 USDT",
-                    availableForCycles: "Доступно для новых циклов: 0 USDT",
-                    totalRow: "Вы запускаете цикл на:",
-                    startCycleModalBtn: "Запустить цикл",
-                    parallelNote: "Циклы работают параллельно",
-                    activeCyclesTitle: "Активные циклы",
-                    totalCycles: "Всего циклов",
-                    inWork: "В работе",
-                    accrual: "Начисление",
-                    earnedFromCycles: "Заработано с циклов",
-                    historyTitle: "История транзакций",
-                    noTransactions: "Нет транзакций",
-                    inviteFriendTitle: "Пригласить друга",
-                    shareLinkText: "Поделитесь ссылкой на Tethera",
-                    startCycleModalTitle: "Запустить цикл",
-                    availableBalanceLabel: "Доступно:",
-                    cycleAmountLabel: "Сумма цикла",
-                    tetheraId: "Tethera ID",
-                    language: "Язык",
-                    support: "Поддержка",
-                    news: "Новости"
-                },
-                en: {
-                    earned: "Earned from cycles",
-                    activeDeposit: "Active deposit",
-                    availableWithdraw: "Available for withdrawal",
-                    cycleHint: "+1.5% per cycle (6 hours)",
-                    newCycleLabel: "New",
-                    activeCyclesLabel: "Active",
-                    startCycleBtn: "Start cycle",
-                    walletTitle: "WALLET",
-                    depositTab: "Deposit",
-                    withdrawTab: "Withdraw",
-                    coinLabel: "Coin:",
-                    networkLabel: "Network:",
-                    addressLabel: "Wallet address (USDT)",
-                    copyBtn: "Copy",
-                    commentLabel: "Comment (TWord)",
-                    commentWarning: "⚠️ Comment is required for deposit",
-                    withdrawAmountLabel: "Enter amount (USDT) · Min 5 USDT",
-                    withdrawAddressLabel: "Your USDT address",
-                    withdrawSubmitBtn: "Withdraw",
-                    ratingTitle: "RATING",
-                    seasonLabel: "SEASON I",
-                    remainingLabel: "Remains",
-                    yourEnergyScore: "Your Energy Score",
-                    refTitle: "REFERRALS",
-                    inviteBtn: "👥 Invite friend",
-                    yourRefs: "Your referrals",
-                    teamRefs: "Total team",
-                    activeRefs: "Active",
-                    levelsTitle: "Levels & rewards",
-                    level1: "Level 1",
-                    level2: "Level 2",
-                    level2Cond: "Deposit from 500 USDT",
-                    level3: "Level 3",
-                    level3Cond1: "Deposit from 1000 USDT",
-                    level3Cond2: "Team turnover 1-2 levels from 25K USDT per day",
-                    level4: "Level 4",
-                    level4Cond1: "Deposit from 2000 USDT",
-                    level4Cond2: "Whole structure turnover from 100K USDT per day",
-                    level5: "Level 5",
-                    level5Cond1: "Deposit from 4000 USDT",
-                    level5Cond2: "Whole structure turnover from 200K USDT per day",
-                    navHome: "Home",
-                    navWallet: "Wallet",
-                    navRating: "Rating",
-                    navRef: "Referrals",
-                    modalDepositTitle: "Active deposit",
-                    modalDepositHint: "You have no active cycles yet",
-                    modalWithdrawTitle: "Profit",
-                    modalWithdrawBtn: "Withdraw",
-                    modalReinvestBtn: "Reinvest",
-                    newCycleTitle: "New cycle",
-                    newCycleSub: "Cycle gives +1.5% every 6 hours",
-                    newCycleAmountLabel: "Cycle amount",
-                    minLabel: "Min: 5 USDT",
-                    availableForCycles: "Available for new cycles: 0 USDT",
-                    totalRow: "You are starting a cycle for:",
-                    startCycleModalBtn: "Start cycle",
-                    parallelNote: "Cycles work in parallel",
-                    activeCyclesTitle: "Active cycles",
-                    totalCycles: "Total cycles",
-                    inWork: "In work",
-                    accrual: "Accrual",
-                    earnedFromCycles: "Earned from cycles",
-                    historyTitle: "Transaction history",
-                    noTransactions: "No transactions",
-                    inviteFriendTitle: "Invite friend",
-                    shareLinkText: "Share link to Tethera",
-                    startCycleModalTitle: "Start cycle",
-                    availableBalanceLabel: "Available:",
-                    cycleAmountLabel: "Cycle amount",
-                    tetheraId: "Tethera ID",
-                    language: "Language",
-                    support: "Support",
-                    news: "News"
-                }
-            };
-
-            let currentLang = 'ru';
-
-            function applyLanguage() {
-                document.querySelectorAll('[data-lang]').forEach(el => {
-                    const key = el.getAttribute('data-lang');
-                    if (translations[currentLang][key]) {
-                        el.textContent = translations[currentLang][key];
-                    }
-                });
-                document.getElementById('langLabel').textContent = translations[currentLang].language;
-                document.getElementById('supportLabel').textContent = translations[currentLang].support;
-                document.getElementById('newsLabel').textContent = translations[currentLang].news;
-                document.querySelectorAll('.lang-btn').forEach(btn => {
-                    if (btn.getAttribute('data-lang') === currentLang) btn.classList.add('active');
-                    else btn.classList.remove('active');
-                });
-                const historyTitle = document.getElementById('historyModalTitle');
-                if (historyTitle) historyTitle.textContent = translations[currentLang].historyTitle;
-            }
-
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    currentLang = btn.getAttribute('data-lang');
-                    applyLanguage();
-                });
-            });
-            applyLanguage();
-
-            // ========== ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЯ TELEGRAM ==========
-            let tgUser = null;
-            if (window.Telegram && window.Telegram.WebApp) {
-                const webApp = window.Telegram.WebApp;
-                webApp.expand();
-                tgUser = webApp.initDataUnsafe?.user;
-            }
-            const userIdDisplay = document.getElementById('userIdDisplay');
-            if (userIdDisplay) {
-                if (tgUser && (tgUser.username || tgUser.first_name)) {
-                    userIdDisplay.textContent = tgUser.username || tgUser.first_name;
-                } else {
-                    const randomNames = ["CryptoExplorer", "TetheraFan", "MoonWalker", "StakeMaster", "CycleHunter"];
-                    userIdDisplay.textContent = randomNames[Math.floor(Math.random() * randomNames.length)];
-                }
-            }
-
-            // ========== МЕНЮ ==========
-            const menuBtn = document.getElementById('menuBtn');
-            const sideMenu = document.getElementById('sideMenu');
-            const closeMenu = document.getElementById('closeMenu');
-            function toggleMenu() { sideMenu.classList.toggle('open'); }
-            menuBtn.addEventListener('click', toggleMenu);
-            closeMenu.addEventListener('click', toggleMenu);
-            document.querySelectorAll('.menu-item').forEach(item => {
-                if (item.id !== 'menuLanguage') {
-                    item.addEventListener('click', () => sideMenu.classList.remove('open'));
-                }
-            });
-            // Пустые обработчики для поддержки и новостей
-            document.getElementById('menuSupport').addEventListener('click', () => {});
-            document.getElementById('menuNews').addEventListener('click', () => {});
-
-            // ========== ВСЯ ОСТАЛЬНАЯ ЛОГИКА (кошелёк, рейтинг, циклы) ==========
             // Навигация
             const screens = document.querySelectorAll('.screen');
             const navItems = document.querySelectorAll('.nav-item');
             function showScreen(screenId) {
                 screens.forEach(s => s.classList.remove('active'));
                 document.getElementById(`screen-${screenId}`).classList.add('active');
-                navItems.forEach(item => item.classList.toggle('active', item.dataset.screen === screenId));
+                navItems.forEach(item => {
+                    item.classList.toggle('active', item.dataset.screen === screenId);
+                });
             }
-            navItems.forEach(item => item.addEventListener('click', () => showScreen(item.dataset.screen)));
+            navItems.forEach(item => {
+                item.addEventListener('click', () => showScreen(item.dataset.screen));
+            });
 
-            // Кошелёк, переключение вкладок
+            // Кошелёк (копирование и переключения)
             const walletTabs = document.querySelectorAll('.wallet-tab');
             const depositTab = document.querySelector('.deposit-tab');
             const withdrawTab = document.querySelector('.withdraw-tab');
             if (walletTabs.length) {
-                walletTabs.forEach((tab, idx) => {
+                walletTabs.forEach((tab, index) => {
                     tab.addEventListener('click', () => {
                         walletTabs.forEach(t => t.classList.remove('active'));
                         tab.classList.add('active');
-                        if (idx === 0) { depositTab.style.display = 'block'; withdrawTab.style.display = 'none'; }
-                        else { depositTab.style.display = 'none'; withdrawTab.style.display = 'block'; }
+                        if (index === 0) {
+                            depositTab.style.display = 'block';
+                            withdrawTab.style.display = 'none';
+                        } else {
+                            depositTab.style.display = 'none';
+                            withdrawTab.style.display = 'block';
+                        }
                     });
                 });
             }
 
             const words = ['sunset', 'ocean', 'forest', 'mountain', 'river', 'thunder', 'galaxy', 'nebula', 'phoenix', 'crystal'];
+            let currentTWord = words[Math.floor(Math.random() * words.length)];
             const commentSpan = document.getElementById('comment-value');
-            if (commentSpan) commentSpan.textContent = words[Math.floor(Math.random() * words.length)];
+            if (commentSpan) commentSpan.textContent = currentTWord;
 
             const addressesUSDT = { ton: 'UQB9ZLQiBDcAi3bSHyYqN0qit8Fo9tPN_GPoWmFRLM8nnZL2', trc20: 'TLoZopiKVoveXKVN4roLTB3ZJGAhAaLedY', sol: '69voGycFKw9qPZ6JGqqmqXXVPP9Rk5HkWTxBYhGrVRsk', bep20: '0xF990109424DAE8976FF513770EF0a0E8C4e7685d' };
             const addressesUSDC = { eth: '0xF990109424DAE8976FF513770EF0a0E8C4e7685d', sol: '69voGycFKw9qPZ6JGqqmqXXVPP9Rk5HkWTxBYhGrVRsk', bep20: '0xF990109424DAE8976FF513770EF0a0E8C4e7685d' };
@@ -1297,11 +1122,13 @@
                 const firstChip = depositNetworkSelector.querySelector('.network-chip');
                 if (firstChip) firstChip.click();
             }
-            depositCoinBtns.forEach(btn => btn.addEventListener('click', () => {
-                depositCoinBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                updateDepositNetworks(btn.dataset.coin);
-            }));
+            depositCoinBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    depositCoinBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    updateDepositNetworks(this.dataset.coin);
+                });
+            });
             updateDepositNetworks('usdt');
 
             const withdrawCoinBtns = document.querySelectorAll('.withdraw-tab .coin-btn');
@@ -1320,22 +1147,26 @@
                     chip.textContent = net.name;
                     withdrawNetworkSelector.appendChild(chip);
                 });
-                document.querySelectorAll('.withdraw-tab .network-chip').forEach(chip => chip.addEventListener('click', function() {
-                    document.querySelectorAll('.withdraw-tab .network-chip').forEach(c => c.classList.remove('active'));
-                    this.classList.add('active');
-                }));
+                document.querySelectorAll('.withdraw-tab .network-chip').forEach(chip => {
+                    chip.addEventListener('click', function() {
+                        document.querySelectorAll('.withdraw-tab .network-chip').forEach(c => c.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                });
             }
-            withdrawCoinBtns.forEach(btn => btn.addEventListener('click', () => {
-                withdrawCoinBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const coin = btn.dataset.coin;
-                const coinUpper = coin.toUpperCase();
-                withdrawAmountLabel.textContent = translations[currentLang].withdrawAmountLabel.replace('USDT', coinUpper);
-                withdrawAddressLabel.textContent = translations[currentLang].withdrawAddressLabel.replace('USDT', coinUpper);
-                withdrawAmountInput.placeholder = '0.00';
-                withdrawAddressInput.placeholder = `Enter ${coinUpper} recipient address`;
-                updateWithdrawNetworks(coin);
-            }));
+            withdrawCoinBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    withdrawCoinBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const coin = this.dataset.coin;
+                    const coinUpper = coin.toUpperCase();
+                    withdrawAmountLabel.textContent = `Введите сумму (${coinUpper}) · Min 5 ${coinUpper}`;
+                    withdrawAddressLabel.textContent = `Ваш адрес ${coinUpper}`;
+                    withdrawAmountInput.placeholder = '0.00';
+                    withdrawAddressInput.placeholder = `Введите адрес получателя ${coinUpper}`;
+                    updateWithdrawNetworks(coin);
+                });
+            });
             updateWithdrawNetworks('usdt');
 
             function copyWithFeedback(button, text) {
@@ -1346,63 +1177,107 @@
                     setTimeout(() => { button.textContent = original; button.classList.remove('copied'); }, 2000);
                 }).catch(() => alert('Ошибка копирования'));
             }
-            document.getElementById('copy-address')?.addEventListener('click', function() { copyWithFeedback(this, addressSpan.textContent); });
-            document.getElementById('copy-comment')?.addEventListener('click', function() { copyWithFeedback(this, commentSpan?.textContent || ''); });
+            const copyAddress = document.getElementById('copy-address');
+            const copyComment = document.getElementById('copy-comment');
+            if (copyAddress) copyAddress.addEventListener('click', () => copyWithFeedback(copyAddress, addressSpan.textContent));
+            if (copyComment) copyComment.addEventListener('click', () => copyWithFeedback(copyComment, commentSpan.textContent));
 
+            // История транзакций (делегированный обработчик)
             const historyModal = document.getElementById('historyModal');
-            document.querySelector('.wallet')?.addEventListener('click', (e) => {
-                const icon = e.target.closest('.history-icon');
-                if (icon) {
-                    historyModal.style.display = 'flex';
-                }
-            });
-
-            // Рейтинг (генерация списка)
-            const ratingList = document.getElementById('rating-list');
-            if (ratingList) {
-                const names = ["Zombini","olekitka","Evakuatordubna","MrCryptoMon","vavan42","CryptoKing","WhaleHunter","MoonWalker","BitLord","EtherQueen","SolanaStar","TetheraFan","BlockMaster","DeFiGuru","StakeWizard","LiquidityPro","YieldFarmer","NodeRunner","HashBreaker","MinerJoe","SatoshiFan","VitalikLover","PumpKing","DumpLord","HodlMaster","BullRunner","BearSlayer","AltSeason","CryptoNerd","TokenSeeker","ChainExplorer","SmartContract","Web3Builder","MetaVerse","NFTCollector","DiamondHands","PaperHands","LamboDream","SatoshiNakamoto","CZ_Binance","JustinSun","SBF_Alameda","AndreCronje","Mikol","TetheraWhale","StakerX","CycleKing","ProfitHunter","RewardSeeker","TetheraLeader"];
-                let scores = [];
-                for (let i=0;i<50;i++) {
-                    let base;
-                    if (i<5) base = 1700 - i*80 + Math.random()*60;
-                    else if (i<10) base = 1300 - (i-5)*70 + Math.random()*50;
-                    else if (i<20) base = 900 - (i-10)*40 + Math.random()*45;
-                    else if (i<30) base = 500 - (i-20)*25 + Math.random()*40;
-                    else if (i<40) base = 250 - (i-30)*12 + Math.random()*35;
-                    else base = 100 - (i-40)*4 + Math.random()*30;
-                    base = Math.max(base,5);
-                    scores.push(parseFloat(base.toFixed(2)));
-                }
-                let users = [];
-                for (let i=0;i<50;i++) {
-                    let name = names[i % names.length];
-                    if (i===0) name="Zombini";
-                    if (i===1) name="olekitka";
-                    if (i===2) name="Evakuatordubna";
-                    users.push({name, score: scores[i]});
-                }
-                users.sort((a,b)=>b.score-a.score);
-                const totalScore = users.reduce((s,u)=>s+u.score,0);
-                users.forEach((user,i)=>{
-                    const prize = (user.score/totalScore)*15000;
-                    const div = document.createElement('div');
-                    div.className='rating-item';
-                    div.innerHTML=`<span class="rating-position">${i+1}</span><div class="rating-info"><div class="rating-name">${user.name}</div><div class="rating-stake">${user.score.toFixed(2)} ES</div></div><div class="rating-amount">$${prize.toFixed(2)}</div>`;
-                    ratingList.appendChild(div);
+            const historyModalTitle = document.getElementById('historyModalTitle');
+            const walletContainer = document.querySelector('.wallet');
+            if (walletContainer) {
+                walletContainer.addEventListener('click', function(e) {
+                    const icon = e.target.closest('.history-icon');
+                    if (icon) {
+                        const isWithdraw = icon.closest('.withdraw-tab') !== null;
+                        historyModalTitle.textContent = isWithdraw ? 'История вывода' : 'История транзакций';
+                        historyModal.style.display = 'flex';
+                    }
                 });
             }
 
-            // Рефералы
-            document.getElementById('inviteFriendBtn')?.addEventListener('click',()=>document.getElementById('referralModal').style.display='flex');
-            document.getElementById('copyReferralLink')?.addEventListener('click',function(){ copyWithFeedback(this, document.getElementById('referralLink').textContent); });
+            // ========== Рейтинг ==========
+            const ratingList = document.getElementById('rating-list');
+            if (ratingList) {
+                const names = [
+                    "Zombini", "olekitka", "Evakuatordubna", "MrCryptoMon", "vavan42",
+                    "CryptoKing", "WhaleHunter", "MoonWalker", "BitLord", "EtherQueen",
+                    "SolanaStar", "TetheraFan", "BlockMaster", "DeFiGuru", "StakeWizard",
+                    "LiquidityPro", "YieldFarmer", "NodeRunner", "HashBreaker", "MinerJoe",
+                    "SatoshiFan", "VitalikLover", "PumpKing", "DumpLord", "HodlMaster",
+                    "BullRunner", "BearSlayer", "AltSeason", "CryptoNerd", "TokenSeeker",
+                    "ChainExplorer", "SmartContract", "Web3Builder", "MetaVerse", "NFTCollector",
+                    "DiamondHands", "PaperHands", "LamboDream", "SatoshiNakamoto", "CZ_Binance",
+                    "JustinSun", "SBF_Alameda", "AndreCronje", "Mikol", "TetheraWhale",
+                    "StakerX", "CycleKing", "ProfitHunter", "RewardSeeker", "TetheraLeader"
+                ];
+                let scores = [];
+                for (let i = 0; i < 50; i++) {
+                    let base;
+                    if (i < 5) base = 1700 - i * 80 + Math.random() * 60;
+                    else if (i < 10) base = 1300 - (i-5) * 70 + Math.random() * 50;
+                    else if (i < 20) base = 900 - (i-10) * 40 + Math.random() * 45;
+                    else if (i < 30) base = 500 - (i-20) * 25 + Math.random() * 40;
+                    else if (i < 40) base = 250 - (i-30) * 12 + Math.random() * 35;
+                    else base = 100 - (i-40) * 4 + Math.random() * 30;
+                    base = Math.max(base, 5);
+                    scores.push(parseFloat(base.toFixed(2)));
+                }
+                let users = [];
+                for (let i = 0; i < 50; i++) {
+                    let name = names[i % names.length];
+                    if (i === 0) name = "Zombini";
+                    if (i === 1) name = "olekitka";
+                    if (i === 2) name = "Evakuatordubna";
+                    users.push({ name: name, score: scores[i] });
+                }
+                users.sort((a,b) => b.score - a.score);
+                const totalScore = users.reduce((sum, u) => sum + u.score, 0);
+                for (let i = 0; i < users.length; i++) {
+                    const user = users[i];
+                    const prize = (user.score / totalScore) * 15000;
+                    const div = document.createElement('div');
+                    div.className = 'rating-item';
+                    div.innerHTML = `
+                        <span class="rating-position">${i+1}</span>
+                        <div class="rating-info">
+                            <div class="rating-name">${user.name}</div>
+                            <div class="rating-stake">${user.score.toFixed(2)} ES</div>
+                        </div>
+                        <div class="rating-amount">$${prize.toFixed(2)}</div>
+                    `;
+                    ratingList.appendChild(div);
+                }
+            }
 
-            // Запуск цикла
+            // ========== Рефералы ==========
+            const inviteBtn = document.getElementById('inviteFriendBtn');
+            const referralModal = document.getElementById('referralModal');
+            const copyReferralLinkBtn = document.getElementById('copyReferralLink');
+            const referralLinkSpan = document.getElementById('referralLink');
+            const closeBtns = document.querySelectorAll('.close');
+
+            if (inviteBtn) {
+                inviteBtn.addEventListener('click', () => {
+                    referralModal.style.display = 'flex';
+                });
+            }
+            if (copyReferralLinkBtn) {
+                copyReferralLinkBtn.addEventListener('click', () => {
+                    copyWithFeedback(copyReferralLinkBtn, referralLinkSpan.textContent);
+                });
+            }
+
+            // ========== Модальное окно для запуска цикла ==========
             const startCycleMainBtn = document.getElementById('startCycleMainBtn');
             const cycleLaunchModal = document.getElementById('cycleLaunchModal');
             const cycleLaunchAmount = document.getElementById('cycleLaunchAmount');
             const cycleLaunchError = document.getElementById('cycleLaunchError');
             const confirmLaunchBtn = document.getElementById('confirmLaunchBtn');
             const availableBalanceSpan = document.getElementById('availableBalance');
+
+            // Текущий доступный баланс (пока заглушка 0)
             let availableBalance = 0.00;
             availableBalanceSpan.textContent = availableBalance.toFixed(2);
 
@@ -1415,7 +1290,7 @@
                     return;
                 }
                 if (amount > availableBalance) {
-                    cycleLaunchError.textContent = currentLang === 'ru' ? 'Недостаточно средств' : 'Insufficient funds';
+                    cycleLaunchError.textContent = 'Недостаточно средств';
                     confirmLaunchBtn.classList.add('disabled');
                     confirmLaunchBtn.disabled = true;
                 } else {
@@ -1424,110 +1299,135 @@
                     confirmLaunchBtn.disabled = false;
                 }
             }
+
             cycleLaunchAmount.addEventListener('input', updateLaunchButtonState);
+
+            // Открытие модального окна
             startCycleMainBtn.addEventListener('click', () => {
                 cycleLaunchAmount.value = '';
+                cycleLaunchError.textContent = '';
                 updateLaunchButtonState();
                 cycleLaunchModal.style.display = 'flex';
             });
-            cycleLaunchModal.querySelector('.close').addEventListener('click', () => cycleLaunchModal.style.display = 'none');
-            confirmLaunchBtn.addEventListener('click', () => {
-                if (confirmLaunchBtn.disabled) return;
-                let amount = parseFloat(cycleLaunchAmount.value);
-                if (amount>0 && amount<=availableBalance) {
-                    alert(currentLang === 'ru' ? `Цикл на сумму ${amount.toFixed(2)} USDT запущен! (демо-режим)` : `Cycle for ${amount.toFixed(2)} USDT started! (demo mode)`);
+
+            // Закрытие по крестику
+            const closeLaunchModal = cycleLaunchModal.querySelector('.close');
+            closeLaunchModal.addEventListener('click', () => {
+                cycleLaunchModal.style.display = 'none';
+            });
+
+            // Закрытие по клику вне окна
+            window.addEventListener('click', (e) => {
+                if (e.target === cycleLaunchModal) {
                     cycleLaunchModal.style.display = 'none';
                 }
             });
 
-            // Закрытие модальных окон
-            const closeBtns = document.querySelectorAll('.close');
+            // Кнопка "Запустить цикл" в модальном окне
+            confirmLaunchBtn.addEventListener('click', () => {
+                if (confirmLaunchBtn.disabled) return;
+                let amount = parseFloat(cycleLaunchAmount.value);
+                if (amount > 0 && amount <= availableBalance) {
+                    alert(`Цикл на сумму ${amount.toFixed(2)} USDT запущен! (демо-режим)`);
+                    cycleLaunchModal.style.display = 'none';
+                }
+            });
+
+            // ========== Остальные модальные окна ==========
             const depositModal = document.getElementById('depositModal');
             const withdrawModal = document.getElementById('withdrawModal');
             const newCycleModal = document.getElementById('newCycleModal');
             const activeCyclesModal = document.getElementById('activeCyclesModal');
-            const referralModal = document.getElementById('referralModal');
-            closeBtns.forEach(btn => btn.addEventListener('click', () => {
-                depositModal.style.display='none'; withdrawModal.style.display='none'; newCycleModal.style.display='none';
-                activeCyclesModal.style.display='none'; historyModal.style.display='none'; referralModal.style.display='none';
-                cycleLaunchModal.style.display='none';
-            }));
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    depositModal.style.display = 'none';
+                    withdrawModal.style.display = 'none';
+                    newCycleModal.style.display = 'none';
+                    activeCyclesModal.style.display = 'none';
+                    historyModal.style.display = 'none';
+                    referralModal.style.display = 'none';
+                    cycleLaunchModal.style.display = 'none';
+                });
+            });
             window.addEventListener('click', (e) => {
-                if (e.target === depositModal) depositModal.style.display='none';
-                if (e.target === withdrawModal) withdrawModal.style.display='none';
-                if (e.target === newCycleModal) newCycleModal.style.display='none';
-                if (e.target === activeCyclesModal) activeCyclesModal.style.display='none';
-                if (e.target === historyModal) historyModal.style.display='none';
-                if (e.target === referralModal) referralModal.style.display='none';
-                if (e.target === cycleLaunchModal) cycleLaunchModal.style.display='none';
+                if (e.target === depositModal) depositModal.style.display = 'none';
+                if (e.target === withdrawModal) withdrawModal.style.display = 'none';
+                if (e.target === newCycleModal) newCycleModal.style.display = 'none';
+                if (e.target === activeCyclesModal) activeCyclesModal.style.display = 'none';
+                if (e.target === historyModal) historyModal.style.display = 'none';
+                if (e.target === referralModal) referralModal.style.display = 'none';
+                if (e.target === cycleLaunchModal) cycleLaunchModal.style.display = 'none';
             });
-            document.querySelectorAll('.stat-card').forEach(card => card.addEventListener('click', (e) => {
-                const label = card.querySelector('.stat-label-small');
-                if (label && (label.textContent.trim() === (currentLang === 'ru' ? 'Активный депозит' : 'Active deposit'))) depositModal.style.display='flex';
-                if (label && (label.textContent.trim() === (currentLang === 'ru' ? 'Доступно к выводу' : 'Available for withdrawal'))) withdrawModal.style.display='flex';
-            }));
-            document.getElementById('newCycleCard').addEventListener('click',()=>{
-                newCycleModal.style.display='flex';
-                document.getElementById('cycleAmount').value='';
-                document.getElementById('totalAmount').textContent='0.00';
+            document.querySelectorAll('.stat-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    const label = card.querySelector('.stat-label-small');
+                    if (label && label.textContent.trim() === 'Активный депозит') depositModal.style.display = 'flex';
+                    if (label && label.textContent.trim() === 'Доступно к выводу') withdrawModal.style.display = 'flex';
+                });
+            });
+            document.getElementById('newCycleCard').addEventListener('click', () => {
+                newCycleModal.style.display = 'flex';
+                document.getElementById('cycleAmount').value = '';
+                document.getElementById('totalAmount').textContent = '0.00';
                 document.getElementById('startCycleBtn').classList.remove('active');
-                document.getElementById('startCycleBtn').disabled=true;
+                document.getElementById('startCycleBtn').disabled = true;
             });
-            document.getElementById('activeCyclesCard').addEventListener('click',()=>activeCyclesModal.style.display='flex');
+            document.getElementById('activeCyclesCard').addEventListener('click', () => activeCyclesModal.style.display = 'flex');
             const cycleInput = document.getElementById('cycleAmount');
             const totalSpan = document.getElementById('totalAmount');
             const startBtn = document.getElementById('startCycleBtn');
             function updateTotal() {
                 let val = parseFloat(cycleInput.value);
-                if (isNaN(val)||val<0) val=0;
-                totalSpan.textContent=val.toFixed(2);
-                if (val>=5) { startBtn.classList.add('active'); startBtn.disabled=false; }
-                else { startBtn.classList.remove('active'); startBtn.disabled=true; }
+                if (isNaN(val) || val < 0) val = 0;
+                totalSpan.textContent = val.toFixed(2);
+                if (val >= 5) { startBtn.classList.add('active'); startBtn.disabled = false; }
+                else { startBtn.classList.remove('active'); startBtn.disabled = true; }
             }
-            if (cycleInput) cycleInput.addEventListener('input',updateTotal);
-            document.querySelectorAll('.quick-btn').forEach(btn=>btn.addEventListener('click',()=>{
-                cycleInput.value=btn.getAttribute('data-amount');
-                updateTotal();
-            }));
-            if (startBtn) startBtn.addEventListener('click',()=>{ if(!startBtn.disabled){ alert(currentLang === 'ru' ? 'Цикл запущен! (демо-режим)' : 'Cycle started! (demo mode)'); newCycleModal.style.display='none'; } });
-            document.querySelectorAll('.modal-btn').forEach(btn=>btn.addEventListener('click',()=>alert(currentLang === 'ru' ? 'Функция будет реализована позже' : 'Function will be implemented later')));
-
-            // График
-            const sparklines = document.querySelectorAll('.sparkline');
-            if(sparklines.length){
-                const dataMap = new Map();
-                const pointsCount=60;
-                sparklines.forEach(canvas=>{
-                    const current=[], target=[];
-                    for(let i=0;i<pointsCount;i++){ const val=Math.random(); current.push(val); target.push(val); }
-                    dataMap.set(canvas,{current,target});
+            if (cycleInput) cycleInput.addEventListener('input', updateTotal);
+            document.querySelectorAll('.quick-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    cycleInput.value = btn.getAttribute('data-amount');
+                    updateTotal();
                 });
-                function drawSparkline(canvas,current){
-                    const ctx=canvas.getContext('2d'), w=canvas.width, h=canvas.height;
-                    ctx.clearRect(0,0,w,h);
-                    ctx.strokeStyle='#00ffaa'; ctx.lineWidth=2; ctx.lineJoin='round'; ctx.lineCap='round';
+            });
+            if (startBtn) startBtn.addEventListener('click', () => { if (!startBtn.disabled) { alert('Цикл запущен! (демо-режим)'); newCycleModal.style.display = 'none'; } });
+            document.querySelectorAll('.modal-btn').forEach(btn => btn.addEventListener('click', () => alert('Функция будет реализована позже')));
+
+            // ========== График ==========
+            const sparklines = document.querySelectorAll('.sparkline');
+            if (sparklines.length > 0) {
+                const dataMap = new Map();
+                const pointsCount = 60;
+                sparklines.forEach(canvas => {
+                    const current = [], target = [];
+                    for (let i = 0; i < pointsCount; i++) { const val = Math.random(); current.push(val); target.push(val); }
+                    dataMap.set(canvas, { current, target });
+                });
+                function drawSparkline(canvas, current) {
+                    const ctx = canvas.getContext('2d'), w = canvas.width, h = canvas.height;
+                    ctx.clearRect(0, 0, w, h);
+                    ctx.strokeStyle = '#00ffaa'; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
                     ctx.beginPath();
-                    const step=w/(current.length-1);
-                    for(let i=0;i<current.length;i++){
-                        const x=i*step, y=current[i]*h;
-                        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+                    const step = w / (current.length - 1);
+                    for (let i = 0; i < current.length; i++) {
+                        const x = i * step, y = current[i] * h;
+                        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
                     }
                     ctx.stroke();
                 }
-                function updateTargets(target){ for(let i=0;i<target.length;i++){ let delta=(Math.random()-0.5)*0.12; let newVal=target[i]+delta; if(newVal<0) newVal=0; if(newVal>1) newVal=1; target[i]=newVal; } }
-                function interpolate(current,target,factor=0.1){ for(let i=0;i<current.length;i++) current[i]+=(target[i]-current[i])*factor; }
-                setInterval(()=>{
-                    sparklines.forEach(canvas=>{
-                        const data=dataMap.get(canvas);
-                        if(!data) return;
+                function updateTargets(target) { for (let i = 0; i < target.length; i++) { let delta = (Math.random() - 0.5) * 0.12; let newVal = target[i] + delta; if (newVal < 0) newVal = 0; if (newVal > 1) newVal = 1; target[i] = newVal; } }
+                function interpolate(current, target, factor = 0.1) { for (let i = 0; i < current.length; i++) current[i] += (target[i] - current[i]) * factor; }
+                setInterval(() => {
+                    sparklines.forEach(canvas => {
+                        const data = dataMap.get(canvas);
+                        if (!data) return;
                         updateTargets(data.target);
-                        interpolate(data.current,data.target,0.15);
-                        drawSparkline(canvas,data.current);
+                        interpolate(data.current, data.target, 0.15);
+                        drawSparkline(canvas, data.current);
                     });
-                },50);
+                }, 50);
             }
         })();
     </script>
 </body>
 </html>
-```
