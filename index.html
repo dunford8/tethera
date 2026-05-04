@@ -23,30 +23,26 @@
             justify-content: stretch;
         }
 
-        /* Шапка с гамбургером и центрированным логотипом */
-        .app-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 70px;
-            background: rgba(10, 20, 15, 0.7);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(0, 255, 170, 0.25);
+        .app {
+            width: 100%;
+            height: 100vh;
+            background: transparent;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 0 16px;
+            flex-direction: column;
+            overflow: hidden;
+            color: #ffffff;
         }
+
+        /* Гамбургер-меню (абсолютное, поверх контента) */
         .menu-btn {
-            position: absolute;
-            left: 16px;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1100;
             width: 40px;
             height: 40px;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(8px);
             border-radius: 12px;
             display: flex;
             flex-direction: column;
@@ -66,24 +62,17 @@
         .menu-btn:active {
             transform: scale(0.95);
         }
-        .app-title {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            color: #fff;
-            text-shadow: 0 0 8px rgba(0,255,170,0.5);
-        }
 
-        /* Боковое меню — шире, чтобы английские слова помещались */
+        /* Боковое меню */
         .side-menu {
             position: fixed;
             top: 0;
-            left: -320px;
-            width: 300px;
+            left: -300px;
+            width: 280px;
             height: 100%;
             background: rgba(10, 20, 15, 0.95);
             backdrop-filter: blur(20px);
-            z-index: 1100;
+            z-index: 1200;
             transition: left 0.3s ease;
             padding: 80px 20px 20px;
             border-right: 1px solid rgba(0,255,170,0.3);
@@ -143,29 +132,18 @@
             border-color: #00ffaa;
         }
 
-        .app {
-            width: 100%;
-            height: 100vh;
-            background: transparent;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            color: #ffffff;
-        }
-
         .screens-container {
             flex: 1;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            margin-top: 70px; /* отступ под фиксированную шапку */
         }
 
         .screen {
             display: none;
             flex: 1;
             flex-direction: column;
-            padding: 30px 16px 10px 16px; /* верхний отступ уменьшен, чтобы суммарно с margin-top = 100px */
+            padding: 100px 16px 10px 16px; /* исходный верхний отступ */
             overflow-y: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
@@ -702,152 +680,7 @@
             box-shadow: 0 4px 12px rgba(0, 255, 170, 0.5);
         }
 
-        /* Стили для модального окна рефералов */
-        .referral-modal .modal-content {
-            max-width: 340px;
-            text-align: center;
-        }
-        .referral-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-        .referral-sub {
-            font-size: 14px;
-            color: #b0e0d0;
-            margin-bottom: 20px;
-        }
-        .referral-link {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(0,255,170,0.3);
-            border-radius: 20px;
-            padding: 12px 16px;
-            margin-bottom: 20px;
-            word-break: break-all;
-            font-size: 14px;
-            color: #fff;
-        }
-        .referral-copy-btn {
-            background: linear-gradient(135deg, #00c9a7, #00a87e);
-            border: none;
-            border-radius: 40px;
-            padding: 12px 20px;
-            font-weight: 600;
-            font-size: 16px;
-            color: #0b1f18;
-            cursor: pointer;
-            transition: transform 0.15s;
-            width: 100%;
-        }
-        .referral-copy-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* Стили для окна запуска цикла */
-        .cycle-launch-modal .modal-content {
-            max-width: 340px;
-            text-align: center;
-        }
-        .cycle-launch-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-        .balance-info {
-            background: rgba(0,0,0,0.2);
-            border-radius: 20px;
-            padding: 12px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            color: #b0e0d0;
-        }
-        .balance-info span {
-            color: #00ffaa;
-            font-weight: 600;
-            font-size: 18px;
-        }
-        .launch-input-wrapper {
-            margin-bottom: 20px;
-        }
-        .launch-input-label {
-            font-size: 14px;
-            color: #b0e0d0;
-            margin-bottom: 8px;
-            display: block;
-            text-align: left;
-        }
-        .launch-input-field {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(0,255,170,0.2);
-            border-radius: 20px;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-        }
-        .launch-input-field input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 16px;
-            outline: none;
-        }
-        .launch-input-field input::placeholder {
-            color: #5f7f70;
-        }
-        .launch-input-suffix {
-            color: #00ffaa;
-            margin-left: 8px;
-        }
-        .error-message {
-            font-size: 12px;
-            color: #ffaa5e;
-            margin-top: 8px;
-            text-align: left;
-        }
-        .launch-btn {
-            background: linear-gradient(135deg, #00c9a7, #00a87e);
-            border: none;
-            border-radius: 40px;
-            padding: 14px;
-            font-weight: 600;
-            font-size: 16px;
-            color: #0b1f18;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-            transition: transform 0.15s;
-        }
-        .launch-btn:active {
-            transform: scale(0.98);
-        }
-        .launch-btn.disabled {
-            background: rgba(0,0,0,0.2);
-            color: #5f7f70;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        @media (max-height: 700px) {
-            .screen { padding-top: 20px; padding-bottom: 5px; } /* чуть уменьшен отступ на маленьких экранах */
-            .timer-circle-wrapper { width: 160px; height: 160px; }
-            .timer-value { font-size: 24px; }
-            .timer-progress-bar { width: 160px; }
-            .timer-hint { margin-top: 16px; }
-            .cycles-row { margin-top: 20px; }
-            .gradient-btn { margin-top: 14px; }
-            .timer-large { margin-bottom: 60px; }
-            .season-header { padding: 16px 20px; }
-            .prize-label { font-size: 16px; }
-            .right-col { width: 130px; }
-            .prize-amount { font-size: 24px; }
-            .time-left { font-size: 14px; padding: 3px 10px; }
-            .user-score .accent-text { font-size: 20px; }
-        }
-
-        /* Общие стили для модальных окон */
+        /* Стили для модальных окон */
         .modal {
             position: fixed;
             top: 0;
@@ -917,18 +750,32 @@
         .history-modal .modal-content { max-width: 340px; }
         .history-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 20px; }
         .history-empty { font-size: 14px; color: #b0e0d0; padding: 20px 0; }
+
+        @media (max-height: 700px) {
+            .screen { padding-top: 80px; padding-bottom: 5px; }
+            .timer-circle-wrapper { width: 160px; height: 160px; }
+            .timer-value { font-size: 24px; }
+            .timer-progress-bar { width: 160px; }
+            .timer-hint { margin-top: 16px; }
+            .cycles-row { margin-top: 20px; }
+            .gradient-btn { margin-top: 14px; }
+            .timer-large { margin-bottom: 60px; }
+            .season-header { padding: 16px 20px; }
+            .prize-label { font-size: 16px; }
+            .right-col { width: 130px; }
+            .prize-amount { font-size: 24px; }
+            .time-left { font-size: 14px; padding: 3px 10px; }
+            .user-score .accent-text { font-size: 20px; }
+        }
     </style>
 </head>
 <body>
 <div class="app">
-    <div class="app-header">
-        <div class="menu-btn" id="menuBtn">
-            <span></span><span></span><span></span>
-        </div>
-        <div class="app-title">TETHERA</div>
-        <div style="width: 40px;"></div>
+    <!-- Гамбургер-меню -->
+    <div class="menu-btn" id="menuBtn">
+        <span></span><span></span><span></span>
     </div>
-
+    <!-- Боковое меню -->
     <div class="side-menu" id="sideMenu">
         <div class="close-menu" id="closeMenu">&times;</div>
         <div class="menu-item" id="menuUserId">
@@ -956,6 +803,7 @@
     <div class="screens-container">
         <!-- Главная -->
         <div class="screen home active" id="screen-home">
+            <h1 class="title-main" style="font-size:28px; letter-spacing:4px; margin-bottom:16px; text-align:center;">TETHERA</h1>
             <div class="stats-double-column">
                 <div class="stats-left">
                     <div class="stat-card">
@@ -1020,9 +868,9 @@
             <button class="gradient-btn" id="startCycleMainBtn" data-lang="startCycleBtn">Запустить цикл</button>
         </div>
 
-        <!-- Кошелёк (без изменений, но с атрибутами перевода) -->
+        <!-- Кошелёк (без изменений) -->
         <div class="screen wallet" id="screen-wallet">
-            <h1 class="title-main" style="font-size:24px;" data-lang="walletTitle">КОШЕЛЁК</h1>
+            <h1 class="title-main" style="font-size:24px; text-align:center;" data-lang="walletTitle">КОШЕЛЁК</h1>
             <div class="wallet-tabs">
                 <div class="wallet-tab active" data-wallet="deposit" data-lang="depositTab">Пополнение</div>
                 <div class="wallet-tab" data-wallet="withdraw" data-lang="withdrawTab">Вывод</div>
@@ -1102,7 +950,7 @@
 
         <!-- Рейтинг -->
         <div class="screen rating" id="screen-rating">
-            <h1 class="title-main" style="font-size:24px; margin-bottom:20px;" data-lang="ratingTitle">РЕЙТИНГ</h1>
+            <h1 class="title-main" style="font-size:24px; margin-bottom:20px; text-align:center;" data-lang="ratingTitle">РЕЙТИНГ</h1>
             <div class="season-header">
                 <div class="prize-row">
                     <span class="prize-label" data-lang="seasonLabel">СЕЗОН I</span>
@@ -1122,7 +970,7 @@
 
         <!-- Рефералы -->
         <div class="screen ref" id="screen-ref">
-            <h1 class="title-main" style="font-size:24px;" data-lang="refTitle">РЕФЕРАЛЫ</h1>
+            <h1 class="title-main" style="font-size:24px; text-align:center;" data-lang="refTitle">РЕФЕРАЛЫ</h1>
             <button class="invite-btn" id="inviteFriendBtn" data-lang="inviteBtn">👥 Пригласить друга</button>
             <div class="ref-header">
                 <div class="ref-stat">
@@ -1338,7 +1186,6 @@
                     if (btn.getAttribute('data-lang') === currentLang) btn.classList.add('active');
                     else btn.classList.remove('active');
                 });
-                // Обновляем заголовок модалки истории
                 const historyTitle = document.getElementById('historyModalTitle');
                 if (historyTitle) historyTitle.textContent = translations[currentLang].historyTitle;
             }
@@ -1380,7 +1227,7 @@
                     item.addEventListener('click', () => sideMenu.classList.remove('open'));
                 }
             });
-            // Пустые обработчики для поддержки и новостей (визуал)
+            // Пустые обработчики для поддержки и новостей
             document.getElementById('menuSupport').addEventListener('click', () => {});
             document.getElementById('menuNews').addEventListener('click', () => {});
 
@@ -1504,12 +1351,11 @@
             document.querySelector('.wallet')?.addEventListener('click', (e) => {
                 const icon = e.target.closest('.history-icon');
                 if (icon) {
-                    const isWithdraw = icon.closest('.withdraw-tab') !== null;
                     historyModal.style.display = 'flex';
                 }
             });
 
-            // Рейтинг
+            // Рейтинг (генерация списка)
             const ratingList = document.getElementById('rating-list');
             if (ratingList) {
                 const names = ["Zombini","olekitka","Evakuatordubna","MrCryptoMon","vavan42","CryptoKing","WhaleHunter","MoonWalker","BitLord","EtherQueen","SolanaStar","TetheraFan","BlockMaster","DeFiGuru","StakeWizard","LiquidityPro","YieldFarmer","NodeRunner","HashBreaker","MinerJoe","SatoshiFan","VitalikLover","PumpKing","DumpLord","HodlMaster","BullRunner","BearSlayer","AltSeason","CryptoNerd","TokenSeeker","ChainExplorer","SmartContract","Web3Builder","MetaVerse","NFTCollector","DiamondHands","PaperHands","LamboDream","SatoshiNakamoto","CZ_Binance","JustinSun","SBF_Alameda","AndreCronje","Mikol","TetheraWhale","StakerX","CycleKing","ProfitHunter","RewardSeeker","TetheraLeader"];
