@@ -33,10 +33,10 @@
             color: #ffffff;
         }
 
-        /* Гамбургер-меню (абсолютное, поверх контента) */
+        /* Гамбургер-меню (абсолютное, поверх контента) — скорректировано для одной линии с заголовком */
         .menu-btn {
             position: fixed;
-            top: 20px;
+            top: 100px;      /* центрировано относительно заголовка TETHERA (padding-top 85px + высота шрифта) */
             left: 20px;
             z-index: 1100;
             width: 40px;
@@ -63,7 +63,7 @@
             transform: scale(0.95);
         }
 
-        /* Боковое меню */
+        /* Боковое меню — ширина 280px */
         .side-menu {
             position: fixed;
             top: 0;
@@ -139,11 +139,12 @@
             overflow: hidden;
         }
 
+        /* Уменьшен верхний отступ — «на дольку» меньше */
         .screen {
             display: none;
             flex: 1;
             flex-direction: column;
-            padding: 100px 16px 10px 16px; /* исходный верхний отступ */
+            padding: 85px 16px 10px 16px;   /* было 100px, стало 85px */
             overflow-y: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
@@ -751,8 +752,10 @@
         .history-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 20px; }
         .history-empty { font-size: 14px; color: #b0e0d0; padding: 20px 0; }
 
+        /* Адаптив для маленьких экранов */
         @media (max-height: 700px) {
-            .screen { padding-top: 80px; padding-bottom: 5px; }
+            .screen { padding-top: 65px; padding-bottom: 5px; }
+            .menu-btn { top: 80px; }
             .timer-circle-wrapper { width: 160px; height: 160px; }
             .timer-value { font-size: 24px; }
             .timer-progress-bar { width: 160px; }
@@ -868,7 +871,7 @@
             <button class="gradient-btn" id="startCycleMainBtn" data-lang="startCycleBtn">Запустить цикл</button>
         </div>
 
-        <!-- Кошелёк (без изменений) -->
+        <!-- Кошелёк -->
         <div class="screen wallet" id="screen-wallet">
             <h1 class="title-main" style="font-size:24px; text-align:center;" data-lang="walletTitle">КОШЕЛЁК</h1>
             <div class="wallet-tabs">
@@ -1002,7 +1005,7 @@
         <div class="nav-item" data-screen="ref"><span>👥</span><span data-lang="navRef">Рефералы</span></div>
     </nav>
 
-    <!-- Модальные окна -->
+    <!-- Модальные окна (без изменений) -->
     <div class="modal" id="depositModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="modal-label" data-lang="modalDepositTitle">Активный депозит</div><div class="modal-value">$0.00</div><div class="modal-hint" data-lang="modalDepositHint">У вас ещё нет активных циклов</div></div></div>
     <div class="modal" id="withdrawModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="modal-label" data-lang="modalWithdrawTitle">Прибыль</div><div class="modal-value">$0.00</div><div class="modal-buttons"><button class="modal-btn" data-lang="modalWithdrawBtn">Забрать</button><button class="modal-btn" data-lang="modalReinvestBtn">Реинвестировать</button></div></div></div>
     <div class="modal new-cycle-modal" id="newCycleModal" style="display: none;"><div class="modal-content"><span class="close">&times;</span><div class="new-cycle-title" data-lang="newCycleTitle">Новый цикл</div><div class="new-cycle-sub" data-lang="newCycleSub">Цикл приносит +1,5% каждые 6 часов</div><div class="new-cycle-label" data-lang="newCycleAmountLabel">Сумма цикла</div><div class="new-cycle-input-wrapper"><input type="number" id="cycleAmount" class="new-cycle-input" placeholder="0.00" min="0" step="0.01" value=""><span class="new-cycle-input-suffix">USDT</span></div><div class="quick-buttons"><button class="quick-btn" data-amount="50">50</button><button class="quick-btn" data-amount="100">100</button><button class="quick-btn" data-amount="500">500</button><button class="quick-btn" data-amount="1000">1000</button></div><div class="info-row"><span data-lang="minLabel">Мин: 5 USDT</span><span data-lang="availableForCycles">Доступно для новых циклов: 0 USDT</span></div><div class="total-row" data-lang="totalRow">Вы запускаете цикл на: <span id="totalAmount">0.00</span> USDT</div><button class="new-cycle-btn" id="startCycleBtn" disabled data-lang="startCycleModalBtn">Запустить цикл</button><div class="bottom-note" data-lang="parallelNote">Циклы работают параллельно</div></div></div>
@@ -1178,7 +1181,6 @@
                         el.textContent = translations[currentLang][key];
                     }
                 });
-                // Обновляем специальные элементы
                 document.getElementById('langLabel').textContent = translations[currentLang].language;
                 document.getElementById('supportLabel').textContent = translations[currentLang].support;
                 document.getElementById('newsLabel').textContent = translations[currentLang].news;
@@ -1231,7 +1233,7 @@
             document.getElementById('menuSupport').addEventListener('click', () => {});
             document.getElementById('menuNews').addEventListener('click', () => {});
 
-            // ========== ВСЯ ОСТАЛЬНАЯ ЛОГИКА (как в исходном коде) ==========
+            // ========== ВСЯ ОСТАЛЬНАЯ ЛОГИКА (кошелёк, рейтинг, циклы) ==========
             // Навигация
             const screens = document.querySelectorAll('.screen');
             const navItems = document.querySelectorAll('.nav-item');
